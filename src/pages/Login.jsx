@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   EMAIL_INPUT_TESTID,
   LOGIN_BUTTON_TESTID,
+  MIN_CHARACTERS,
   PASSWORD_INPUT_TESTID,
 } from '../tests/helpers/Consts';
 
@@ -16,7 +17,6 @@ function Login() {
   };
 
   const validateLogin = () => {
-    const MIN_CHARACTERS = 6;
     const checkEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(state.email);
     return !(checkEmail && state.password.length >= MIN_CHARACTERS);
   };

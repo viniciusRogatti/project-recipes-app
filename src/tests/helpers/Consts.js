@@ -1,3 +1,5 @@
+export const MIN_CHARACTERS = 7;
+
 export const EMAIL_INPUT_TESTID = 'email-input';
 export const PASSWORD_INPUT_TESTID = 'password-input';
 export const LOGIN_BUTTON_TESTID = 'login-submit-btn';
