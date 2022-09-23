@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { EMAIL_INPUT_TESTID, LOGIN_BUTTON_TESTID, PASSWORD_INPUT_TESTID } from '../tests/helpers/Consts';
+import {
+  EMAIL_INPUT_TESTID,
+  LOGIN_BUTTON_TESTID,
+  PASSWORD_INPUT_TESTID,
+} from '../tests/helpers/Consts';
 
 function Login() {
   const [state, setState] = useState({
