@@ -2,8 +2,7 @@ import React from 'react';
 import './App.css';
 import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import Login from './pages/Login';
-import SearchBar from './components/SearchBar';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -16,8 +15,7 @@ function App() {
       >
         Glass
       </object>
-      {/* <Login /> */}
-      <SearchBar />
+      <Login />
     </div>
   );
 }
