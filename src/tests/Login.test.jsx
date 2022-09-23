@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import {
@@ -10,11 +10,12 @@ import {
   PASSWORD_INPUT_TESTID,
   VALID_EMAIL,
   VALID_PASS,
-} from './helpers/Consts';
+} from '../services/helpers/Consts';
+import renderWithRouter from './renderWithRouter';
 
 describe('Testa a página de Login', () => {
   test('Se "Login" renderiza os inputs de email, password e o botão "Enter"', () => {
-    render(<App />);
+    renderWithRouter(<App />);
 
     const emailInput = screen.getByTestId(EMAIL_INPUT_TESTID);
     const passInput = screen.getByTestId(PASSWORD_INPUT_TESTID);
@@ -26,7 +27,7 @@ describe('Testa a página de Login', () => {
   });
 
   test('Se o botão "Enter" começa disabled e fica enabled conforme validação', () => {
-    render(<App />);
+    renderWithRouter(<App />);
 
     const emailInput = screen.getByTestId(EMAIL_INPUT_TESTID);
     const passInput = screen.getByTestId(PASSWORD_INPUT_TESTID);
@@ -46,5 +47,25 @@ describe('Testa a página de Login', () => {
     userEvent.type(passInput, VALID_PASS);
 
     expect(loginButton).toBeEnabled();
+  });
+
+  test(`Se o botão "Enter", quando email e password válidos,
+  redireciona para a página principal de receitas de comidas: "/meals"`, () => {
+    const { history } = renderWithRouter(<App />);
+
+    const emailInput = screen.getByTestId(EMAIL_INPUT_TESTID);
+    const passInput = screen.getByTestId(PASSWORD_INPUT_TESTID);
+    const loginButton = screen.getByTestId(LOGIN_BUTTON_TESTID);
+
+    expect(history.location.pathname).toBe('/');
+
+    userEvent.type(emailInput, VALID_EMAIL);
+    userEvent.type(passInput, VALID_PASS);
+
+    userEvent.click(loginButton);
+
+    const { pathname } = history.location;
+
+    expect(pathname).toBe('/meals');
   });
 });

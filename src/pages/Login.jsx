@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import saveUser from '../services/localStorage';
 import {
   EMAIL_INPUT_TESTID,
   LOGIN_BUTTON_TESTID,
   MIN_CHARACTERS,
   PASSWORD_INPUT_TESTID,
-} from '../tests/helpers/Consts';
+} from '../services/helpers/Consts';
 
 function Login() {
+  const history = useHistory();
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -27,6 +29,7 @@ function Login() {
       email: state.email,
     };
     saveUser(savedEmail);
+    history.push('/meals');
   };
 
   return (

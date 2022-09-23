@@ -2,7 +2,7 @@ import {
   DRINKS_KEY,
   MEALS_KEY,
   USER_KEY,
-} from '../tests/helpers/Consts';
+} from './helpers/Consts';
 
 const saveUser = (email) => {
   localStorage.setItem(USER_KEY, JSON.stringify(email));
