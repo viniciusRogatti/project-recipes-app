@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import saveUser from '../services/localStorage';
 import {
   EMAIL_INPUT_TESTID,
   LOGIN_BUTTON_TESTID,
@@ -21,7 +22,12 @@ function Login() {
     return !(checkEmail && state.password.length >= MIN_CHARACTERS);
   };
 
-  console.log(validateLogin());
+  const handleEnter = () => {
+    const savedEmail = {
+      email: state.email,
+    };
+    saveUser(savedEmail);
+  };
 
   return (
     <form>
@@ -51,7 +57,7 @@ function Login() {
         type="button"
         data-testid={ LOGIN_BUTTON_TESTID }
         disabled={ validateLogin() }
-        // onClick={ handleEnter }
+        onClick={ handleEnter }
       >
         Enter
       </button>

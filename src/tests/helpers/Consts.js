@@ -1,4 +1,7 @@
 export const MIN_CHARACTERS = 7;
+export const USER_KEY = 'user';
+export const MEALS_KEY = 'mealsToken';
+export const DRINKS_KEY = 'drinksToken';
 
 export const EMAIL_INPUT_TESTID = 'email-input';
 export const PASSWORD_INPUT_TESTID = 'password-input';
