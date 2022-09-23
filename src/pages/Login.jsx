@@ -4,6 +4,7 @@ import saveUser from '../services/localStorage';
 import {
   EMAIL_INPUT_TESTID,
   LOGIN_BUTTON_TESTID,
+  MEALS_PATH,
   MIN_CHARACTERS,
   PASSWORD_INPUT_TESTID,
 } from '../services/helpers/Consts';
@@ -29,7 +30,7 @@ function Login() {
       email: state.email,
     };
     saveUser(savedEmail);
-    history.push('/meals');
+    history.push(MEALS_PATH);
   };
 
   return (

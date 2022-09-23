@@ -7,6 +7,8 @@ import {
   INVALID_EMAIL,
   INVALID_PASS,
   LOGIN_BUTTON_TESTID,
+  LOGIN_PATH,
+  MEALS_PATH,
   PASSWORD_INPUT_TESTID,
   VALID_EMAIL,
   VALID_PASS,
@@ -57,7 +59,7 @@ describe('Testa a página de Login', () => {
     const passInput = screen.getByTestId(PASSWORD_INPUT_TESTID);
     const loginButton = screen.getByTestId(LOGIN_BUTTON_TESTID);
 
-    expect(history.location.pathname).toBe('/');
+    expect(history.location.pathname).toBe(LOGIN_PATH);
 
     userEvent.type(emailInput, VALID_EMAIL);
     userEvent.type(passInput, VALID_PASS);
@@ -66,6 +68,6 @@ describe('Testa a página de Login', () => {
 
     const { pathname } = history.location;
 
-    expect(pathname).toBe('/meals');
+    expect(pathname).toBe(MEALS_PATH);
   });
 });
