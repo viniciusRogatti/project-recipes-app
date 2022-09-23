@@ -1,4 +1,4 @@
-import { INGREDIENT_VALUE, NAME_VALUE } from '../tests/helpers/Consts';
+import { INGREDIENT_VALUE, NAME_VALUE } from './helpers/Consts';
 
 const TheMealDBAPI = async (endPoint, value) => {
   let URL;

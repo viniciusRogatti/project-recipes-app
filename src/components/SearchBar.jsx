@@ -7,7 +7,7 @@ import {
   INGREDIENT_SEARCH_TESTID,
   INGREDIENT_VALUE,
   NAME_SEARCH_TESTID,
-  NAME_VALUE } from '../tests/helpers/Consts';
+  NAME_VALUE } from '../services/helpers/Consts';
 
 function SearchBar() {
   const [search, setSearch] = useState('');
