@@ -24,6 +24,7 @@ export const INGREDIENT_SEARCH_TESTID = 'ingredient-search-radio';
 export const NAME_SEARCH_TESTID = 'name-search-radio';
 export const FIRST_LETTER_SEARCH_TESTID = 'first-letter-search-radio';
 export const BTN_SEARCH_EXEC_TESTID = 'exec-search-btn';
+export const SEARCH_TESTID = 'search-input';
 
 export const INGREDIENT_VALUE = 'ingredient';
 export const NAME_VALUE = 'name';

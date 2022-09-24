@@ -7,7 +7,8 @@ import {
   INGREDIENT_SEARCH_TESTID,
   INGREDIENT_VALUE,
   NAME_SEARCH_TESTID,
-  NAME_VALUE } from '../services/helpers/Consts';
+  NAME_VALUE,
+  SEARCH_TESTID } from '../services/helpers/Consts';
 
 function SearchBar() {
   const [search, setSearch] = useState('');
@@ -25,6 +26,7 @@ function SearchBar() {
       <input
         type="text"
         placeholder="Search"
+        data-testid={ SEARCH_TESTID }
         onChange={ (e) => setValue(e.target.value) }
       />
       <label htmlFor={ INGREDIENT_SEARCH_TESTID }>
