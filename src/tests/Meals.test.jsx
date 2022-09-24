@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
@@ -14,6 +14,7 @@ import {
   SEARCH_TOP_BTN,
 } from '../services/helpers/Consts';
 import beefMeals from '../../cypress/mocks/beefMeals';
+import oneMeal from '../../cypress/mocks/oneMeal';
 
 describe('Testa a página Meals', () => {
   test(`Se o título "Meals" é renderizado na tela,
@@ -60,7 +61,7 @@ describe('Testa a página Meals', () => {
     expect(fetch).toBeCalledWith(urlIngredientBeef);
   });
 
-  test(`Se ao ao fazer um pesquisa com filtro "name" a api é chamado com a url
+  test(`Se ao fazer um pesquisa com filtro "name" a api é chamado com a url
   https://www.themealdb.com/api/json/v1/1/search.php?s={nome}`, () => {
     renderWithRouter(<App />, MEALS_PATH);
     global.fetch = jest.fn().mockResolvedValue({
@@ -85,7 +86,7 @@ describe('Testa a página Meals', () => {
     expect(fetch).toBeCalledWith(urlNameBeef);
   });
 
-  test(`Se ao ao fazer um pesquisa com filtro "First letter" a api é chamado com a url
+  test(`Se ao fazer um pesquisa com filtro "First letter" a api é chamado com a url
   https://www.themealdb.com/api/json/v1/1/search.php?f={primeira-letra}`, () => {
     renderWithRouter(<App />, MEALS_PATH);
     global.fetch = jest.fn().mockResolvedValue({
@@ -110,6 +111,30 @@ describe('Testa a página Meals', () => {
     expect(fetch).toBeCalledWith(urlNameBeef);
   });
 
+  test(`Se ao digitar "arabiata" e selecionar o filtro "Name" 
+  o usuario é redirecionado para a pagina "/meals/:id"`, async () => {
+    const { history } = renderWithRouter(<App />, MEALS_PATH);
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(oneMeal),
+    });
+
+    const typedValue = 'arrabiata';
+    const pathNameArrabiata = '/meals/52771';
+    const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
+    expect(searchButton).toBeInTheDocument();
+    userEvent.click(searchButton);
+
+    const inputSearch = screen.getByTestId(SEARCH_TESTID);
+    const inputName = screen.getByTestId(NAME_SEARCH_TESTID);
+    const btnSearch = screen.getByTestId(BTN_SEARCH_EXEC_TESTID);
+
+    userEvent.type(inputSearch, typedValue);
+    userEvent.click(inputName);
+    userEvent.click(btnSearch);
+
+    await waitFor(() => expect(history.location.pathname)
+      .toBe(pathNameArrabiata), { timeout: 2000 });
+  });
   // test(`Se ao digitar mais de uma letra e tentar usar o filtro "First letter"
   // é exibo um alert com a msg "Your search must have only 1 (one) character"`, () => {
   //   renderWithRouter(<App />, MEALS_PATH);
