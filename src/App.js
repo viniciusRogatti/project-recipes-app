@@ -19,29 +19,32 @@ import {
   DONE_RECIPES_PATH,
   MEALS_RECIPES_PATH,
   DRINKS_RECIPES_PATH } from './services/helpers/Consts';
+import RecipesProvider from './context/RecipesProvider';
 
 function App() {
   return (
-    <div className="meals">
-      <span className="logo">TRYBE 2.0</span>
-      <object
-        className="rocksGlass"
-        type="image/svg+xml"
-        data={ rockGlass }
-      >
-        Glass
-      </object>
-      <Switch>
-        <Route exact path={ LOGIN_PATH } component={ Login } />
-        <Route exact path={ MEALS_PATH } component={ Meals } />
-        <Route exact path={ DRINKS_PATH } component={ Drinks } />
-        <Route exact path={ PROFILE_PATH } component={ Profile } />
-        <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
-        <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
-        <Route exact path={ MEALS_RECIPES_PATH } component={ Erro } />
-        <Route exact path={ DRINKS_RECIPES_PATH } component={ Erro } />
-      </Switch>
-    </div>
+    <RecipesProvider>
+      <div className="meals">
+        <span className="logo">TRYBE 2.0</span>
+        <object
+          className="rocksGlass"
+          type="image/svg+xml"
+          data={ rockGlass }
+        >
+          Glass
+        </object>
+        <Switch>
+          <Route exact path={ LOGIN_PATH } component={ Login } />
+          <Route exact path={ MEALS_PATH } component={ Meals } />
+          <Route exact path={ DRINKS_PATH } component={ Drinks } />
+          <Route exact path={ PROFILE_PATH } component={ Profile } />
+          <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
+          <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
+          <Route exact path={ MEALS_RECIPES_PATH } component={ Erro } />
+          <Route exact path={ DRINKS_RECIPES_PATH } component={ Erro } />
+        </Switch>
+      </div>
+    </RecipesProvider>
   );
 }
 

@@ -5,23 +5,23 @@ import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import {
   BTN_SEARCH_EXEC_TESTID,
+  DRINKS_PATH,
   FIRST_LETTER_SEARCH_TESTID,
   INGREDIENT_SEARCH_TESTID,
-  MEALS_PATH,
   NAME_SEARCH_TESTID,
   PROFILE_TOP_BTN,
   SEARCH_TESTID,
   SEARCH_TOP_BTN,
 } from '../services/helpers/Consts';
-import beefMeals from '../../cypress/mocks/beefMeals';
-import oneMeal from '../../cypress/mocks/oneMeal';
+import cocktailDrinks from '../../cypress/mocks/cocktailDrinks';
+import oneDrink from '../../cypress/mocks/oneDrink';
 
-describe('Testa a página Meals', () => {
-  test(`Se o título "Meals" é renderizado na tela,
+describe('Testa a página Drinks', () => {
+  test(`Se o título "Drinks" é renderizado na tela,
   assim como os botões "profile" e "search"`, () => {
-    renderWithRouter(<App />, MEALS_PATH);
+    renderWithRouter(<App />, DRINKS_PATH);
 
-    expect(screen.getByRole('heading', { name: /meals/i, level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /drinks/i, level: 1 })).toBeInTheDocument();
     expect(screen.getByTestId(PROFILE_TOP_BTN)).toBeInTheDocument();
 
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
@@ -36,15 +36,15 @@ describe('Testa a página Meals', () => {
   });
 
   test(`Se ao escolher o filtro "ingredient" o fetch é feito com a url
-  "https://www.themealdb.com/api/json/v1/1/filter.php?i={ingrediente}"`, () => {
-    renderWithRouter(<App />, MEALS_PATH);
+  "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i={ingrediente}"`, () => {
+    renderWithRouter(<App />, DRINKS_PATH);
 
     global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(beefMeals),
+      json: jest.fn().mockResolvedValue(cocktailDrinks),
     });
 
-    const typedValue = 'beef';
-    const urlIngredientBeef = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${typedValue}`;
+    const typedValue = 'cocktails';
+    const urlIngredientCocktails = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${typedValue}`;
 
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     expect(searchButton).toBeInTheDocument();
@@ -58,18 +58,18 @@ describe('Testa a página Meals', () => {
     userEvent.click(inputIngredient);
     userEvent.click(btnSearch);
 
-    expect(fetch).toBeCalledWith(urlIngredientBeef);
+    expect(fetch).toBeCalledWith(urlIngredientCocktails);
   });
 
   test(`Se ao fazer uma pesquisa com filtro "name" a api é chamada com a url
-  https://www.themealdb.com/api/json/v1/1/search.php?s={nome}`, () => {
-    renderWithRouter(<App />, MEALS_PATH);
+  https://www.thecocktaildb.com/json/v1/1/search.php?s={nome}`, () => {
+    renderWithRouter(<App />, DRINKS_PATH);
     global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(beefMeals),
+      json: jest.fn().mockResolvedValue(cocktailDrinks),
     });
 
-    const typedValue = 'beef';
-    const urlNameBeef = `https://www.themealdb.com/api/json/v1/1/search.php?s=${typedValue}`;
+    const typedValue = 'cocktails';
+    const urlNameCocktails = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${typedValue}`;
 
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     expect(searchButton).toBeInTheDocument();
@@ -83,18 +83,18 @@ describe('Testa a página Meals', () => {
     userEvent.click(inputName);
     userEvent.click(btnSearch);
 
-    expect(fetch).toBeCalledWith(urlNameBeef);
+    expect(fetch).toBeCalledWith(urlNameCocktails);
   });
 
   test(`Se ao fazer um pesquisa com filtro "First letter" a api é chamado com a url
-  https://www.themealdb.com/api/json/v1/1/search.php?f={primeira-letra}`, () => {
-    renderWithRouter(<App />, MEALS_PATH);
+  https://www.thecocktaildb.com/api/json/v1/1/search.php?f={primeira-letra}`, () => {
+    renderWithRouter(<App />, DRINKS_PATH);
     global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(beefMeals),
+      json: jest.fn().mockResolvedValue(cocktailDrinks),
     });
 
-    const typedValue = 'b';
-    const urlNameBeef = `https://www.themealdb.com/api/json/v1/1/search.php?f=${typedValue}`;
+    const typedValue = 'c';
+    const urlNameCocktails = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${typedValue}`;
 
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     expect(searchButton).toBeInTheDocument();
@@ -108,18 +108,18 @@ describe('Testa a página Meals', () => {
     userEvent.click(inputFirstLetter);
     userEvent.click(btnSearch);
 
-    expect(fetch).toBeCalledWith(urlNameBeef);
+    expect(fetch).toBeCalledWith(urlNameCocktails);
   });
 
-  test(`Se ao digitar "arrabiata" e selecionar o filtro "Name" 
-  o usuario é redirecionado para a pagina "/meals/:id"`, async () => {
-    const { history } = renderWithRouter(<App />, MEALS_PATH);
+  test(`Se ao digitar "aquamarine" e selecionar o filtro "Name" 
+  o usuario é redirecionado para a pagina "/drinks/:id"`, async () => {
+    const { history } = renderWithRouter(<App />, DRINKS_PATH);
     global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneMeal),
+      json: jest.fn().mockResolvedValue(oneDrink),
     });
 
-    const typedValue = 'arrabiata';
-    const pathNameArrabiata = '/meals/52771';
+    const typedValue = 'aquamarine';
+    const pathNameAquamarine = '/drinks/178319';
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);
     expect(searchButton).toBeInTheDocument();
     userEvent.click(searchButton);
@@ -133,6 +133,6 @@ describe('Testa a página Meals', () => {
     userEvent.click(btnSearch);
 
     await waitFor(() => expect(history.location.pathname)
-      .toBe(pathNameArrabiata), { timeout: 2000 });
+      .toBe(pathNameAquamarine), { timeout: 2000 });
   });
 });
