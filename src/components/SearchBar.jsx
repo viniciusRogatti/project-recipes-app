@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import TheMealDBAPI from '../services/fetchApi';
 import {
   BTN_SEARCH_EXEC_TESTID,
+  DRINKS_PATH,
   FIRST_LETTER_SEARCH_TESTID,
   FIRST_LETTER_VALUE,
   INGREDIENT_SEARCH_TESTID,
   INGREDIENT_VALUE,
+  MEALS_PATH,
   NAME_SEARCH_TESTID,
   NAME_VALUE,
   SEARCH_TESTID } from '../services/helpers/Consts';
@@ -14,7 +16,25 @@ import {
 function SearchBar() {
   const [search, setSearch] = useState('');
   const [value, setValue] = useState('');
+  const [idScreen, setIdScreen] = useState('');
   const { pathname } = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    setIdScreen(pathname === MEALS_PATH ? 'idMeal' : 'idDrink');
+  }, [pathname]);
+
+  const handleClick = async () => {
+    const screen = pathname === MEALS_PATH ? 'meals' : 'drinks';
+    const response = await TheMealDBAPI(pathname, search, value);
+    const result = response[screen];
+    if (result?.length === 1) {
+      const id = result[0][idScreen];
+      if (pathname === MEALS_PATH) {
+        history.push(`${MEALS_PATH}/${id}`);
+      } else history.push(`${DRINKS_PATH}/${id}`);
+    }
+  };
 
   return (
     <div>
@@ -59,7 +79,7 @@ function SearchBar() {
       </label>
       <button
         type="button"
-        onClick={ () => TheMealDBAPI(pathname, search, value) }
+        onClick={ handleClick }
         data-testid={ BTN_SEARCH_EXEC_TESTID }
       >
         SEARCH
