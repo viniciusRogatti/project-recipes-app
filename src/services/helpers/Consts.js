@@ -29,3 +29,8 @@ export const SEARCH_TESTID = 'search-input';
 export const INGREDIENT_VALUE = 'ingredient';
 export const NAME_VALUE = 'name';
 export const FIRST_LETTER_VALUE = 'first-letter';
+
+// HEADER COMPONENT
+
+export const PROFILE_TOP_BTN = 'profile-top-btn';
+export const SEARCH_TOP_BTN = 'search-top-btn';
