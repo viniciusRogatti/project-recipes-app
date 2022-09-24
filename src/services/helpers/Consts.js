@@ -26,6 +26,8 @@ export const MEALS_RECIPES_PATH = '/meals/:id';
 export const DRINKS_RECIPES_PATH = '/drinks/:id';
 
 // SEARCH BAR COMPONENT
+export const ALERT_FIRSTLETTER_INVALID = 'Your search must have only 1 (one) character';
+
 export const INGREDIENT_SEARCH_TESTID = 'ingredient-search-radio';
 export const NAME_SEARCH_TESTID = 'name-search-radio';
 export const FIRST_LETTER_SEARCH_TESTID = 'first-letter-search-radio';
@@ -39,3 +41,4 @@ export const FIRST_LETTER_VALUE = 'first-letter';
 // HEADER COMPONENT
 export const PROFILE_TOP_BTN = 'profile-top-btn';
 export const SEARCH_TOP_BTN = 'search-top-btn';
+export const TITLE_HEADER_TESTID = 'page-title';
