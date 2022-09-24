@@ -2,7 +2,9 @@ import {
   ALERT_FIRSTLETTER_INVALID,
   FIRST_LETTER_VALUE,
   INGREDIENT_VALUE,
-  MEALS_PATH, NAME_VALUE } from './helpers/Consts';
+  MEALS_PATH,
+  NAME_VALUE,
+} from './helpers/Consts';
 
 export const dynamicsUrl = (type, search, value) => {
   const dynamicHost = type === MEALS_PATH ? 'www.themealdb.com' : 'www.thecocktaildb.com';
@@ -16,7 +18,7 @@ export const dynamicsUrl = (type, search, value) => {
   }
 };
 
-const TheMealDBAPI = async (type, search, value) => {
+const TheRecipesDBAPI = async (type, search, value) => {
   const URL = dynamicsUrl(type, search, value);
   try {
     const response = await fetch(URL);
@@ -27,4 +29,4 @@ const TheMealDBAPI = async (type, search, value) => {
   }
 };
 
-export default TheMealDBAPI;
+export default TheRecipesDBAPI;

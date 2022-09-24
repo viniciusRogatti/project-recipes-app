@@ -42,3 +42,9 @@ export const FIRST_LETTER_VALUE = 'first-letter';
 export const PROFILE_TOP_BTN = 'profile-top-btn';
 export const SEARCH_TOP_BTN = 'search-top-btn';
 export const TITLE_HEADER_TESTID = 'page-title';
+
+// RECIPES LIMIT
+export const RECIPES_LIMIT = 12;
+
+export const HAVEN = 'haven';
+export const ALERT_MSG = `Sorry, we ${HAVEN}'t found any recipes for these filters.`;
