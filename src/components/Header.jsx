@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import profileIcon from './images/profileIcon.svg';
-import searchIcon from './images/searchIcon.svg';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 
 function Header({ title, searchAble }) {
   return (
@@ -11,23 +12,24 @@ function Header({ title, searchAble }) {
       >
         {title}
       </h1>
-      <object
-        data-testid="profile-top-btn"
-        type="image/svg+xml"
-        src={ profileIcon }
-      >
-        Profile
-      </object>
+      <Link to="/profile">
+        <img
+          data-testid="profile-top-btn"
+          type="image/svg+xml"
+          src={ profileIcon }
+          alt="profile-icon"
+        />
+      </Link>
+
       {
         searchAble
         && (
-          <object
+          <img
             data-testid="search-top-btn"
             type="image/svg+xml"
             src={ searchIcon }
-          >
-            Search
-          </object>
+            alt="search-icon"
+          />
         )
       }
     </div>
