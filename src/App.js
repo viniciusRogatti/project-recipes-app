@@ -10,6 +10,15 @@ import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Erro from './pages/Erro';
+import {
+  MEALS_PATH,
+  LOGIN_PATH,
+  DRINKS_PATH,
+  PROFILE_PATH,
+  FAVORITES_PATH,
+  DONE_RECIPES_PATH,
+  MEALS_RECIPES_PATH,
+  DRINKS_RECIPES_PATH } from './services/helpers/Consts';
 
 function App() {
   return (
@@ -23,14 +32,14 @@ function App() {
         Glass
       </object>
       <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route exact path="/meals" component={ Meals } />
-        <Route exact path="/drinks" component={ Drinks } />
-        <Route exact path="/profile" component={ Profile } />
-        <Route exact path="/done-recipes" component={ DoneRecipes } />
-        <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-        <Route exact path="/meals/*" component={ Erro } />
-        <Route exact path="/drinks/*" component={ Erro } />
+        <Route exact path={ LOGIN_PATH } component={ Login } />
+        <Route exact path={ MEALS_PATH } component={ Meals } />
+        <Route exact path={ DRINKS_PATH } component={ Drinks } />
+        <Route exact path={ PROFILE_PATH } component={ Profile } />
+        <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
+        <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
+        <Route exact path={ MEALS_RECIPES_PATH } component={ Erro } />
+        <Route exact path={ DRINKS_RECIPES_PATH } component={ Erro } />
       </Switch>
     </div>
   );

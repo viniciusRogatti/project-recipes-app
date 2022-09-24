@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import TheMealDBAPI from '../services/fetchApi';
 import {
   BTN_SEARCH_EXEC_TESTID,
@@ -13,13 +14,7 @@ import {
 function SearchBar() {
   const [search, setSearch] = useState('');
   const [value, setValue] = useState('');
-
-  const handleClick = () => {
-    if (search === FIRST_LETTER_VALUE && value.length > 1) {
-      return global.alert('Your search must have only 1 (one) character');
-    }
-    TheMealDBAPI(search, value);
-  };
+  const { pathname } = useLocation();
 
   return (
     <div>
@@ -64,7 +59,7 @@ function SearchBar() {
       </label>
       <button
         type="button"
-        onClick={ handleClick }
+        onClick={ () => TheMealDBAPI(pathname, search, value) }
         data-testid={ BTN_SEARCH_EXEC_TESTID }
       >
         SEARCH
