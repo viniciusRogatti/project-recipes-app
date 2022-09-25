@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
 import DrinkCards from '../components/DrinkCards';
 import Header from '../components/Header';
-import RecipesContext from '../context/RecipesContext';
+import useRecipes from '../hooks/useRecipes';
 import { ALERT_MSG, RECIPES_LIMIT } from '../services/helpers/Consts';
 
 function Drinks() {
-  const { drinks } = useContext(RecipesContext);
+  const { drinks } = useRecipes();
+  console.log(drinks);
   return (
     <div>
       <Header title="Drinks" searchAble />
