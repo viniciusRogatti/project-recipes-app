@@ -31,7 +31,6 @@ function SearchBar() {
     const screen = pathname === MEALS_PATH ? 'meals' : 'drinks';
     const response = await TheRecipesDBAPI(pathname, search, value);
     const result = response[screen];
-    console.log(result);
     if (result?.length === 1) {
       const id = result[0][idScreen];
       if (pathname === MEALS_PATH) {
