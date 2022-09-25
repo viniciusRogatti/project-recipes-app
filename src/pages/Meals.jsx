@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
 import Header from '../components/Header';
 import MealCards from '../components/MealCards';
-import RecipesContext from '../context/RecipesContext';
+import useRecipes from '../hooks/useRecipes';
 import { ALERT_MSG, RECIPES_LIMIT } from '../services/helpers/Consts';
 
 function Meals() {
-  const { meals } = useContext(RecipesContext);
+  const { meals } = useRecipes();
   return (
     <div>
       <Header title="Meals" searchAble />

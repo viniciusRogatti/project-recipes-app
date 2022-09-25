@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
-// import TheRecipesDBAPI from '../services/fetchApi';
 
 function RecipesProvider({ children }) {
   const [meals, setMeals] = useState([]);

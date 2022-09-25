@@ -46,5 +46,4 @@ export const TITLE_HEADER_TESTID = 'page-title';
 // RECIPES LIMIT
 export const RECIPES_LIMIT = 12;
 
-export const HAVEN = 'haven';
-export const ALERT_MSG = `Sorry, we ${HAVEN}'t found any recipes for these filters.`;
+export const ALERT_MSG = 'Sorry, we haven\'t found any recipes for these filters.';
