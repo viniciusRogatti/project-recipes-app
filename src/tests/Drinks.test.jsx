@@ -10,13 +10,30 @@ import {
   INGREDIENT_SEARCH_TESTID,
   NAME_SEARCH_TESTID,
   PROFILE_TOP_BTN,
+  RECIPES_LIMIT,
   SEARCH_TESTID,
   SEARCH_TOP_BTN,
 } from '../services/helpers/Consts';
 import cocktailDrinks from '../../cypress/mocks/cocktailDrinks';
+import drinks from '../../cypress/mocks/drinks';
 import oneDrink from '../../cypress/mocks/oneDrink';
 
 describe('Testa a página Drinks', () => {
+  test(`Se ao carregar a pagina, os cards de receitas referente a comidas são 
+  renderizados na tela até o index 12`, async () => {
+    renderWithRouter(<App />, DRINKS_PATH);
+
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(drinks),
+    });
+
+    await waitFor(() => {
+      for (let index = 0; index < RECIPES_LIMIT; index += 1) {
+        expect(screen.getByTestId(`${index}-recipe-card`)).toBeInTheDocument();
+      }
+    }, { timeout: 2000 });
+  });
+
   test(`Se o título "Drinks" é renderizado na tela,
   assim como os botões "profile" e "search"`, () => {
     renderWithRouter(<App />, DRINKS_PATH);
