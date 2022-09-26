@@ -7,7 +7,8 @@ import { CATEGORIES_LIMIT, MEALS_PATH } from '../services/helpers/Consts';
 function Categories() {
   const { pathname } = useLocation();
   const [categories, setCategories] = useState({});
-  const { setTrueMeals, setTrueDrinks, setSearchRecipes } = useRecipes();
+  const [saveCategory, setSavecategory] = useState('');
+  const { setTrueMeals, setTrueDrinks, searchRecipes, setSearchRecipes } = useRecipes();
 
   useEffect(() => {
     const fetch = async () => {
@@ -21,6 +22,8 @@ function Categories() {
 
   const filterCategory = async ({ target }) => {
     const fetch = await fetchCategory(pathname, target.innerText);
+    setSavecategory(target.innerText);
+    if (saveCategory === target.innerText) return setSearchRecipes(!searchRecipes);
     if (target.innerText === 'All') return setSearchRecipes(false);
     if (pathname === MEALS_PATH) return setTrueMeals(fetch.meals);
     return setTrueDrinks(fetch.drinks);
