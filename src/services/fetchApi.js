@@ -20,7 +20,7 @@ export const dynamicsUrl = (type, search, value) => {
   }
 };
 
-const TheRecipesDBAPI = async (type, search, value) => {
+export const TheRecipesDBAPI = async (type, search, value) => {
   const URL = dynamicsUrl(type, search, value);
   try {
     const response = await fetch(URL);
@@ -42,8 +42,8 @@ export const AllRecipesAPI = async (path) => {
   }
 };
 
-export const fetchCategories = async (path) => {
-  const dynamicHost = path === MEALS_PATH ? 'www.themealdb.com' : 'www.thecocktaildb.com';
+export const fetchAllCategories = async (path) => {
+  const dynamicHost = path === MEALS_PATH ? MEALS_ENDPOINT : DRINKS_ENDPOINT;
   const URL = `https://${dynamicHost}/api/json/v1/1/list.php?c=list`;
   try {
     const response = await fetch(URL);
@@ -54,4 +54,14 @@ export const fetchCategories = async (path) => {
   }
 };
 
-export default TheRecipesDBAPI;
+export const fetchCategory = async (path, value) => {
+  const dynamicHost = path === MEALS_PATH ? MEALS_ENDPOINT : DRINKS_ENDPOINT;
+  const URL = `https://${dynamicHost}/api/json/v1/1/filter.php?c=${value}`;
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
