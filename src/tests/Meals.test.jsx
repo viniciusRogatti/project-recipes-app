@@ -10,13 +10,29 @@ import {
   MEALS_PATH,
   NAME_SEARCH_TESTID,
   PROFILE_TOP_BTN,
+  RECIPES_LIMIT,
   SEARCH_TESTID,
   SEARCH_TOP_BTN,
 } from '../services/helpers/Consts';
 import beefMeals from '../../cypress/mocks/beefMeals';
+import meals from '../../cypress/mocks/meals';
 import oneMeal from '../../cypress/mocks/oneMeal';
 
 describe('Testa a página Meals', () => {
+  test(`Se ao carregar a pagina, os cards de receitas referente a comidas são 
+  renderizados na tela até o index 12`, async () => {
+    renderWithRouter(<App />, MEALS_PATH);
+
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue(meals),
+    });
+
+    await waitFor(() => {
+      for (let index = 0; index < RECIPES_LIMIT; index += 1) {
+        expect(screen.getByTestId(`${index}-recipe-card`)).toBeInTheDocument();
+      }
+    }, { timeout: 3000 });
+  });
   test(`Se o título "Meals" é renderizado na tela,
   assim como os botões "profile" e "search"`, () => {
     renderWithRouter(<App />, MEALS_PATH);
