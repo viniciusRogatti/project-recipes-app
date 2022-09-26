@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import TheRecipesDBAPI from '../services/fetchApi';
 import {
+  ALERT_MSG,
   BTN_SEARCH_EXEC_TESTID,
   DRINKS_PATH,
   FIRST_LETTER_SEARCH_TESTID,
@@ -15,7 +16,7 @@ import {
   SEARCH_TESTID } from '../services/helpers/Consts';
 
 function SearchBar() {
-  const { setMeals, setDrinks } = useContext(RecipesContext);
+  const { setMeals, setDrinks, setSearchRecipes } = useContext(RecipesContext);
 
   const [search, setSearch] = useState('');
   const [value, setValue] = useState('');
@@ -31,6 +32,8 @@ function SearchBar() {
     const screen = pathname === MEALS_PATH ? 'meals' : 'drinks';
     const response = await TheRecipesDBAPI(pathname, search, value);
     const result = response[screen];
+
+    if (!result) return global.alert(ALERT_MSG);
     if (result?.length === 1) {
       const id = result[0][idScreen];
       if (pathname === MEALS_PATH) {
@@ -39,6 +42,8 @@ function SearchBar() {
     }
     if (pathname === MEALS_PATH) setMeals(result);
     else setDrinks(result);
+
+    setSearchRecipes(true);
   };
 
   return (
