@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import TheRecipesDBAPI from '../services/fetchApi';
+import { TheRecipesDBAPI } from '../services/fetchApi';
 import {
   ALERT_MSG,
   BTN_SEARCH_EXEC_TESTID,
@@ -16,7 +16,7 @@ import {
   SEARCH_TESTID } from '../services/helpers/Consts';
 
 function SearchBar() {
-  const { setMeals, setDrinks, setSearchRecipes } = useContext(RecipesContext);
+  const { setTrueMeals, setTrueDrinks } = useContext(RecipesContext);
 
   const [search, setSearch] = useState('');
   const [value, setValue] = useState('');
@@ -40,10 +40,8 @@ function SearchBar() {
         history.push(`${MEALS_PATH}/${id}`);
       } else history.push(`${DRINKS_PATH}/${id}`);
     }
-    if (pathname === MEALS_PATH) setMeals(result);
-    else setDrinks(result);
-
-    setSearchRecipes(true);
+    if (pathname === MEALS_PATH) setTrueMeals(result);
+    else setTrueDrinks(result);
   };
 
   return (

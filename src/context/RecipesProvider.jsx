@@ -7,11 +7,21 @@ function RecipesProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [searchRecipes, setSearchRecipes] = useState(false);
 
+  const setTrueMeals = (param) => {
+    setMeals(param);
+    setSearchRecipes(true);
+  };
+
+  const setTrueDrinks = (param) => {
+    setDrinks(param);
+    setSearchRecipes(true);
+  };
+
   const contextValue = useMemo(() => ({
     meals,
-    setMeals,
+    setTrueMeals,
     drinks,
-    setDrinks,
+    setTrueDrinks,
     setSearchRecipes,
     searchRecipes,
   }), [meals, drinks, searchRecipes]);
