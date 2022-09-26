@@ -28,5 +28,16 @@ const TheRecipesDBAPI = async (type, search, value) => {
     return search === FIRST_LETTER_VALUE ? global.alert(ALERT_FIRSTLETTER_INVALID) : err;
   }
 };
+export const AllRecipesAPI = async (path) => {
+  const dynamicHost = path === MEALS_PATH ? 'www.themealdb.com' : 'www.thecocktaildb.com';
+  const URL = `https://${dynamicHost}/api/json/v1/1/search.php?s=`;
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
 
 export default TheRecipesDBAPI;

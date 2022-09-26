@@ -3,7 +3,6 @@ import RecipesContext from '../context/RecipesContext';
 
 function useRecipes() {
   const value = useContext(RecipesContext);
-  console.log(value);
   return value;
 }
 
