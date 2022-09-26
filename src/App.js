@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
@@ -23,7 +22,7 @@ import RecipesProvider from './context/RecipesProvider';
 function App() {
   return (
     <RecipesProvider>
-      <div className="meals">
+      <div>
         <Switch>
           <Route exact path={ LOGIN_PATH } component={ Login } />
           <Route exact path={ MEALS_PATH } component={ Meals } />

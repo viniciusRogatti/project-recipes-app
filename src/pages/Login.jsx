@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import saveUser from '../services/localStorage';
 import {
+  BoxLogin,
+  BoxLogo,
+  Container,
+  LoginTitle,
+  LogoTomate,
+  LogoApp,
+  ButtonLogin,
+  InputLogin,
+} from '../styles/Login/LoginStyles';
+
+import {
   EMAIL_INPUT_TESTID,
   LOGIN_BUTTON_TESTID,
   MEALS_PATH,
@@ -34,38 +45,43 @@ function Login() {
   };
 
   return (
-    <form>
-      <label htmlFor="email">
-        <span>Email: </span>
-        <input
+    <Container>
+      <BoxLogo>
+        <LogoApp />
+        <LogoTomate />
+      </BoxLogo>
+      <BoxLogin>
+        <LoginTitle>
+          Login
+        </LoginTitle>
+        <InputLogin
           type="email"
           name="email"
           id="email"
           data-testid={ EMAIL_INPUT_TESTID }
           value={ state.email }
           onChange={ onInputChange }
+          placeholder="Email"
         />
-      </label>
-      <label htmlFor="password">
-        <span>Password: </span>
-        <input
+        <InputLogin
           type="password"
           name="password"
           id="password"
           data-testid={ PASSWORD_INPUT_TESTID }
           value={ state.password }
           onChange={ onInputChange }
+          placeholder="Password"
         />
-      </label>
-      <button
-        type="button"
-        data-testid={ LOGIN_BUTTON_TESTID }
-        disabled={ validateLogin() }
-        onClick={ handleEnter }
-      >
-        Enter
-      </button>
-    </form>
+        <ButtonLogin
+          type="button"
+          data-testid={ LOGIN_BUTTON_TESTID }
+          disabled={ validateLogin() }
+          onClick={ handleEnter }
+        >
+          Enter
+        </ButtonLogin>
+      </BoxLogin>
+    </Container>
   );
 }
 
