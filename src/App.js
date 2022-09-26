@@ -7,7 +7,7 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import Erro from './pages/Erro';
+// import Erro from './pages/Erro';
 import {
   MEALS_PATH,
   LOGIN_PATH,
@@ -18,6 +18,7 @@ import {
   MEALS_RECIPES_PATH,
   DRINKS_RECIPES_PATH } from './services/helpers/Consts';
 import RecipesProvider from './context/RecipesProvider';
+import RecipeDetails from './pages/RecipeDetails';
 
 function App() {
   return (
@@ -30,8 +31,8 @@ function App() {
           <Route exact path={ PROFILE_PATH } component={ Profile } />
           <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
           <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
-          <Route exact path={ MEALS_RECIPES_PATH } component={ Erro } />
-          <Route exact path={ DRINKS_RECIPES_PATH } component={ Erro } />
+          <Route exact path={ MEALS_RECIPES_PATH } component={ RecipeDetails } />
+          <Route exact path={ DRINKS_RECIPES_PATH } component={ RecipeDetails } />
         </Switch>
       </div>
     </RecipesProvider>

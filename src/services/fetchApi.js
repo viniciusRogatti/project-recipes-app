@@ -65,3 +65,15 @@ export const fetchCategory = async (path, value) => {
     return err;
   }
 };
+
+export const RecipeDetalsAPI = async (path, id) => {
+  const dynamicHost = path.includes('meals') ? MEALS_ENDPOINT : DRINKS_ENDPOINT;
+  const URL = `https://${dynamicHost}/api/json/v1/1/lookup.php?i=${id}`;
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
