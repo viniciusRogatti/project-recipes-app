@@ -45,5 +45,12 @@ export const TITLE_HEADER_TESTID = 'page-title';
 
 // RECIPES LIMIT
 export const RECIPES_LIMIT = 12;
+// CATEGORIES LIMIT
+export const CATEGORIES_LIMIT = 5;
 
 export const ALERT_MSG = 'Sorry, we haven\'t found any recipes for these filters.';
+
+// ENDPOINTS
+export const MEALS_ENDPOINT = 'www.themealdb.com';
+
+export const DRINKS_ENDPOINT = 'www.thecocktaildb.com';
