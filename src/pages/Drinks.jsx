@@ -17,7 +17,7 @@ function Drinks() {
       setSearchRecipes(false);
     };
     CallRecipes();
-  }, []); // eslint-disable-line 
+  }, []); // eslint-disable-line
 
   return (
     <>
