@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import saveUser from '../services/localStorage';
+import { saveUser } from '../services/localStorage';
 import {
   BoxLogin,
   BoxLogo,
