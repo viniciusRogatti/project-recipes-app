@@ -54,3 +54,7 @@ export const ALERT_MSG = 'Sorry, we haven\'t found any recipes for these filters
 export const MEALS_ENDPOINT = 'www.themealdb.com';
 
 export const DRINKS_ENDPOINT = 'www.thecocktaildb.com';
+
+// YOUTUBE SHENANIGANS
+export const MINUS_WATCH = 'watch?v=';
+export const PLUS_EMBED = 'embed/';
