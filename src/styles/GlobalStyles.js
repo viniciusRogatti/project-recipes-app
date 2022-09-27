@@ -13,6 +13,11 @@ html, body {
   height: 100%;
 }
 
+iframe {
+  max-width: 95vw;
+  margin: auto;
+}
+
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
