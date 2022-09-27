@@ -5,7 +5,7 @@ import { MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
 import RecommendedMealCards from './RecommendedMealCards';
 import StartRecipeButton from '../styles/StartRecipeButton';
-import { getRecipes } from '../services/localStorage';
+import { getProgessesRecipes, getRecipes } from '../services/localStorage';
 
 function DrinkDetails() {
   const { id } = useParams();
@@ -13,10 +13,13 @@ function DrinkDetails() {
   const [details, setDetails] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [recipeDone, setRecipeDone] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
       const screen = pathname.includes('drinks') && 'drinks';
+      const { drinks } = getProgessesRecipes();
+      setInProgressRecipes(Object.keys(drinks).some((key) => key === id));
       const response = await RecipeDetalsAPI(pathname, id);
       const result = response[screen];
       setDetails(result);
@@ -93,13 +96,13 @@ function DrinkDetails() {
               <StartRecipeButton
                 data-testid="start-recipe-btn"
               >
-                Start Recipe
+                { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
               </StartRecipeButton>
             ) : recipeDone.map((recipe) => recipe.idDrink === id && (
               <StartRecipeButton
                 data-testid="start-recipe-btn"
               >
-                Start Recipe
+                { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
               </StartRecipeButton>
             ))}
           </div>

@@ -3,6 +3,7 @@ export const USER_KEY = 'user';
 export const MEALS_KEY = 'mealsToken';
 export const DRINKS_KEY = 'drinksToken';
 export const DONE_KEY = 'doneRecipes';
+export const IN_PROGRESSES_RECIPES_KEY = 'inProgressRecipes';
 
 // LOGIN PAGE
 export const MIN_CHARACTERS = 7;

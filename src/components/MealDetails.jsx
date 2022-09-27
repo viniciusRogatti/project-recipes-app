@@ -10,7 +10,7 @@ import {
 import Carrousel from '../styles/carrousel';
 import RecommendedDrinkCards from './RecommendedDrinkCard';
 import StartRecipeButton from '../styles/StartRecipeButton';
-import { getRecipes } from '../services/localStorage';
+import { getProgessesRecipes, getRecipes } from '../services/localStorage';
 
 function MealDetails() {
   const { id } = useParams();
@@ -18,10 +18,13 @@ function MealDetails() {
   const [details, setDetails] = useState([]);
   const [recommended, setRecommended] = useState([]);
   const [recipeDone, setRecipeDone] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
       const screen = pathname.includes('meals') && 'meals';
+      const { meals } = getProgessesRecipes();
+      setInProgressRecipes(Object.keys(meals).some((key) => key === id));
       const response = await RecipeDetalsAPI(pathname, id);
       const result = response[screen];
       setDetails(result);
@@ -112,13 +115,13 @@ function MealDetails() {
               <StartRecipeButton
                 data-testid="start-recipe-btn"
               >
-                Start Recipe
+                { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
               </StartRecipeButton>
             ) : recipeDone.map((recipe) => recipe.idMeal === id && (
               <StartRecipeButton
                 data-testid="start-recipe-btn"
               >
-                Start Recipe
+                { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
               </StartRecipeButton>
             ))}
           </div>
