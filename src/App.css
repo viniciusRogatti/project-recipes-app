@@ -8,15 +8,3 @@ body, html {
   height: 100vh;
   width: 100vw;
 }
-
-.meals {
-  align-items: center;
-  background: #0fa36b;
-  color: #464646;
-  display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  height: 100%;
-  justify-content: center;
-  width: 100%;
-}

@@ -2,17 +2,16 @@ import Categories from '../components/Categories';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
+import { Container } from '../styles/main';
 
 function Meals() {
   return (
-    <>
-      <main style={ { display: 'flex', flexDirection: 'column' } }>
-        <Header title="Meals" searchAble />
-        <Categories />
-        <Recipes />
-      </main>
+    <Container>
+      <Header title="Meals" searchAble />
+      <Categories />
+      <Recipes />
       <Footer />
-    </>
+    </Container>
 
   );
 }

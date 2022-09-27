@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import useRecipes from '../hooks/useRecipes';
 import { fetchAllCategories, fetchCategory } from '../services/fetchApi';
 import { CATEGORIES_LIMIT, MEALS_PATH } from '../services/helpers/Consts';
+import { Container } from '../styles/categorias';
 
 function Categories() {
   const { pathname } = useLocation();
@@ -30,7 +31,7 @@ function Categories() {
   };
 
   return (
-    <div>
+    <Container>
       {(
         categories?.length && categories
           .map((category, index) => (index < CATEGORIES_LIMIT && (
@@ -50,7 +51,7 @@ function Categories() {
       >
         All
       </button>
-    </div>
+    </Container>
   );
 }
 

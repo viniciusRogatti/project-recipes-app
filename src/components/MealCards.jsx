@@ -2,20 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { MEALS_PATH } from '../services/helpers/Consts';
+import { RecipesCard } from '../styles/main';
 
 function MealCards({ meal, index }) {
   return (
-    <Link to={ `${MEALS_PATH}/${meal.idMeal}` }>
-      <div data-testid={ `${index}-recipe-card` }>
-        <h3 data-testid={ `${index}-card-name` }>{meal.strMeal}</h3>
+    <RecipesCard data-testid={ `${index}-recipe-card` }>
+      <Link to={ `${MEALS_PATH}/${meal.idMeal}` }>
         <img
-          width="50px"
           src={ meal.strMealThumb }
           alt={ meal }
           data-testid={ `${index}-card-img` }
         />
-      </div>
-    </Link>
+        <h3 data-testid={ `${index}-card-name` }>{meal.strMeal}</h3>
+      </Link>
+    </RecipesCard>
   );
 }
 

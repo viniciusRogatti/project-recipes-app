@@ -13,6 +13,7 @@ import {
   RECIPES_LIMIT,
   SEARCH_TESTID,
   SEARCH_TOP_BTN,
+  TITLE_HEADER_TESTID,
 } from '../services/helpers/Consts';
 import cocktailDrinks from '../../cypress/mocks/cocktailDrinks';
 import drinks from '../../cypress/mocks/drinks';
@@ -38,7 +39,7 @@ describe('Testa a página Drinks', () => {
   assim como os botões "profile" e "search"`, () => {
     renderWithRouter(<App />, DRINKS_PATH);
 
-    expect(screen.getByRole('heading', { name: /drinks/i, level: 1 })).toBeInTheDocument();
+    expect(screen.getByTestId(TITLE_HEADER_TESTID)).toBeInTheDocument();
     expect(screen.getByTestId(PROFILE_TOP_BTN)).toBeInTheDocument();
 
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);

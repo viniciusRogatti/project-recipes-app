@@ -6,11 +6,9 @@ import Recipes from '../components/Recipes';
 function Drinks() {
   return (
     <>
-      <main style={ { display: 'flex', flexDirection: 'column' } }>
-        <Header title="Drinks" searchAble />
-        <Categories />
-        <Recipes />
-      </main>
+      <Header title="Drinks" searchAble />
+      <Categories />
+      <Recipes />
       <Footer />
     </>
 

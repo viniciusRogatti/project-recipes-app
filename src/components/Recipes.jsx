@@ -6,12 +6,7 @@ import MealRecipes from './MealRecipes';
 
 function Recipes() {
   const { pathname } = useLocation();
-  return (
-    <section>
-      { pathname === MEALS_PATH
-        ? <MealRecipes /> : <DrinkRecipes />}
-    </section>
-  );
+  return pathname === MEALS_PATH ? <MealRecipes /> : <DrinkRecipes />;
 }
 
 export default Recipes;

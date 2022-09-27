@@ -37,7 +37,7 @@ describe('Testa a página Meals', () => {
   assim como os botões "profile" e "search"`, () => {
     renderWithRouter(<App />, MEALS_PATH);
 
-    expect(screen.getByRole('heading', { name: /meals/i, level: 1 })).toBeInTheDocument();
+    expect(screen.getByTestId(SEARCH_TOP_BTN)).toBeInTheDocument();
     expect(screen.getByTestId(PROFILE_TOP_BTN)).toBeInTheDocument();
 
     const searchButton = screen.getByTestId(SEARCH_TOP_BTN);

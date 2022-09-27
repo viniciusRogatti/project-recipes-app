@@ -10,7 +10,7 @@ import {
   LogoApp,
   ButtonLogin,
   InputLogin,
-} from '../styles/Login/LoginStyles';
+} from '../styles/login';
 
 import {
   EMAIL_INPUT_TESTID,
