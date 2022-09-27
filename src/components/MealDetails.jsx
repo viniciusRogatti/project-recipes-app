@@ -9,6 +9,7 @@ import {
 } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
 import RecommendedDrinkCards from './RecommendedDrinkCard';
+import StartRecipeButton from '../styles/StartRecipeButton';
 
 function MealDetails() {
   const { id } = useParams();
@@ -104,6 +105,9 @@ function MealDetails() {
                 />
               )))}
             </Carrousel>
+            <StartRecipeButton data-testid="start-recipe-btn">
+              Start Recipes
+            </StartRecipeButton>
           </div>
         ))
       }

@@ -4,6 +4,7 @@ import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
 import { MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
 import RecommendedMealCards from './RecommendedMealCards';
+import StartRecipeButton from '../styles/StartRecipeButton';
 
 function DrinkDetails() {
   const { id } = useParams();
@@ -85,6 +86,9 @@ function DrinkDetails() {
                 />
               )))}
             </Carrousel>
+            <StartRecipeButton data-testid="start-recipe-btn">
+              Start Recipes
+            </StartRecipeButton>
           </div>
         ))
       }
