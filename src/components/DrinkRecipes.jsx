@@ -4,6 +4,7 @@ import useRecipes from '../hooks/useRecipes';
 import { AllRecipesAPI } from '../services/fetchApi';
 import { RECIPES_LIMIT } from '../services/helpers/Consts';
 import DrinkCards from './DrinkCards';
+import { Main } from '../styles/main';
 
 function DrinkRecipes() {
   const { drinks, setSearchRecipes, searchRecipes } = useRecipes();
@@ -18,7 +19,7 @@ function DrinkRecipes() {
   }, []); // eslint-disable-line
 
   return (
-    <div style={ { display: 'flex', flexWrap: 'wrap', justifyContent: 'center' } }>
+    <Main>
       {searchRecipes ? (
         drinks?.length && drinks.map((drink, index) => (index < RECIPES_LIMIT && (
           <DrinkCards drink={ drink } index={ index } key={ drink.idDrink } />
@@ -28,7 +29,7 @@ function DrinkRecipes() {
             <DrinkCards drink={ recipe } index={ index } key={ recipe.idDrink } />
           )))
       )}
-    </div>
+    </Main>
   );
 }
 

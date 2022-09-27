@@ -14,6 +14,7 @@ import {
   NAME_SEARCH_TESTID,
   NAME_VALUE,
   SEARCH_TESTID } from '../services/helpers/Consts';
+import { FilterBox, SearchBox } from '../styles/header';
 
 function SearchBar() {
   const { setTrueMeals, setTrueDrinks } = useContext(RecipesContext);
@@ -45,46 +46,48 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <SearchBox>
       <input
         type="text"
         placeholder="Search"
         data-testid={ SEARCH_TESTID }
         onChange={ (e) => setValue(e.target.value) }
       />
-      <label htmlFor={ INGREDIENT_SEARCH_TESTID }>
-        Ingredient
-        <input
-          type="radio"
-          name="search-radio"
-          value={ INGREDIENT_VALUE }
-          id={ INGREDIENT_SEARCH_TESTID }
-          data-testid={ INGREDIENT_SEARCH_TESTID }
-          onChange={ (e) => setSearch(e.target.value) }
-        />
-      </label>
-      <label htmlFor={ NAME_SEARCH_TESTID }>
-        Name
-        <input
-          type="radio"
-          name="search-radio"
-          value={ NAME_VALUE }
-          id={ NAME_SEARCH_TESTID }
-          data-testid={ NAME_SEARCH_TESTID }
-          onChange={ (e) => setSearch(e.target.value) }
-        />
-      </label>
-      <label htmlFor={ FIRST_LETTER_SEARCH_TESTID }>
-        First letter
-        <input
-          type="radio"
-          name="search-radio"
-          value={ FIRST_LETTER_VALUE }
-          id={ FIRST_LETTER_SEARCH_TESTID }
-          data-testid={ FIRST_LETTER_SEARCH_TESTID }
-          onChange={ (e) => setSearch(e.target.value) }
-        />
-      </label>
+      <FilterBox>
+        <label htmlFor={ INGREDIENT_SEARCH_TESTID }>
+          <input
+            type="radio"
+            name="search-radio"
+            value={ INGREDIENT_VALUE }
+            id={ INGREDIENT_SEARCH_TESTID }
+            data-testid={ INGREDIENT_SEARCH_TESTID }
+            onChange={ (e) => setSearch(e.target.value) }
+          />
+          Ingredient
+        </label>
+        <label htmlFor={ NAME_SEARCH_TESTID }>
+          <input
+            type="radio"
+            name="search-radio"
+            value={ NAME_VALUE }
+            id={ NAME_SEARCH_TESTID }
+            data-testid={ NAME_SEARCH_TESTID }
+            onChange={ (e) => setSearch(e.target.value) }
+          />
+          Name
+        </label>
+        <label htmlFor={ FIRST_LETTER_SEARCH_TESTID }>
+          <input
+            type="radio"
+            name="search-radio"
+            value={ FIRST_LETTER_VALUE }
+            id={ FIRST_LETTER_SEARCH_TESTID }
+            data-testid={ FIRST_LETTER_SEARCH_TESTID }
+            onChange={ (e) => setSearch(e.target.value) }
+          />
+          First letter
+        </label>
+      </FilterBox>
       <button
         type="button"
         onClick={ handleClick }
@@ -92,7 +95,7 @@ function SearchBar() {
       >
         SEARCH
       </button>
-    </div>
+    </SearchBox>
   );
 }
 

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import useRecipes from '../hooks/useRecipes';
 import { AllRecipesAPI } from '../services/fetchApi';
 import { RECIPES_LIMIT } from '../services/helpers/Consts';
+import { Main } from '../styles/main';
 import MealCards from './MealCards';
 
 function MealRecipes() {
@@ -18,7 +19,7 @@ function MealRecipes() {
     CallRecipes();
   }, [pathname]); // eslint-disable-line
   return (
-    <div style={ { display: 'flex', flexWrap: 'wrap', justifyContent: 'center' } }>
+    <Main>
       {searchRecipes ? (
         meals?.length && meals.map((meal, index) => (index < RECIPES_LIMIT && (
           <MealCards meal={ meal } index={ index } key={ meal.idMeal } />
@@ -28,7 +29,7 @@ function MealRecipes() {
             <MealCards meal={ recipe } index={ index } key={ recipe.idMeal } />
           )))
       )}
-    </div>
+    </Main>
   );
 }
 

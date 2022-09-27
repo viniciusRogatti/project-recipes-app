@@ -49,6 +49,10 @@ export const ButtonLogin = styled.button`
   font-weight: bold;
   text-transform: uppercase;
   color: #FFFFFF;
+
+  :disabled {
+    opacity: 0.3;
+  }
 `;
 
 export const LoginTitle = styled.h1`
