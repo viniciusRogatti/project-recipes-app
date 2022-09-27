@@ -2,6 +2,7 @@
 export const USER_KEY = 'user';
 export const MEALS_KEY = 'mealsToken';
 export const DRINKS_KEY = 'drinksToken';
+export const DONE_KEY = 'doneRecipes';
 
 // LOGIN PAGE
 export const MIN_CHARACTERS = 7;
@@ -47,6 +48,8 @@ export const TITLE_HEADER_TESTID = 'page-title';
 export const RECIPES_LIMIT = 12;
 // CATEGORIES LIMIT
 export const CATEGORIES_LIMIT = 5;
+
+export const RECOMMENDED_LIMIT = 6;
 
 export const ALERT_MSG = 'Sorry, we haven\'t found any recipes for these filters.';
 

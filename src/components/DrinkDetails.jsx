@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { RecipeDetalsAPI } from '../services/fetchApi';
+import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
+import { MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
+import Carrousel from '../styles/carrousel';
+import RecommendedMealCards from './RecommendedMealCards';
+import StartRecipeButton from '../styles/StartRecipeButton';
+import { getRecipes } from '../services/localStorage';
 
 function DrinkDetails() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState([]);
+  const [recommended, setRecommended] = useState([]);
+  const [recipeDone, setRecipeDone] = useState([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -16,7 +23,16 @@ function DrinkDetails() {
     };
     fetchDetails();
   }, [id, pathname]);
-  console.log(details);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AllRecipesAPI(MEALS_PATH);
+      setRecommended(data.meals);
+    };
+    fetchData();
+    setRecipeDone(getRecipes());
+  }, [pathname]);
+
   const getIngredientsAndMeasures = () => {
     if (details[0] !== undefined) {
       const ingredients = Object.entries(details[0])
@@ -57,7 +73,35 @@ function DrinkDetails() {
                 {result}
               </p>
             ))}
+            <h5>
+              Instructions
+            </h5>
             <p data-testid="instructions">{detail.strInstructions}</p>
+            <h5>
+              Recommended
+            </h5>
+            <Carrousel>
+              {recommended.map((meal, index) => (index < RECOMMENDED_LIMIT && (
+                <RecommendedMealCards
+                  meal={ meal }
+                  index={ index }
+                  key={ meal.idMeal }
+                />
+              )))}
+            </Carrousel>
+            {!recipeDone.length ? (
+              <StartRecipeButton
+                data-testid="start-recipe-btn"
+              >
+                Start Recipe
+              </StartRecipeButton>
+            ) : recipeDone.map((recipe) => recipe.idDrink === id && (
+              <StartRecipeButton
+                data-testid="start-recipe-btn"
+              >
+                Start Recipe
+              </StartRecipeButton>
+            ))}
           </div>
         ))
       }
