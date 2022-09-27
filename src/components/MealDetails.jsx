@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
-import { DRINKS_PATH, MINUS_WATCH, PLUS_EMBED } from '../services/helpers/Consts';
+import {
+  DRINKS_PATH,
+  MINUS_WATCH,
+  PLUS_EMBED,
+  RECOMMENDED_LIMIT,
+} from '../services/helpers/Consts';
+import Carrousel from '../styles/carrousel';
+import RecommendedDrinkCards from './RecommendedDrinkCard';
 
 function MealDetails() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState([]);
+  const [recommended, setRecommended] = useState([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -21,7 +29,7 @@ function MealDetails() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await AllRecipesAPI(DRINKS_PATH);
-      return data;
+      setRecommended(data.drinks);
     };
     fetchData();
   }, [pathname]);
@@ -87,6 +95,15 @@ function MealDetails() {
             <h5>
               Recommended
             </h5>
+            <Carrousel>
+              {recommended.map((drink, index) => (index < RECOMMENDED_LIMIT && (
+                <RecommendedDrinkCards
+                  drink={ drink }
+                  index={ index }
+                  key={ drink.idDrink }
+                />
+              )))}
+            </Carrousel>
           </div>
         ))
       }
