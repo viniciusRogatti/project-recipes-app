@@ -10,12 +10,14 @@ import {
 import Carrousel from '../styles/carrousel';
 import RecommendedDrinkCards from './RecommendedDrinkCard';
 import StartRecipeButton from '../styles/StartRecipeButton';
+import { getRecipes } from '../services/localStorage';
 
 function MealDetails() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState([]);
   const [recommended, setRecommended] = useState([]);
+  const [recipeDone, setRecipeDone] = useState([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -33,6 +35,7 @@ function MealDetails() {
       setRecommended(data.drinks);
     };
     fetchData();
+    setRecipeDone(getRecipes());
   }, [pathname]);
 
   const getIngredientsAndMeasures = () => {
@@ -105,9 +108,19 @@ function MealDetails() {
                 />
               )))}
             </Carrousel>
-            <StartRecipeButton data-testid="start-recipe-btn">
-              Start Recipes
-            </StartRecipeButton>
+            {!recipeDone.length ? (
+              <StartRecipeButton
+                data-testid="start-recipe-btn"
+              >
+                Start Recipe
+              </StartRecipeButton>
+            ) : recipeDone.map((recipe) => recipe.idMeal === id && (
+              <StartRecipeButton
+                data-testid="start-recipe-btn"
+              >
+                Start Recipe
+              </StartRecipeButton>
+            ))}
           </div>
         ))
       }

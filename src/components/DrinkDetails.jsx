@@ -5,12 +5,14 @@ import { MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
 import RecommendedMealCards from './RecommendedMealCards';
 import StartRecipeButton from '../styles/StartRecipeButton';
+import { getRecipes } from '../services/localStorage';
 
 function DrinkDetails() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState([]);
   const [recommended, setRecommended] = useState([]);
+  const [recipeDone, setRecipeDone] = useState([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -28,6 +30,7 @@ function DrinkDetails() {
       setRecommended(data.meals);
     };
     fetchData();
+    setRecipeDone(getRecipes());
   }, [pathname]);
 
   const getIngredientsAndMeasures = () => {
@@ -86,9 +89,19 @@ function DrinkDetails() {
                 />
               )))}
             </Carrousel>
-            <StartRecipeButton data-testid="start-recipe-btn">
-              Start Recipes
-            </StartRecipeButton>
+            {!recipeDone.length ? (
+              <StartRecipeButton
+                data-testid="start-recipe-btn"
+              >
+                Start Recipe
+              </StartRecipeButton>
+            ) : recipeDone.map((recipe) => recipe.idDrink === id && (
+              <StartRecipeButton
+                data-testid="start-recipe-btn"
+              >
+                Start Recipe
+              </StartRecipeButton>
+            ))}
           </div>
         ))
       }
