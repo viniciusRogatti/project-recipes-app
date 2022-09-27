@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { RecipeDetalsAPI } from '../services/fetchApi';
-import { MINUS_WATCH, PLUS_EMBED } from '../services/helpers/Consts';
+import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
+import { DRINKS_PATH, MINUS_WATCH, PLUS_EMBED } from '../services/helpers/Consts';
 
 function MealDetails() {
   const { id } = useParams();
@@ -17,7 +17,15 @@ function MealDetails() {
     };
     fetchDetails();
   }, [id, pathname]);
-  console.log(details);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AllRecipesAPI(DRINKS_PATH);
+      return data;
+    };
+    fetchData();
+  }, [pathname]);
+
   const getIngredientsAndMeasures = () => {
     if (details[0] !== undefined) {
       const ingredients = Object.entries(details[0])
@@ -58,7 +66,13 @@ function MealDetails() {
                 {result}
               </p>
             ))}
+            <h5>
+              Instructions
+            </h5>
             <p data-testid="instructions">{detail.strInstructions}</p>
+            <h5>
+              Video
+            </h5>
             <iframe
               data-testid="video"
               width="560"
@@ -70,6 +84,9 @@ function MealDetails() {
               autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
+            <h5>
+              Recommended
+            </h5>
           </div>
         ))
       }

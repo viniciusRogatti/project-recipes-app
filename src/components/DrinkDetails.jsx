@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { RecipeDetalsAPI } from '../services/fetchApi';
+import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
+import { MEALS_PATH } from '../services/helpers/Consts';
 
 function DrinkDetails() {
   const { id } = useParams();
@@ -16,7 +17,15 @@ function DrinkDetails() {
     };
     fetchDetails();
   }, [id, pathname]);
-  console.log(details);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await AllRecipesAPI(MEALS_PATH);
+      return data;
+    };
+    fetchData();
+  }, [pathname]);
+
   const getIngredientsAndMeasures = () => {
     if (details[0] !== undefined) {
       const ingredients = Object.entries(details[0])
@@ -57,6 +66,9 @@ function DrinkDetails() {
                 {result}
               </p>
             ))}
+            <h5>
+              Instructions
+            </h5>
             <p data-testid="instructions">{detail.strInstructions}</p>
           </div>
         ))
