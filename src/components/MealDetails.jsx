@@ -16,8 +16,10 @@ import {
   PLUS_EMBED,
   RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import {
+  checkRecipeIsFavorited,
   getProgessesRecipes,
   getRecipes,
+  removeRecipeToFavorite,
   saveRecipeToFavorite } from '../services/localStorage';
 
 function MealDetails() {
@@ -34,14 +36,18 @@ function MealDetails() {
   useEffect(() => {
     const fetchDetails = async () => {
       const screen = pathname.includes('meals') && 'meals';
-      const { meals } = getProgessesRecipes();
-      setInProgressRecipes(Object.keys(meals).some((key) => key === id));
       const response = await RecipeDetalsAPI(pathname, id);
       const result = response[screen];
       setDetails(result);
     };
     fetchDetails();
   }, [id, pathname]);
+
+  useEffect(() => {
+    setIsFavorite(checkRecipeIsFavorited(details[0], 'meal'));
+    const { meals } = getProgessesRecipes();
+    setInProgressRecipes(Object.keys(meals).some((key) => key === id));
+  }, [details]); // eslint-disable-line
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +67,7 @@ function MealDetails() {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
       saveRecipeToFavorite(details[0], 'meal');
-    } else console.log('teste');
+    } else removeRecipeToFavorite(details[0], 'meal');
   };
 
   const getIngredientsAndMeasures = () => {
@@ -121,17 +127,13 @@ function MealDetails() {
               autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
-          <button type="button" onClick={ handlefavorited } data-testid="favorite-btn">
-            { isFavorite ? (
-              <img
-                alt="favoriteIcon"
-                src={ FavoriteIcon }
-              />
-            ) : (
-              <img
-                alt="notFavoriteIcon"
-                src={ notFavoriteIcon }
-              />)}
+          <button
+            type="button"
+            onClick={ handlefavorited }
+            data-testid="favorite-btn"
+            src={ isFavorite ? FavoriteIcon : notFavoriteIcon }
+          >
+            Favoritar
           </button>
           {copied && <h3>Link copied!</h3>}
           <button
