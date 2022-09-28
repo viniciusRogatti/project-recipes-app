@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
-import Carrousel from '../styles/carrousel';
 import FavoriteIcon from '../images/blackHeartIcon.svg';
 import notFavoriteIcon from '../images/whiteHeartIcon.svg';
-import StartRecipeButton from '../styles/StartRecipeButton';
-import RecommendedMealCards from './RecommendedMealCards';
-import {
-  AllRecipesAPI,
-  RecipeDetalsAPI } from '../services/fetchApi';
-import {
-  MEALS_PATH,
-  RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import {
   checkRecipeIsFavorited,
-  getProgessesRecipes,
-  getRecipes,
   removeRecipeToFavorite,
-  saveRecipeToFavorite } from '../services/localStorage';
+  saveRecipeToFavorite,
+} from '../services/localStorage';
+import StartRecipeButton from '../styles/StartRecipeButton';
+import { RecipeDetalsAPI } from '../services/fetchApi';
 
-function DrinkDetails() {
+function DrinkInProgress() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState([]);
-  const [recommended, setRecommended] = useState([]);
-  const [recipeDone, setRecipeDone] = useState([]);
-  const [inProgressRecipes, setInProgressRecipes] = useState(false);
   const [copied, setcopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const history = useHistory();
+  // const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -42,24 +31,13 @@ function DrinkDetails() {
   }, [id, pathname]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await AllRecipesAPI(MEALS_PATH);
-      setRecommended(data.meals);
-    };
-    fetchData();
-    setRecipeDone(getRecipes());
-  }, [pathname]);
+    setIsFavorite(checkRecipeIsFavorited(details[0], 'drink'));
+  }, [details]); // eslint-disable-line
 
   const shareLink = () => {
     copy(`http://localhost:3000${pathname}`);
     setcopied(true);
   };
-
-  useEffect(() => {
-    setIsFavorite(checkRecipeIsFavorited(details[0], 'drink'));
-    const { drinks } = getProgessesRecipes();
-    setInProgressRecipes(Object.keys(drinks).some((key) => key === id));
-  }, [details]); // eslint-disable-line
 
   const handlefavorited = () => {
     setIsFavorite(!isFavorite);
@@ -85,6 +63,9 @@ function DrinkDetails() {
     }
   };
 
+  // const handleChecked = ({ target: { id } }) => {
+  // };
+
   return (
     <section>
       {details.length && details.map((detail) => (
@@ -95,18 +76,28 @@ function DrinkDetails() {
             data-testid="recipe-photo"
           />
           <h3 data-testid="recipe-title">{detail.strDrink}</h3>
-          <h4 data-testid="recipe-category">{detail.strAlcoholic}</h4>
+          <h4 data-testid="recipe-category">{detail.strCategory}</h4>
           <h5>
             Ingredients
           </h5>
-          {getIngredientsAndMeasures().map((result, index) => (
-            <p
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {result}
-            </p>
-          ))}
+          {getIngredientsAndMeasures()
+            .map((result, index) => ((result !== '  '
+            && result !== ' ' && result !== null) && (
+              <label
+                htmlFor={ result }
+                key={ index }
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <input
+                  type="checkbox"
+                  name="ingredient"
+                  id={ result }
+                // checked={ isChecked }
+                // onClick={ handleChecked }
+                />
+                {result}
+              </label>
+            )))}
           <h5>
             Instructions
           </h5>
@@ -130,37 +121,16 @@ function DrinkDetails() {
               alt="link video"
             />
           </button>
-          <h5>
-            Recommended
-          </h5>
-          <Carrousel>
-            {recommended.map((meal, index) => (index < RECOMMENDED_LIMIT && (
-              <RecommendedMealCards
-                meal={ meal }
-                index={ index }
-                key={ meal.idMeal }
-              />
-            )))}
-          </Carrousel>
-          {!recipeDone.length ? (
-            <StartRecipeButton
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`${pathname}/in-progress`) }
-            >
-              { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
-            </StartRecipeButton>
-          ) : recipeDone.map((recipe) => recipe.idDrink === id && (
-            <StartRecipeButton
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`${pathname}/in-progress`) }
-            >
-              { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
-            </StartRecipeButton>
-          ))}
         </div>
       ))}
+      <StartRecipeButton
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+        data-testid="finish-recipe-btn"
+      >
+        Finish Recipe
+      </StartRecipeButton>
     </section>
   );
 }
 
-export default DrinkDetails;
+export default DrinkInProgress;

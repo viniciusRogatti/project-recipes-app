@@ -1,40 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import Carrousel from '../styles/carrousel';
 import shareIcon from '../images/shareIcon.svg';
 import FavoriteIcon from '../images/blackHeartIcon.svg';
 import notFavoriteIcon from '../images/whiteHeartIcon.svg';
-import StartRecipeButton from '../styles/StartRecipeButton';
-import RecommendedDrinkCards from './RecommendedDrinkCard';
 import {
-  AllRecipesAPI,
-  RecipeDetalsAPI,
-} from '../services/fetchApi';
-import {
-  DRINKS_PATH,
   MINUS_WATCH,
   PLUS_EMBED,
-  RECOMMENDED_LIMIT,
 } from '../services/helpers/Consts';
 import {
   checkRecipeIsFavorited,
-  getProgessesRecipes,
-  getRecipes,
   removeRecipeToFavorite,
   saveRecipeToFavorite,
 } from '../services/localStorage';
+import StartRecipeButton from '../styles/StartRecipeButton';
+import { RecipeDetalsAPI } from '../services/fetchApi';
 
-function MealDetails() {
+function MealInProgress() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState([]);
-  const [recommended, setRecommended] = useState([]);
-  const [recipeDone, setRecipeDone] = useState([]);
-  const [inProgressRecipes, setInProgressRecipes] = useState(false);
   const [copied, setcopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const history = useHistory();
+  // const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -48,18 +36,7 @@ function MealDetails() {
 
   useEffect(() => {
     setIsFavorite(checkRecipeIsFavorited(details[0], 'meal'));
-    const { meals } = getProgessesRecipes();
-    setInProgressRecipes(Object.keys(meals).some((key) => key === id));
   }, [details]); // eslint-disable-line
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await AllRecipesAPI(DRINKS_PATH);
-      setRecommended(data.drinks);
-    };
-    fetchData();
-    setRecipeDone(getRecipes());
-  }, [pathname]);
 
   const shareLink = () => {
     copy(`http://localhost:3000${pathname}`);
@@ -90,6 +67,9 @@ function MealDetails() {
     }
   };
 
+  // const handleChecked = ({ target: { id } }) => {
+  // };
+
   return (
     <section>
       {details.length && details.map((detail) => (
@@ -104,14 +84,24 @@ function MealDetails() {
           <h5>
             Ingredients
           </h5>
-          {getIngredientsAndMeasures().map((result, index) => (
-            <p
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {result}
-            </p>
-          ))}
+          {getIngredientsAndMeasures()
+            .map((result, index) => ((result !== '  '
+            && result !== ' ' && result !== null) && (
+              <label
+                htmlFor={ result }
+                key={ index }
+                data-testid={ `${index}-ingredient-step` }
+              >
+                <input
+                  type="checkbox"
+                  name="ingredient"
+                  id={ result }
+                // checked={ isChecked }
+                // onClick={ handleChecked }
+                />
+                {result}
+              </label>
+            )))}
           <h5>
             Instructions
           </h5>
@@ -149,37 +139,16 @@ function MealDetails() {
               alt="link video"
             />
           </button>
-          <h5>
-            Recommended
-          </h5>
-          <Carrousel>
-            {recommended.map((drink, index) => (index < RECOMMENDED_LIMIT && (
-              <RecommendedDrinkCards
-                drink={ drink }
-                index={ index }
-                key={ drink.idDrink }
-              />
-            )))}
-          </Carrousel>
-          {!recipeDone.length ? (
-            <StartRecipeButton
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`${pathname}/in-progress`) }
-            >
-              { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
-            </StartRecipeButton>
-          ) : recipeDone.map((recipe) => recipe.idMeal === id && (
-            <StartRecipeButton
-              onClick={ () => history.push(`${pathname}/in-progress`) }
-              data-testid="start-recipe-btn"
-            >
-              { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
-            </StartRecipeButton>
-          ))}
         </div>
       ))}
+      <StartRecipeButton
+        // onClick={ () => history.push(`${pathname}/in-progress`) }
+        data-testid="finish-recipe-btn"
+      >
+        Finish Recipe
+      </StartRecipeButton>
     </section>
   );
 }
 
-export default MealDetails;
+export default MealInProgress;
