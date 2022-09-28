@@ -24,6 +24,8 @@ export const LOGIN_PATH = '/';
 export const MEALS_PATH = '/meals';
 export const DRINKS_PATH = '/drinks';
 export const PROFILE_PATH = '/profile';
+export const MEALS_IN_PROGRESS_PATH = '/meals/:id/in-progress';
+export const DRINKS_IN_PROGRESS_PATH = '/drinks/:id/in-progress';
 export const DONE_RECIPES_PATH = '/done-recipes';
 export const FAVORITES_PATH = '/favorite-recipes';
 export const MEALS_RECIPES_PATH = '/meals/:id';
@@ -58,7 +60,6 @@ export const ALERT_MSG = 'Sorry, we haven\'t found any recipes for these filters
 
 // ENDPOINTS
 export const MEALS_ENDPOINT = 'www.themealdb.com';
-
 export const DRINKS_ENDPOINT = 'www.thecocktaildb.com';
 
 // YOUTUBE SHENANIGANS

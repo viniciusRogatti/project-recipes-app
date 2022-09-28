@@ -16,9 +16,13 @@ import {
   FAVORITES_PATH,
   DONE_RECIPES_PATH,
   MEALS_RECIPES_PATH,
-  DRINKS_RECIPES_PATH } from './services/helpers/Consts';
+  DRINKS_RECIPES_PATH,
+  MEALS_IN_PROGRESS_PATH,
+  DRINKS_IN_PROGRESS_PATH,
+} from './services/helpers/Consts';
 import RecipesProvider from './context/RecipesProvider';
 import RecipeDetails from './pages/RecipeDetails';
+import RecipeInProgress from './components/RecipeInProgress';
 
 function App() {
   return (
@@ -29,6 +33,8 @@ function App() {
           <Route exact path={ MEALS_PATH } component={ Meals } />
           <Route exact path={ DRINKS_PATH } component={ Drinks } />
           <Route exact path={ PROFILE_PATH } component={ Profile } />
+          <Route exact path={ MEALS_IN_PROGRESS_PATH } component={ RecipeInProgress } />
+          <Route exact path={ DRINKS_IN_PROGRESS_PATH } component={ RecipeInProgress } />
           <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
           <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
           <Route exact path={ MEALS_RECIPES_PATH } component={ RecipeDetails } />
