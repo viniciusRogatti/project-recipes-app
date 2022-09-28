@@ -4,6 +4,8 @@ import {
   IN_PROGRESSES_RECIPES_KEY,
   MEALS_KEY,
   USER_KEY,
+  FAVORITES_KEY,
+  INITIAL_PROGRESSES,
 } from './helpers/Consts';
 
 export const saveUser = (email) => {
@@ -15,15 +17,11 @@ export const saveUser = (email) => {
 if (!JSON.parse(localStorage.getItem(DONE_KEY))) {
   localStorage.setItem(DONE_KEY, JSON.stringify([]));
 }
-const INITIAL_PROGRESSES = {
-  drinks: {
-  },
-  meals: {
-  },
-};
-
 if (!JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY))) {
   localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(INITIAL_PROGRESSES));
+}
+if (!JSON.parse(localStorage.getItem(FAVORITES_KEY))) {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([]));
 }
 
 export const saveProgressesRecipes = (obj, type) => {
@@ -50,6 +48,24 @@ export const getProgessesRecipes = () => (
 export const getRecipes = () => {
   const parse = JSON.parse(localStorage.getItem(DONE_KEY));
   return parse;
+};
+
+export const saveRecipeToFavorite = (recipe, type) => {
+  const typeId = type === 'meal' ? 'idMeal' : 'idDrink';
+  const name = type === 'meal' ? 'strMeal' : 'strDrink';
+  const image = type === 'meal' ? 'strMealThumb' : 'strDrinkThumb';
+  const obj = {
+    id: recipe[typeId],
+    type,
+    nationality: recipe.strArea ? recipe.strArea : '',
+    category: recipe.strCategory,
+    alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
+    name: recipe[name],
+    image: recipe[image],
+  };
+  console.log(recipe);
+  const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...allRecipes, obj]));
 };
 
 export default saveUser;
