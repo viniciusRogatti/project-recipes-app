@@ -14,8 +14,10 @@ import {
   MEALS_PATH,
   RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import {
+  checkRecipeIsFavorited,
   getProgessesRecipes,
   getRecipes,
+  removeRecipeToFavorite,
   saveRecipeToFavorite } from '../services/localStorage';
 
 function DrinkDetails() {
@@ -32,8 +34,6 @@ function DrinkDetails() {
   useEffect(() => {
     const fetchDetails = async () => {
       const screen = pathname.includes('drinks') && 'drinks';
-      const { drinks } = getProgessesRecipes();
-      setInProgressRecipes(Object.keys(drinks).some((key) => key === id));
       const response = await RecipeDetalsAPI(pathname, id);
       const result = response[screen];
       setDetails(result);
@@ -55,11 +55,17 @@ function DrinkDetails() {
     setcopied(true);
   };
 
+  useEffect(() => {
+    setIsFavorite(checkRecipeIsFavorited(details[0], 'drink'));
+    const { drinks } = getProgessesRecipes();
+    setInProgressRecipes(Object.keys(drinks).some((key) => key === id));
+  }, [details]); // eslint-disable-line
+
   const handlefavorited = () => {
     setIsFavorite(!isFavorite);
     if (!isFavorite) {
       saveRecipeToFavorite(details[0], 'drink');
-    } else console.log('teste');
+    } else removeRecipeToFavorite(details[0], 'drink');
   };
 
   const getIngredientsAndMeasures = () => {
@@ -106,17 +112,13 @@ function DrinkDetails() {
               Instructions
             </h5>
             <p data-testid="instructions">{detail.strInstructions}</p>
-            <button type="button" onClick={ handlefavorited } data-testid="favorite-btn">
-              { isFavorite ? (
-                <img
-                  alt="favoriteIcon"
-                  src={ FavoriteIcon }
-                />
-              ) : (
-                <img
-                  alt="notFavoriteIcon"
-                  src={ notFavoriteIcon }
-                />)}
+            <button
+              type="button"
+              onClick={ handlefavorited }
+              data-testid="favorite-btn"
+              src={ isFavorite ? FavoriteIcon : notFavoriteIcon }
+            >
+              Favoritar
             </button>
             {copied && <h3>Link copied!</h3>}
             <button

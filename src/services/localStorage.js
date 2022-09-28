@@ -63,9 +63,24 @@ export const saveRecipeToFavorite = (recipe, type) => {
     name: recipe[name],
     image: recipe[image],
   };
-  console.log(recipe);
   const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
   localStorage.setItem(FAVORITES_KEY, JSON.stringify([...allRecipes, obj]));
 };
 
-export default saveUser;
+export const removeRecipeToFavorite = (recipe, type) => {
+  const typeId = type === 'meal' ? 'idMeal' : 'idDrink';
+  if (recipe) {
+    const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
+    const recipesFilter = allRecipes.filter((recip) => recip.id !== recipe[typeId]);
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(recipesFilter));
+  }
+};
+
+export const checkRecipeIsFavorited = (recipe, type) => {
+  const typeId = type === 'meal' ? 'idMeal' : 'idDrink';
+  const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
+  if (recipe) {
+    const isFavorite = allRecipes.some((recip) => recip.id === recipe[typeId]);
+    return isFavorite;
+  }
+};
