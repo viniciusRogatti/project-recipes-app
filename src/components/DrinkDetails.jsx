@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import copy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
 import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
 import { MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
@@ -14,6 +16,8 @@ function DrinkDetails() {
   const [recommended, setRecommended] = useState([]);
   const [recipeDone, setRecipeDone] = useState([]);
   const [inProgressRecipes, setInProgressRecipes] = useState(false);
+  const [copied, setcopied] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -35,6 +39,11 @@ function DrinkDetails() {
     fetchData();
     setRecipeDone(getRecipes());
   }, [pathname]);
+
+  const shareLink = () => {
+    copy(`http://localhost:3000${pathname}`);
+    setcopied(true);
+  };
 
   const getIngredientsAndMeasures = () => {
     if (details[0] !== undefined) {
@@ -80,6 +89,25 @@ function DrinkDetails() {
               Instructions
             </h5>
             <p data-testid="instructions">{detail.strInstructions}</p>
+            {copied && <h3>Link copied!</h3>}
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ shareLink }
+            >
+              <img
+                src={ shareIcon }
+                alt="link video"
+              />
+            </button>
+
+            <button
+              data-testid="favorite-btn"
+              type="button"
+            >
+              Adicionar aos Favoritos
+
+            </button>
             <h5>
               Recommended
             </h5>
@@ -95,12 +123,14 @@ function DrinkDetails() {
             {!recipeDone.length ? (
               <StartRecipeButton
                 data-testid="start-recipe-btn"
+                onClick={ () => history.push(`${pathname}/in-progress`) }
               >
                 { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
               </StartRecipeButton>
             ) : recipeDone.map((recipe) => recipe.idDrink === id && (
               <StartRecipeButton
                 data-testid="start-recipe-btn"
+                onClick={ () => history.push(`${pathname}/in-progress`) }
               >
                 { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
               </StartRecipeButton>
