@@ -2,12 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
-import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
-import { MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
-import RecommendedMealCards from './RecommendedMealCards';
+import FavoriteIcon from '../images/blackHeartIcon.svg';
+import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 import StartRecipeButton from '../styles/StartRecipeButton';
-import { getProgessesRecipes, getRecipes } from '../services/localStorage';
+import RecommendedMealCards from './RecommendedMealCards';
+import {
+  AllRecipesAPI,
+  RecipeDetalsAPI } from '../services/fetchApi';
+import {
+  MEALS_PATH,
+  RECOMMENDED_LIMIT } from '../services/helpers/Consts';
+import {
+  getProgessesRecipes,
+  getRecipes,
+  saveRecipeToFavorite } from '../services/localStorage';
 
 function DrinkDetails() {
   const { id } = useParams();
@@ -17,6 +26,7 @@ function DrinkDetails() {
   const [recipeDone, setRecipeDone] = useState([]);
   const [inProgressRecipes, setInProgressRecipes] = useState(false);
   const [copied, setcopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -43,6 +53,13 @@ function DrinkDetails() {
   const shareLink = () => {
     copy(`http://localhost:3000${pathname}`);
     setcopied(true);
+  };
+
+  const handlefavorited = () => {
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      saveRecipeToFavorite(details[0], 'drink');
+    } else console.log('teste');
   };
 
   const getIngredientsAndMeasures = () => {
@@ -89,6 +106,18 @@ function DrinkDetails() {
               Instructions
             </h5>
             <p data-testid="instructions">{detail.strInstructions}</p>
+            <button type="button" onClick={ handlefavorited } data-testid="favorite-btn">
+              { isFavorite ? (
+                <img
+                  alt="favoriteIcon"
+                  src={ FavoriteIcon }
+                />
+              ) : (
+                <img
+                  alt="notFavoriteIcon"
+                  src={ notFavoriteIcon }
+                />)}
+            </button>
             {copied && <h3>Link copied!</h3>}
             <button
               type="button"
@@ -99,14 +128,6 @@ function DrinkDetails() {
                 src={ shareIcon }
                 alt="link video"
               />
-            </button>
-
-            <button
-              data-testid="favorite-btn"
-              type="button"
-            >
-              Adicionar aos Favoritos
-
             </button>
             <h5>
               Recommended

@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
+import Carrousel from '../styles/carrousel';
+import shareIcon from '../images/shareIcon.svg';
+import FavoriteIcon from '../images/blackHeartIcon.svg';
+import notFavoriteIcon from '../images/whiteHeartIcon.svg';
+import StartRecipeButton from '../styles/StartRecipeButton';
+import RecommendedDrinkCards from './RecommendedDrinkCard';
+import {
+  AllRecipesAPI,
+  RecipeDetalsAPI } from '../services/fetchApi';
 import {
   DRINKS_PATH,
   MINUS_WATCH,
   PLUS_EMBED,
-  RECOMMENDED_LIMIT,
-} from '../services/helpers/Consts';
-import Carrousel from '../styles/carrousel';
-import RecommendedDrinkCards from './RecommendedDrinkCard';
-import StartRecipeButton from '../styles/StartRecipeButton';
-import { getProgessesRecipes, getRecipes } from '../services/localStorage';
-import shareIcon from '../images/shareIcon.svg';
+  RECOMMENDED_LIMIT } from '../services/helpers/Consts';
+import {
+  getProgessesRecipes,
+  getRecipes,
+  saveRecipeToFavorite } from '../services/localStorage';
 
 function MealDetails() {
   const { id } = useParams();
@@ -22,6 +28,7 @@ function MealDetails() {
   const [recipeDone, setRecipeDone] = useState([]);
   const [inProgressRecipes, setInProgressRecipes] = useState(false);
   const [copied, setcopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -48,6 +55,13 @@ function MealDetails() {
   const shareLink1 = () => {
     copy(`http://localhost:3000${pathname}`);
     setcopied(true);
+  };
+
+  const handlefavorited = () => {
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      saveRecipeToFavorite(details[0], 'meal');
+    } else console.log('teste');
   };
 
   const getIngredientsAndMeasures = () => {
@@ -107,6 +121,18 @@ function MealDetails() {
               autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
+          <button type="button" onClick={ handlefavorited } data-testid="favorite-btn">
+            { isFavorite ? (
+              <img
+                alt="favoriteIcon"
+                src={ FavoriteIcon }
+              />
+            ) : (
+              <img
+                alt="notFavoriteIcon"
+                src={ notFavoriteIcon }
+              />)}
+          </button>
           {copied && <h3>Link copied!</h3>}
           <button
             type="button"
@@ -117,14 +143,6 @@ function MealDetails() {
               src={ shareIcon }
               alt="link video"
             />
-          </button>
-
-          <button
-            data-testid="favorite-btn"
-            type="button"
-          >
-            Adicionar aos Favoritos
-
           </button>
           <h5>
             Recommended

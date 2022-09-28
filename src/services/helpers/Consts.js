@@ -4,7 +4,9 @@ export const MEALS_KEY = 'mealsToken';
 export const DRINKS_KEY = 'drinksToken';
 export const DONE_KEY = 'doneRecipes';
 export const IN_PROGRESSES_RECIPES_KEY = 'inProgressRecipes';
+export const FAVORITES_KEY = 'favoriteRecipes';
 
+export const INITIAL_PROGRESSES = { drinks: { }, meals: { } };
 // LOGIN PAGE
 export const MIN_CHARACTERS = 7;
 export const EMAIL_INPUT_TESTID = 'email-input';
