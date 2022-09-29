@@ -5,6 +5,7 @@ import RecipesContext from './RecipesContext';
 function RecipesProvider({ children }) {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [recipesMade, setRecipesMade] = useState(0);
 
   const setTrueFilter = (param) => {
     setFilteredRecipes(param);
@@ -16,7 +17,9 @@ function RecipesProvider({ children }) {
     setTrueFilter,
     setIsSearching,
     isSearching,
-  }), [isSearching, setIsSearching, filteredRecipes]);
+    setRecipesMade,
+    recipesMade,
+  }), [isSearching, setIsSearching, filteredRecipes, recipesMade]);
 
   return (
     <RecipesContext.Provider value={ contextValue }>

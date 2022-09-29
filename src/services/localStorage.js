@@ -24,19 +24,45 @@ if (!JSON.parse(localStorage.getItem(FAVORITES_KEY))) {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify([]));
 }
 
-export const saveProgressesRecipes = (obj, type) => {
+export const saveProgressesRecipesMeals = (id, ingredient) => {
   const allDrinks = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)).drinks;
   const allMeals = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)).meals;
-  if (type === 'drinks') {
-    const check = Object.keys(allDrinks).find((key) => key === obj.idDrink);
-    if (!check) {
-      const newObj = { drinks: { ...allDrinks, [obj.idDrink]: obj }, meals: allMeals };
+  const check = Object.keys(allMeals).some((key) => key === id);
+  if (!check) {
+    const newObj = { meals: { ...allMeals, [id]: [ingredient] }, drinks: allDrinks };
+    localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
+  } else {
+    const checkIngredient = allMeals[id].includes(ingredient);
+    if (!checkIngredient) {
+      const newObj = { meals: { ...allMeals, [id]: [...allMeals[id], ingredient] },
+        drinks: allDrinks };
+      localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
+    } else {
+      const newObj = {
+        meals: { ...allMeals, [id]: allMeals[id].filter((e) => e !== ingredient) },
+        drinks: allDrinks };
       localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
     }
+  }
+};
+
+export const saveProgressesRecipesDrinks = (id, ingredient) => {
+  const allDrinks = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)).drinks;
+  const allMeals = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)).meals;
+  const check = Object.keys(allDrinks).some((key) => key === id);
+  if (!check) {
+    const newObj = { drinks: { ...allDrinks, [id]: [ingredient] }, meals: allMeals };
+    localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
   } else {
-    const check = Object.keys(allDrinks).some((key) => key === obj.idMeal);
-    if (!check) {
-      const newObj = { meals: { ...allMeals, [obj.idMeal]: obj }, drinks: allDrinks };
+    const checkIngredient = allDrinks[id].includes(ingredient);
+    if (!checkIngredient) {
+      const newObj = { drinks: { ...allDrinks, [id]: [...allDrinks[id], ingredient] },
+        meals: allMeals };
+      localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
+    } else {
+      const newObj = {
+        drinks: { ...allDrinks, [id]: allDrinks[id].filter((e) => e !== ingredient) },
+        meals: allMeals };
       localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
     }
   }

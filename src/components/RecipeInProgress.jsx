@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import Ingredients from './Ingredients';
 import { RecipeDetalsAPI } from '../services/fetchApi';
@@ -11,15 +11,23 @@ import VideoRecipe from './VideoRecipe';
 import StartRecipeButton from '../styles/StartRecipeButton';
 import {
   checkRecipeIsFavorited,
+  getProgessesRecipes,
+  removeRecipeToFavorite,
+  saveRecipeToFavorite,
 } from '../services/localStorage';
+import useRecipes from '../hooks/useRecipes';
+import { DONE_RECIPES_PATH } from '../services/helpers/Consts';
 
 function RecipeInProgress() {
   const { pathname } = useLocation();
+  const history = useHistory();
   const { id } = useParams();
   const [detail, setDetail] = useState([]);
   const [ingredients, setIngredients] = useState(null);
   const [copiedLink, setcopiedLink] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [recipeFinished, setrecipeFinished] = useState(false);
+  const { recipesMade } = useRecipes();
 
   const screen = pathname.includes('meals') ? 'meals' : 'drinks';
   const cardImg = pathname.includes('meals') ? 'strMealThumb' : 'strDrinkThumb';
@@ -29,7 +37,6 @@ function RecipeInProgress() {
     const fetchDetails = async () => {
       const response = await RecipeDetalsAPI(pathname, id);
       const result = response[screen];
-
       setDetail(result[0]);
       setIngredients(getIngredientsAndMeasures(result[0]));
       setIsFavorite(checkRecipeIsFavorited(result[0], screen));
@@ -37,8 +44,17 @@ function RecipeInProgress() {
     fetchDetails();
   }, []); // eslint-disable-line
 
+  useEffect(() => {
+    const recipesInProgress = getProgessesRecipes()[screen][id]?.length;
+    if (recipesInProgress) setrecipeFinished(recipesInProgress === ingredients?.length);
+  }, [ingredients]); // eslint-disable-line
+
+  useEffect(() => {
+    setrecipeFinished(recipesMade === ingredients?.length);
+  }, [recipesMade]); // eslint-disable-line
+
   const shareLink = () => {
-    copy(`http://localhost:3000${pathname}`);
+    copy(`http://localhost:3000/${screen}/${id}`);
     setcopiedLink(true);
   };
 
@@ -84,6 +100,8 @@ function RecipeInProgress() {
       {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
       <StartRecipeButton
         data-testid="finish-recipe-btn"
+        disabled={ !recipeFinished }
+        onClick={ () => history.push(DONE_RECIPES_PATH) }
       >
         Finish Recipe
       </StartRecipeButton>

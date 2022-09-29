@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import {
+  saveProgressesRecipesMeals,
+  saveProgressesRecipesDrinks,
+  getProgessesRecipes } from '../services/localStorage';
+import useRecipes from '../hooks/useRecipes';
 
 function Ingredients({ ingredient, inProgress, index }) {
   const { id } = useParams();
-  const handleChange = () => {
-    console.log(id);
+  const { pathname } = useLocation();
+  const [isChecked, setIsChecked] = useState(false);
+  const type = pathname.includes('meals') ? 'meals' : 'drinks';
+  const { setRecipesMade } = useRecipes();
+
+  useEffect(() => {
+    const checkedIngredient = getProgessesRecipes()[type][id];
+    if (checkedIngredient) setIsChecked(checkedIngredient.includes(ingredient));
+  }, []); // eslint-disable-line
+
+  const handleChange = ({ target: { checked } }) => {
+    setIsChecked(checked);
+    if (type === 'drinks') saveProgressesRecipesDrinks(id, ingredient);
+    else saveProgressesRecipesMeals(id, ingredient);
+    setRecipesMade(getProgessesRecipes()[type][id].length);
   };
 
   return (
@@ -24,9 +42,9 @@ function Ingredients({ ingredient, inProgress, index }) {
       >
         <input
           type="checkbox"
-          name="ingredient"
           id={ ingredient }
           onChange={ handleChange }
+          checked={ isChecked }
         />
         {ingredient}
       </label>
