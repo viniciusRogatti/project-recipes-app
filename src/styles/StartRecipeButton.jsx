@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const StartRecipeButton = styled.button`
+display: block;
 background: #FCC436;
 border-radius: 5px;
 position: fixed;
