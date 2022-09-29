@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
-function Ingredientes({ ingredient, inProgress, index }) {
+function Ingredients({ ingredient, inProgress, index }) {
   const { id } = useParams();
   const handleChange = () => {
     console.log(id);
@@ -34,9 +34,9 @@ function Ingredientes({ ingredient, inProgress, index }) {
   );
 }
 
-Ingredientes.propTypes = {
+Ingredients.propTypes = {
   ingredient: PropTypes.string,
   inProgress: PropTypes.bool,
 }.isRequired;
 
-export default Ingredientes;
+export default Ingredients;

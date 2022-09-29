@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import Ingredientes from './Ingredientes';
+import Ingredients from './Ingredients';
 import { RecipeDetalsAPI } from '../services/fetchApi';
 import getIngredientsAndMeasures from '../services/getIngredientsAndMeasures';
 import shareIcon from '../images/shareIcon.svg';
@@ -72,7 +72,7 @@ function RecipeInProgress() {
       <h4 data-testid="recipe-category">{detail.strCategory}</h4>
       <h5> Ingredients </h5>
       {ingredients?.map((ingredient, index) => (
-        <Ingredientes
+        <Ingredients
           ingredient={ ingredient }
           inProgress
           index={ index }

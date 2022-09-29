@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import Ingredientes from '../components/Ingredientes';
+import Ingredients from '../components/Ingredients';
 import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
 import getIngredientsAndMeasures from '../services/getIngredientsAndMeasures';
 import shareIcon from '../images/shareIcon.svg';
@@ -96,7 +96,7 @@ function RecipeDetails() {
       </h4>
       <h5> Ingredients </h5>
       {ingredients?.map((ingredient, index) => (
-        <Ingredientes
+        <Ingredients
           ingredient={ ingredient }
           inProgress={ false }
           index={ index }
