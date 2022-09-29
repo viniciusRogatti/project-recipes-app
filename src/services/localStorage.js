@@ -42,21 +42,26 @@ export const saveProgressesRecipes = (obj, type) => {
   }
 };
 
-export const getProgessesRecipes = () => (
-  JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)));
+export const getProgessesRecipes = () => JSON.parse(localStorage
+  .getItem(IN_PROGRESSES_RECIPES_KEY));
 
-export const getRecipes = () => {
-  const parse = JSON.parse(localStorage.getItem(DONE_KEY));
-  return parse;
+export const getRecipes = () => JSON.parse(localStorage.getItem(DONE_KEY));
+
+export const checkIsDoneRecipe = (idRecipe) => {
+  const allRecipesDone = getRecipes();
+  const teste = allRecipesDone.some((recipe) => recipe.id === idRecipe);
+  return teste;
 };
 
 export const saveRecipeToFavorite = (recipe, type) => {
-  const typeId = type === 'meal' ? 'idMeal' : 'idDrink';
-  const name = type === 'meal' ? 'strMeal' : 'strDrink';
-  const image = type === 'meal' ? 'strMealThumb' : 'strDrinkThumb';
+  console.log(recipe, type);
+  const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
+  const name = type === 'meals' ? 'strMeal' : 'strDrink';
+  const image = type === 'meals' ? 'strMealThumb' : 'strDrinkThumb';
+  const recipeType = type === 'meals' ? 'meal' : 'drink';
   const obj = {
     id: recipe[typeId],
-    type,
+    type: recipeType,
     nationality: recipe.strArea ? recipe.strArea : '',
     category: recipe.strCategory,
     alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
@@ -68,7 +73,7 @@ export const saveRecipeToFavorite = (recipe, type) => {
 };
 
 export const removeRecipeToFavorite = (recipe, type) => {
-  const typeId = type === 'meal' ? 'idMeal' : 'idDrink';
+  const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
   if (recipe) {
     const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
     const recipesFilter = allRecipes.filter((recip) => recip.id !== recipe[typeId]);
@@ -77,7 +82,7 @@ export const removeRecipeToFavorite = (recipe, type) => {
 };
 
 export const checkRecipeIsFavorited = (recipe, type) => {
-  const typeId = type === 'meal' ? 'idMeal' : 'idDrink';
+  const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
   const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
   if (recipe) {
     const isFavorite = allRecipes.some((recip) => recip.id === recipe[typeId]);

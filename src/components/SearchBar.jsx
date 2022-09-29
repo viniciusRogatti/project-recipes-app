@@ -17,7 +17,7 @@ import {
 import { FilterBox, SearchBox } from '../styles/header';
 
 function SearchBar() {
-  const { setTrueMeals, setTrueDrinks } = useContext(RecipesContext);
+  const { setTrueFilter } = useContext(RecipesContext);
 
   const [search, setSearch] = useState('');
   const [value, setValue] = useState('');
@@ -41,8 +41,7 @@ function SearchBar() {
         history.push(`${MEALS_PATH}/${id}`);
       } else history.push(`${DRINKS_PATH}/${id}`);
     }
-    if (pathname === MEALS_PATH) setTrueMeals(result);
-    else setTrueDrinks(result);
+    setTrueFilter(result);
   };
 
   return (

@@ -9,25 +9,24 @@ function Categories() {
   const { pathname } = useLocation();
   const [categories, setCategories] = useState({});
   const [saveCategory, setSavecategory] = useState('');
-  const { setTrueMeals, setTrueDrinks, searchRecipes, setSearchRecipes } = useRecipes();
+  const { setTrueFilter, isSearching, setIsSearching } = useRecipes();
+  const screen = pathname === MEALS_PATH ? 'meals' : 'drinks';
 
   useEffect(() => {
     const fetch = async () => {
-      const screen = pathname === MEALS_PATH ? 'meals' : 'drinks';
       const response = await fetchAllCategories(pathname);
       const result = response[screen];
       setCategories(result);
     };
     fetch();
-  }, [pathname]);
+  }, []); // eslint-disable-line
 
   const filterCategory = async ({ target }) => {
     const fetch = await fetchCategory(pathname, target.innerText);
     setSavecategory(target.innerText);
-    if (saveCategory === target.innerText) return setSearchRecipes(!searchRecipes);
-    if (target.innerText === 'All') return setSearchRecipes(false);
-    if (pathname === MEALS_PATH) return setTrueMeals(fetch.meals);
-    return setTrueDrinks(fetch.drinks);
+    if (saveCategory === target.innerText) return setIsSearching(!isSearching);
+    if (target.innerText === 'All') return setIsSearching(false);
+    setTrueFilter(fetch[screen]);
   };
 
   return (

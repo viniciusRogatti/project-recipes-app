@@ -22,7 +22,6 @@ function MealInProgress() {
   const [details, setDetails] = useState([]);
   const [copied, setcopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  // const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
