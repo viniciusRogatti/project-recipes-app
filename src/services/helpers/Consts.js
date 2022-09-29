@@ -65,3 +65,18 @@ export const DRINKS_ENDPOINT = 'www.thecocktaildb.com';
 // YOUTUBE SHENANIGANS
 export const MINUS_WATCH = 'watch?v=';
 export const PLUS_EMBED = 'embed/';
+
+// RECIPE DETAILS TEST IDS
+export const FAVORITE_BTN_TESTID = 'favorite-btn';
+export const SHARE_BTN_TESTID = 'share-btn';
+export const RECIPE_PHOTO_TESTID = 'recipe-photo';
+export const RECIPE_TITLE_TESTID = 'recipe-title';
+export const RECIPE_CATEGORY_TESTID = 'recipe-category';
+export const FIRST_INGREDIENT_MEASURE_TESTID = '0-ingredient-name-and-measure';
+export const INSTRUCTIONS_TESTID = 'instructions';
+export const VIDEO_TESTID = 'video';
+export const RECO_CARD_TESTID = '0-recommendation-card';
+export const RECO_TITLE_TESTID = '0-recommendation-title';
+export const START_RECIPE_BTN_TESTID = 'start-recipe-btn';
+export const FIRST_INGRED_MEAS_TESTID_IN_PROGRESS = '0-ingredient-step';
+export const FINISH_RECIPE_BTN_TESTID = 'finish-recipe-btn';

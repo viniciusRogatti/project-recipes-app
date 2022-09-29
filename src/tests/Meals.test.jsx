@@ -33,6 +33,7 @@ describe('Testa a página Meals', () => {
       }
     }, { timeout: 3000 });
   });
+
   test(`Se o título "Meals" é renderizado na tela,
   assim como os botões "profile" e "search"`, () => {
     renderWithRouter(<App />, MEALS_PATH);
