@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RecipesCard } from '../styles/main';
 import { DRINKS_PATH, MEALS_PATH } from '../services/helpers/Consts';
 
-function Card({ recipe, index }) {
-  const { pathname } = useLocation();
-
-  const cardImage = pathname.includes('meals') ? 'strMealThumb' : 'strDrinkThumb';
-  const cardName = pathname.includes('meals') ? 'strMeal' : 'strDrink';
-  const cardId = pathname.includes('meals') ? 'idMeal' : 'idDrink';
-  const path = pathname.includes('meals') ? MEALS_PATH : DRINKS_PATH;
+function Card({ recipe, titleTestId, imgTestId, nameTestId, type }) {
+  const cardImage = type === 'meals' ? 'strMealThumb' : 'strDrinkThumb';
+  const cardName = type === 'meals' ? 'strMeal' : 'strDrink';
+  const cardId = type === 'meals' ? 'idMeal' : 'idDrink';
+  const path = type === 'meals' ? MEALS_PATH : DRINKS_PATH;
 
   return (
-    <RecipesCard data-testid={ `${index}-recipe-card` }>
+    <RecipesCard data-testid={ titleTestId }>
       <Link to={ `${path}/${recipe[cardId]}` }>
         <img
           src={ recipe[cardImage] }
           alt={ recipe[cardName] }
-          data-testid={ `${index}-card-img` }
+          data-testid={ imgTestId }
         />
-        <h3 data-testid={ `${index}-card-name` }>{recipe[cardName]}</h3>
+        <h3 data-testid={ nameTestId }>{recipe[cardName]}</h3>
       </Link>
     </RecipesCard>
   );
@@ -28,6 +26,10 @@ function Card({ recipe, index }) {
 
 Card.propTypes = {
   recipe: PropTypes.string,
+  titleTestId: PropTypes.string,
+  imgTestId: PropTypes.string,
+  nameTestId: PropTypes.string,
+  type: PropTypes.string,
 }.isRequired;
 
 export default Card;

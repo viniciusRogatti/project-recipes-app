@@ -24,11 +24,26 @@ function Recipes() {
   return (
     <Main>
       {isSearching ? filteredRecipes.map((recipe, index) => (index < RECIPES_LIMIT && (
-        <Card recipe={ recipe } index={ index } key={ `id:${index}-search` } />
+        <Card
+          recipe={ recipe }
+          index={ index }
+          key={ `id:${index}-search` }
+          titleTestId={ `${index}-recipe-card` }
+          imgTestId={ `${index}-card-img` }
+          nameTestId={ `${index}-card-name` }
+          type={ type }
+        />
       ))) : (
         recipes[type]?.length && recipes[type]
           .map((recipe, index) => (index < RECIPES_LIMIT && (
-            <Card recipe={ recipe } index={ index } key={ `id:${index}-recipe` } />
+            <Card
+              recipe={ recipe }
+              key={ `id:${index}-recipe` }
+              titleTestId={ `${index}-recipe-card` }
+              imgTestId={ `${index}-card-img` }
+              nameTestId={ `${index}-card-name` }
+              type={ type }
+            />
           )))
       )}
     </Main>

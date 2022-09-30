@@ -13,6 +13,7 @@ import {
   checkRecipeIsFavorited,
   getProgessesRecipes,
   removeRecipeToFavorite,
+  saveDoneRecipe,
   saveRecipeToFavorite,
 } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
@@ -65,6 +66,11 @@ function RecipeInProgress() {
     } else removeRecipeToFavorite(detail, screen);
   };
 
+  const handleDone = () => {
+    saveDoneRecipe(detail, screen);
+    history.push(DONE_RECIPES_PATH);
+  };
+
   return (
     <section>
       <button
@@ -101,7 +107,7 @@ function RecipeInProgress() {
       <StartRecipeButton
         data-testid="finish-recipe-btn"
         disabled={ !recipeFinished }
-        onClick={ () => history.push(DONE_RECIPES_PATH) }
+        onClick={ handleDone }
       >
         Finish Recipe
       </StartRecipeButton>
