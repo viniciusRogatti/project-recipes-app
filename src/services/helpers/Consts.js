@@ -75,6 +75,7 @@ export const RECIPE_CATEGORY_TESTID = 'recipe-category';
 export const FIRST_INGREDIENT_MEASURE_TESTID = '0-ingredient-name-and-measure';
 export const ALL_INGREDIENTS_MEASURES_TESTIDS = /ingredient-name-and-measure/i;
 export const INGREDIENTS_LENGTH = 8;
+export const AQUAMARINE_INGREDIENTS_LENGTH = 3;
 export const INSTRUCTIONS_TESTID = 'instructions';
 export const VIDEO_TESTID = 'video';
 export const RECO_CARD_TESTID = '0-recommendation-card';
@@ -87,3 +88,4 @@ export const ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS = /ingredient-step/i;
 export const FINISH_RECIPE_BTN_TESTID = 'finish-recipe-btn';
 
 export const MEALS_ARRABIATA_PATH = '/meals/52771';
+export const DRINKS_AQUAMARINE_PATH = '/drinks/178319';
