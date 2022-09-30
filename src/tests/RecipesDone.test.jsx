@@ -5,12 +5,13 @@ import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import { DONE_RECIPES_PATH } from '../services/helpers/Consts';
 
+const today = '29/09/2022';
 const teste = [
   {
     id: 53060,
     alcoholicOrNot: '',
     category: 'Side',
-    doneDate: '29/09/2022',
+    doneDate: today,
     image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
     name: 'Burek',
     nationality: 'Croatian',
@@ -21,13 +22,15 @@ const teste = [
     id: 15997,
     alcoholicOrNot: 'Optional alcohol',
     category: 'Ordinary Drink',
-    doneDate: '29/09/2022',
+    doneDate: today,
     image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
     name: 'GG',
     nationality: '',
     type: 'drink',
     tags: [],
   }];
+
+const dataTestId = '1-horizontal-name';
 
 describe('Testa a page "Recipe Details"', () => {
   beforeEach(() => localStorage.setItem('doneRecipes', JSON.stringify(teste)));
@@ -52,13 +55,13 @@ describe('Testa a page "Recipe Details"', () => {
     expect(firstImgRecipe.src).toBe('https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg');
     expect(firstTitleRecipe).toHaveTextContent('Burek');
     expect(firstTextRecipe).toHaveTextContent('Croatian - Side');
-    expect(firstDoneDateRecipe).toHaveTextContent('29/09/2022');
+    expect(firstDoneDateRecipe).toHaveTextContent(today);
     expect(firstBtnShare).toBeInTheDocument('shareIcon.svg');
     expect(firstTagOfFirstRecipe).toHaveTextContent('Streetfood');
     expect(secondTagOfFirstRecipe).toHaveTextContent('Onthego');
 
     const secondImgRecipe = screen.getByRole('img', { name: 'GG' });
-    const secondTitleRecipe = screen.getByTestId('1-horizontal-name');
+    const secondTitleRecipe = screen.getByTestId(dataTestId);
     const secondTextRecipe = screen.getByTestId('1-horizontal-top-text');
     const secondDoneDateRecipe = screen.getByTestId('1-horizontal-done-date');
     const secondBtnShare = screen.getByTestId('1-horizontal-share-btn');
@@ -66,7 +69,7 @@ describe('Testa a page "Recipe Details"', () => {
     expect(secondImgRecipe.src).toBe('https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg');
     expect(secondTitleRecipe).toHaveTextContent('GG');
     expect(secondTextRecipe).toHaveTextContent('Optional alcohol - Ordinary Drink');
-    expect(secondDoneDateRecipe).toHaveTextContent('29/09/2022');
+    expect(secondDoneDateRecipe).toHaveTextContent(today);
     expect(secondBtnShare).toBeInTheDocument('shareIcon.svg');
   });
   test('Se os botões de filtros tem o comportamento esperado', async () => {
@@ -75,7 +78,7 @@ describe('Testa a page "Recipe Details"', () => {
     const btnFilterFoods = screen.getByRole('button', { name: 'Foods' });
     const btnFilterDrinks = screen.getByRole('button', { name: 'Drinks' });
     const firstTitleRecipe = screen.getByTestId('0-horizontal-name');
-    const secondTitleRecipe = screen.getByTestId('1-horizontal-name');
+    const secondTitleRecipe = screen.getByTestId(dataTestId);
 
     userEvent.click(btnFilterFoods);
 
@@ -85,7 +88,7 @@ describe('Testa a page "Recipe Details"', () => {
     }, { timeout: 2000 });
 
     await waitFor(() => {
-      expect(screen.getByTestId('1-horizontal-name')).toBeInTheDocument();
+      expect(screen.getByTestId(dataTestId)).toBeInTheDocument();
       userEvent.click(btnFilterDrinks);
     }, { timeout: 3000 });
 
