@@ -6,7 +6,7 @@ import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import {
   ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS,
-  AQUAMARINE_INGREDIENTS_LENGTH,
+  AQUAMARINE_INGREDIENTS_LENGTH3,
   FAVORITE_BTN_TESTID,
   FINISH_RECIPE_BTN_TESTID,
   INSTRUCTIONS_TESTID,
@@ -37,6 +37,9 @@ ao selecionar um drink`, () => {
     const recipeCategory = screen.getByTestId(RECIPE_CATEGORY_TESTID);
     const allIngredients = await screen
       .findAllByTestId(ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS);
+
+    screen.debug();
+
     const instructions = screen.getByTestId(INSTRUCTIONS_TESTID);
     const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TESTID);
 
@@ -45,7 +48,7 @@ ao selecionar um drink`, () => {
     expect(recipeImage).toBeInTheDocument();
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeCategory).toBeInTheDocument();
-    expect(allIngredients).toHaveLength(AQUAMARINE_INGREDIENTS_LENGTH);
+    expect(allIngredients).toHaveLength(AQUAMARINE_INGREDIENTS_LENGTH3);
     expect(instructions).toBeInTheDocument();
     expect(finishRecipeBtn).toBeInTheDocument();
     expect(finishRecipeBtn).toBeDisabled();
@@ -59,9 +62,6 @@ ao selecionar um drink`, () => {
       userEvent.click(allIngredients[0]);
       userEvent.click(allIngredients[1]);
       userEvent.click(allIngredients[2]);
-      userEvent.click(allIngredients[3]);
-      userEvent.click(allIngredients[4]);
-      userEvent.click(allIngredients[5]);
     });
 
     expect(finishRecipeBtn).toBeEnabled();

@@ -7,7 +7,7 @@ import {
   ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS,
   FAVORITE_BTN_TESTID,
   FINISH_RECIPE_BTN_TESTID,
-  INGREDIENTS_LENGTH,
+  INGREDIENTS_LENGTH8,
   INSTRUCTIONS_TESTID,
   RECIPE_CATEGORY_TESTID,
   RECIPE_PHOTO_TESTID,
@@ -45,7 +45,7 @@ ao selecionar uma meal`, () => {
     expect(recipeImage).toBeInTheDocument();
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeCategory).toBeInTheDocument();
-    expect(allIngredients).toHaveLength(INGREDIENTS_LENGTH);
+    expect(allIngredients).toHaveLength(INGREDIENTS_LENGTH8);
     expect(instructions).toBeInTheDocument();
     expect(video).toBeInTheDocument();
     expect(finishRecipeBtn).toBeInTheDocument();
@@ -62,14 +62,6 @@ ao selecionar uma meal`, () => {
     userEvent.click(allIngredients[5]);
     userEvent.click(allIngredients[6]);
     userEvent.click(allIngredients[7]);
-    userEvent.click(allIngredients[8]);
-    userEvent.click(allIngredients[9]);
-    userEvent.click(allIngredients[10]);
-    userEvent.click(allIngredients[11]);
-    userEvent.click(allIngredients[12]);
-    userEvent.click(allIngredients[13]);
-    userEvent.click(allIngredients[14]);
-    userEvent.click(allIngredients[15]);
 
     userEvent.click(favoriteBtn);
     userEvent.click(favoriteBtn);
