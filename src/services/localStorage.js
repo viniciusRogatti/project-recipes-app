@@ -104,6 +104,13 @@ export const checkIsDoneRecipe = (idRecipe) => {
 
 // Funtions Recipes Favorite \/
 
+export const getFavoriteRecipes = () => JSON.parse(localStorage.getItem(FAVORITES_KEY));
+
+export const saveAgainToFavorite = (recipe) => {
+  const allfavorites = getFavoriteRecipes();
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...allfavorites, recipe]));
+};
+
 export const saveRecipeToFavorite = (recipe, type) => {
   const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
   const name = type === 'meals' ? 'strMeal' : 'strDrink';
@@ -118,24 +125,28 @@ export const saveRecipeToFavorite = (recipe, type) => {
     name: recipe[name],
     image: recipe[image],
   };
-  const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
-  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...allRecipes, obj]));
+  const allfavorites = getFavoriteRecipes();
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...allfavorites, obj]));
 };
 
 export const removeRecipeToFavorite = (recipe, type) => {
   const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
+  const allfavorites = getFavoriteRecipes();
+  if (recipe.id) {
+    const recipesFilter = allfavorites.filter((recip) => recip.id !== recipe.id);
+    return localStorage.setItem(FAVORITES_KEY, JSON.stringify(recipesFilter));
+  }
   if (recipe) {
-    const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
-    const recipesFilter = allRecipes.filter((recip) => recip.id !== recipe[typeId]);
+    const recipesFilter = allfavorites.filter((recip) => recip.id !== recipe[typeId]);
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(recipesFilter));
   }
 };
 
 export const checkRecipeIsFavorited = (recipe, type) => {
   const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
-  const allRecipes = JSON.parse(localStorage.getItem(FAVORITES_KEY));
+  const allfavorites = getFavoriteRecipes();
   if (recipe) {
-    const isFavorite = allRecipes.some((recip) => recip.id === recipe[typeId]);
+    const isFavorite = allfavorites.some((recip) => recip.id === recipe[typeId]);
     return isFavorite;
   }
 };
