@@ -3,23 +3,37 @@ import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState(null);
+  const [filteredBarRecipes, setFilteredBarRecipes] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const [recipesMade, setRecipesMade] = useState(0);
+  const [updateFavorite, setUpdateFavorite] = useState(false);
 
   const setTrueFilter = (param) => {
-    setFilteredRecipes(param);
+    setFilteredBarRecipes(param);
     setIsSearching(true);
   };
 
+  const handleRecipeFilter = (param) => {
+    setFilteredRecipes(param);
+  };
+
+  const setTrueUpdate = (param) => {
+    setUpdateFavorite(param);
+  };
+
   const contextValue = useMemo(() => ({
+    isSearching,
+    recipesMade,
+    updateFavorite,
     filteredRecipes,
     setTrueFilter,
-    setIsSearching,
-    isSearching,
+    setTrueUpdate,
     setRecipesMade,
-    recipesMade,
-  }), [isSearching, setIsSearching, filteredRecipes, recipesMade]);
+    handleRecipeFilter,
+    filteredBarRecipes,
+    setIsSearching,
+  }), [filteredRecipes, recipesMade, updateFavorite, isSearching, filteredBarRecipes]);
 
   return (
     <RecipesContext.Provider value={ contextValue }>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
+import useRecipes from '../hooks/useRecipes';
 import { TheRecipesDBAPI } from '../services/fetchApi';
 import {
   ALERT_MSG,
@@ -17,7 +17,7 @@ import {
 import { FilterBox, SearchBox } from '../styles/header';
 
 function SearchBar() {
-  const { setTrueFilter } = useContext(RecipesContext);
+  const { setTrueFilter } = useRecipes();
 
   const [search, setSearch] = useState('');
   const [value, setValue] = useState('');

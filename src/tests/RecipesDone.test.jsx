@@ -32,7 +32,7 @@ const teste = [
 
 const dataTestId = '1-horizontal-name';
 
-describe('Testa a page "Recipe Details"', () => {
+describe('Testa a page "Recipes Done"', () => {
   beforeEach(() => localStorage.setItem('doneRecipes', JSON.stringify(teste)));
   test('Se todos os elementos aparecem na tela', async () => {
     renderWithRouter(<App />, DONE_RECIPES_PATH);
