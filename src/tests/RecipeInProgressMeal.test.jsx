@@ -7,7 +7,6 @@ import {
   ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS,
   FAVORITE_BTN_TESTID,
   FINISH_RECIPE_BTN_TESTID,
-  FIRST_INGRED_MEAS_TESTID_IN_PROGRESS,
   INGREDIENTS_LENGTH,
   INSTRUCTIONS_TESTID,
   RECIPE_CATEGORY_TESTID,
@@ -35,8 +34,6 @@ ao selecionar uma meal`, () => {
     const recipeImage = screen.getByTestId(RECIPE_PHOTO_TESTID);
     const recipeTitle = screen.getByTestId(RECIPE_TITLE_TESTID);
     const recipeCategory = screen.getByTestId(RECIPE_CATEGORY_TESTID);
-    const firstIngredient = await screen
-      .findByTestId(FIRST_INGRED_MEAS_TESTID_IN_PROGRESS);
     const allIngredients = await screen
       .findAllByTestId(ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS);
     const instructions = screen.getByTestId(INSTRUCTIONS_TESTID);
@@ -48,7 +45,6 @@ ao selecionar uma meal`, () => {
     expect(recipeImage).toBeInTheDocument();
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeCategory).toBeInTheDocument();
-    expect(firstIngredient).toBeInTheDocument();
     expect(allIngredients).toHaveLength(INGREDIENTS_LENGTH);
     expect(instructions).toBeInTheDocument();
     expect(video).toBeInTheDocument();
@@ -66,19 +62,29 @@ ao selecionar uma meal`, () => {
     userEvent.click(allIngredients[5]);
     userEvent.click(allIngredients[6]);
     userEvent.click(allIngredients[7]);
-
-    expect(finishRecipeBtn).toBeEnabled();
+    userEvent.click(allIngredients[8]);
+    userEvent.click(allIngredients[9]);
+    userEvent.click(allIngredients[10]);
+    userEvent.click(allIngredients[11]);
+    userEvent.click(allIngredients[12]);
+    userEvent.click(allIngredients[13]);
+    userEvent.click(allIngredients[14]);
+    userEvent.click(allIngredients[15]);
 
     userEvent.click(favoriteBtn);
     userEvent.click(favoriteBtn);
     userEvent.click(video);
     userEvent.click(video);
 
-    // userEvent.click(shareBtn);
-    // const copiedMessage = screen.getByText(/link copied/i);
-    // expect(copiedMessage).toBeInTheDocument();
+    const finishRecipeBtn2 = await screen.findByTestId(FINISH_RECIPE_BTN_TESTID);
 
-    userEvent.click(finishRecipeBtn);
+    expect(finishRecipeBtn2).toBeEnabled();
+
+    userEvent.click(finishRecipeBtn2);
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/done-recipes');
+    }, { timeout: 3000 });
   });
   test('Se o botão de copiar o link funciona', async () => {
     const { history } = renderWithRouter(<App />, '/meals/52977/in-progress');
@@ -88,6 +94,7 @@ ao selecionar uma meal`, () => {
         writeText: () => {},
       },
     });
+
     jest.spyOn(navigator.clipboard, 'writeText');
 
     expect(history.location.pathname).toBe('/meals/52977/in-progress');
