@@ -24,6 +24,29 @@ if (!JSON.parse(localStorage.getItem(FAVORITES_KEY))) {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify([]));
 }
 
+export const saveProgressesRecipes = (id, ingredient, type) => {
+  const rest = type === 'meals' ? 'drinks' : 'meals';
+  const myFoods = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY))[type];
+  const otherFoods = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY))[rest];
+  const check = Object.keys(myFoods).some((key) => key === id);
+  if (!check) {
+    const newObj = { [type]: { ...myFoods, [id]: [ingredient] }, [rest]: otherFoods };
+    localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
+  } else {
+    const checkIngredient = myFoods[id].includes(ingredient);
+    if (!checkIngredient) {
+      const newObj = { [type]: { ...myFoods, [id]: [...myFoods[id], ingredient] },
+        [rest]: otherFoods };
+      localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
+    } else {
+      const newObj = {
+        [type]: { ...myFoods, [id]: myFoods[id].filter((e) => e !== ingredient) },
+        [rest]: otherFoods };
+      localStorage.setItem(IN_PROGRESSES_RECIPES_KEY, JSON.stringify(newObj));
+    }
+  }
+};
+
 export const saveProgressesRecipesMeals = (id, ingredient) => {
   const allDrinks = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)).drinks;
   const allMeals = JSON.parse(localStorage.getItem(IN_PROGRESSES_RECIPES_KEY)).meals;
