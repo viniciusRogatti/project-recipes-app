@@ -7,13 +7,12 @@ import {
   ALL_INGREDIENTS_MEASURES_TESTIDS,
   FAVORITE_BTN_TESTID,
   FIRST_INGREDIENT_MEASURE_TESTID,
-  INGREDIENTS_LENGTH,
+  INGREDIENTS_LENGTH8,
   INSTRUCTIONS_TESTID,
   MEALS_ARRABIATA_PATH,
   RECIPE_CATEGORY_TESTID,
   RECIPE_PHOTO_TESTID,
   RECIPE_TITLE_TESTID,
-  // RECO_CARD_TESTID,
   SHARE_BTN_TESTID,
   START_RECIPE_BTN_TESTID,
   VIDEO_TESTID,
@@ -40,11 +39,7 @@ describe('Testa a page "Recipe Details"', () => {
     const allIngredients = await screen.findAllByTestId(ALL_INGREDIENTS_MEASURES_TESTIDS);
     const instructions = screen.getByTestId(INSTRUCTIONS_TESTID);
     const video = screen.getByTestId(VIDEO_TESTID);
-    // const recommendationCard = await screen.findByTestId(RECO_CARD_TESTID);
-    // const recommendationTitle = screen.getByTestId(RECO_TITLE_TESTID);
     const startRecipeBtn = screen.getByTestId(START_RECIPE_BTN_TESTID);
-
-    // const allRecommendationCards = await screen.findAllByTestId(ALL_RECO_IMGS_TESTIDS);
 
     expect(favoriteBtn).toBeInTheDocument();
     expect(shareBtn).toBeInTheDocument();
@@ -53,14 +48,10 @@ describe('Testa a page "Recipe Details"', () => {
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeCategory).toBeInTheDocument();
     expect(firstIngredient).toBeInTheDocument();
-    expect(allIngredients).toHaveLength(INGREDIENTS_LENGTH);
+    expect(allIngredients).toHaveLength(INGREDIENTS_LENGTH8);
     expect(instructions).toBeInTheDocument();
     expect(video).toBeInTheDocument();
-    // expect(recommendationCard).toBeInTheDocument();
-    // expect(recommendationTitle).toBeInTheDocument();
-    // expect(allRecommendationCards).toHaveLength(RECO_IMGS_LENGTH);
     expect(startRecipeBtn).toBeInTheDocument();
-
     expect(recipeTitle).toHaveTextContent(/spicy arrabiata penne/i);
     expect(recipeCategory).toHaveTextContent(/vegetarian/i);
 

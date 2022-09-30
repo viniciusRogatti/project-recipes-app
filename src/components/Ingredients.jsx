@@ -40,7 +40,7 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
       >
         <input
           type="checkbox"
-          data-testid={ `${index}-ingredient-step` }
+          // data-testid={ `${index}-ingredient-step` }
           id={ ingredient }
           onChange={ handleChange }
           checked={ value }

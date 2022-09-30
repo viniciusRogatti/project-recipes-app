@@ -6,7 +6,7 @@ import renderWithRouter from './renderWithRouter';
 import {
   ALL_INGREDIENTS_MEASURES_TESTIDS,
   ALL_RECO_IMGS_TESTIDS,
-  AQUAMARINE_INGREDIENTS_LENGTH,
+  AQUAMARINE_INGREDIENTS_LENGTH3,
   DRINKS_AQUAMARINE_PATH,
   FAVORITE_BTN_TESTID,
   FIRST_INGREDIENT_MEASURE_TESTID,
@@ -54,7 +54,7 @@ describe('Testa a page "Recipe Details", quando selecionado um drink...', () => 
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeCategory).toBeInTheDocument();
     expect(firstIngredient).toBeInTheDocument();
-    expect(allIngredients).toHaveLength(AQUAMARINE_INGREDIENTS_LENGTH);
+    expect(allIngredients).toHaveLength(AQUAMARINE_INGREDIENTS_LENGTH3);
     expect(instructions).toBeInTheDocument();
     expect(recommendationCard).toBeInTheDocument();
     expect(allRecommendationCards).toHaveLength(RECO_IMGS_LENGTH);
