@@ -47,7 +47,9 @@ function RecipeInProgress() {
 
   useEffect(() => {
     const recipesInProgress = getProgessesRecipes()[screen][id]?.length;
-    if (recipesInProgress) setrecipeFinished(recipesInProgress === ingredients?.length);
+    if (recipesInProgress) {
+      setrecipeFinished(recipesInProgress === ingredients?.length);
+    }
   }, [ingredients]); // eslint-disable-line
 
   useEffect(() => {
@@ -70,6 +72,8 @@ function RecipeInProgress() {
     saveDoneRecipe(detail, screen);
     history.push(DONE_RECIPES_PATH);
   };
+
+  const allIngredientsFinished = getProgessesRecipes()[screen][id];
 
   return (
     <section>
@@ -99,6 +103,7 @@ function RecipeInProgress() {
           inProgress
           index={ index }
           key={ `id-ingredient${index}` }
+          isChecked={ allIngredientsFinished?.includes(ingredient) }
         />
       ))}
       <h5> Instructions </h5>

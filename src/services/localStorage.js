@@ -106,11 +106,6 @@ export const checkIsDoneRecipe = (idRecipe) => {
 
 export const getFavoriteRecipes = () => JSON.parse(localStorage.getItem(FAVORITES_KEY));
 
-export const saveAgainToFavorite = (recipe) => {
-  const allfavorites = getFavoriteRecipes();
-  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...allfavorites, recipe]));
-};
-
 export const saveRecipeToFavorite = (recipe, type) => {
   const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
   const name = type === 'meals' ? 'strMeal' : 'strDrink';

@@ -19,7 +19,7 @@ function Recipes() {
       setIsSearching(false);
     };
     CallRecipes();
-  }, [pathname]); // eslint-disable-line
+  }, [pathname, setIsSearching]);
 
   return (
     <Main>
