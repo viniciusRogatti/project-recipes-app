@@ -71,7 +71,30 @@ export const saveProgressesRecipesDrinks = (id, ingredient) => {
 export const getProgessesRecipes = () => JSON.parse(localStorage
   .getItem(IN_PROGRESSES_RECIPES_KEY));
 
+// Funtions Done Recipes
+
 export const getRecipes = () => JSON.parse(localStorage.getItem(DONE_KEY));
+
+export const saveDoneRecipe = (recipe, type) => {
+  const data = new Date().toLocaleDateString('pt-br');
+  const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
+  const name = type === 'meals' ? 'strMeal' : 'strDrink';
+  const image = type === 'meals' ? 'strMealThumb' : 'strDrinkThumb';
+  const recipeType = type === 'meals' ? 'meal' : 'drink';
+  const obj = {
+    id: recipe[typeId],
+    type: recipeType,
+    nationality: recipe.strArea ? recipe.strArea : '',
+    category: recipe.strCategory,
+    alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
+    name: recipe[name],
+    image: recipe[image],
+    doneDate: data,
+    tags: recipe.strTags ? recipe.strTags.split(',') : [],
+  };
+  const allRecipes = JSON.parse(localStorage.getItem(DONE_KEY));
+  localStorage.setItem(DONE_KEY, JSON.stringify([...allRecipes, obj]));
+};
 
 export const checkIsDoneRecipe = (idRecipe) => {
   const allRecipesDone = getRecipes();
@@ -79,8 +102,9 @@ export const checkIsDoneRecipe = (idRecipe) => {
   return teste;
 };
 
+// Funtions Recipes Favorite \/
+
 export const saveRecipeToFavorite = (recipe, type) => {
-  console.log(recipe, type);
   const typeId = type === 'meals' ? 'idMeal' : 'idDrink';
   const name = type === 'meals' ? 'strMeal' : 'strDrink';
   const image = type === 'meals' ? 'strMealThumb' : 'strDrinkThumb';

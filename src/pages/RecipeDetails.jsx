@@ -10,7 +10,6 @@ import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 import VideoRecipe from '../components/VideoRecipe';
 import { DRINKS_PATH, MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
-import RecommendedCards from '../components/RecommendedCards';
 import StartRecipeButton from '../styles/StartRecipeButton';
 import {
   checkIsDoneRecipe,
@@ -19,6 +18,7 @@ import {
   removeRecipeToFavorite,
   saveRecipeToFavorite,
 } from '../services/localStorage';
+import Card from '../components/Card';
 
 function RecipeDetails() {
   const { pathname } = useLocation();
@@ -101,6 +101,7 @@ function RecipeDetails() {
           inProgress={ false }
           index={ index }
           key={ `id-ingredient${index}` }
+          type={ screen }
         />
       ))}
       <h5> Instructions </h5>
@@ -108,10 +109,13 @@ function RecipeDetails() {
       {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
       <Carrousel>
         {recommended?.map((recipe, index) => (index < RECOMMENDED_LIMIT && (
-          <RecommendedCards
+          <Card
             recipe={ recipe }
-            index={ index }
             key={ `${index}-recommendation-card` }
+            titleTestId={ `${index}-recommendation-card` }
+            imgTestId={ `${index}-card-img` }
+            nameTestId={ `${index}-recommendation-title` }
+            type={ screen === 'meals' ? 'drinks' : 'meals' }
           />
         )))}
       </Carrousel>
