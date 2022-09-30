@@ -1,14 +1,14 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
 import {
   ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS,
-  AQUAMARINE_INGREDIENTS_LENGTH,
+  AQUAMARINE_INGREDIENTS_LENGTH3,
   FAVORITE_BTN_TESTID,
   FINISH_RECIPE_BTN_TESTID,
-  FIRST_INGRED_MEAS_TESTID_IN_PROGRESS,
   INSTRUCTIONS_TESTID,
   RECIPE_CATEGORY_TESTID,
   RECIPE_PHOTO_TESTID,
@@ -35,10 +35,11 @@ ao selecionar um drink`, () => {
     const recipeImage = screen.getByTestId(RECIPE_PHOTO_TESTID);
     const recipeTitle = screen.getByTestId(RECIPE_TITLE_TESTID);
     const recipeCategory = screen.getByTestId(RECIPE_CATEGORY_TESTID);
-    const firstIngredient = await screen
-      .findByTestId(FIRST_INGRED_MEAS_TESTID_IN_PROGRESS);
     const allIngredients = await screen
       .findAllByTestId(ALL_INGRED_MEAS_STEP_TESTID_IN_PROGRESS);
+
+    screen.debug();
+
     const instructions = screen.getByTestId(INSTRUCTIONS_TESTID);
     const finishRecipeBtn = screen.getByTestId(FINISH_RECIPE_BTN_TESTID);
 
@@ -47,8 +48,7 @@ ao selecionar um drink`, () => {
     expect(recipeImage).toBeInTheDocument();
     expect(recipeTitle).toBeInTheDocument();
     expect(recipeCategory).toBeInTheDocument();
-    expect(firstIngredient).toBeInTheDocument();
-    expect(allIngredients).toHaveLength(AQUAMARINE_INGREDIENTS_LENGTH);
+    expect(allIngredients).toHaveLength(AQUAMARINE_INGREDIENTS_LENGTH3);
     expect(instructions).toBeInTheDocument();
     expect(finishRecipeBtn).toBeInTheDocument();
     expect(finishRecipeBtn).toBeDisabled();
@@ -56,20 +56,21 @@ ao selecionar um drink`, () => {
     expect(recipeTitle).toHaveTextContent(/aquamarine/i);
     expect(recipeCategory).toHaveTextContent(/cocktail/i);
 
-    userEvent.click(allIngredients[0]);
-    userEvent.click(allIngredients[1]);
-    userEvent.click(allIngredients[2]);
+    act(() => {
+      userEvent.click(favoriteBtn);
+      userEvent.click(favoriteBtn);
+      userEvent.click(allIngredients[0]);
+      userEvent.click(allIngredients[1]);
+      userEvent.click(allIngredients[2]);
+    });
 
     expect(finishRecipeBtn).toBeEnabled();
 
-    userEvent.click(favoriteBtn);
-    userEvent.click(favoriteBtn);
-
-    // userEvent.click(shareBtn);
-    // const copiedMessage = screen.getByText(/link copied/i);
-    // expect(copiedMessage).toBeInTheDocument();
-
     userEvent.click(finishRecipeBtn);
+
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/done-recipes');
+    }, { timeout: 3000 });
   });
   test('Se o botão de copiar o link funciona', async () => {
     const { history } = renderWithRouter(<App />, '/drinks/15997/in-progress');
