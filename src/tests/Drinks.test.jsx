@@ -18,6 +18,8 @@ import {
 import cocktailDrinks from '../../cypress/mocks/cocktailDrinks';
 import drinks from '../../cypress/mocks/drinks';
 import oneDrink from '../../cypress/mocks/oneDrink';
+import drinkCategories from '../../cypress/mocks/drinkCategories';
+import ordinaryDrinks from '../../cypress/mocks/ordinaryDrinks';
 
 describe('Testa a página Drinks', () => {
   test(`Se ao carregar a pagina, os cards de receitas referente a comidas são 
@@ -152,5 +154,29 @@ describe('Testa a página Drinks', () => {
 
     await waitFor(() => expect(history.location.pathname)
       .toBe(pathNameAquamarine), { timeout: 2000 });
+  });
+  test(`Se ao clicar em alguma categoria 
+  renderiza o elemento da categoria especificada`, async () => {
+    global.fetch = jest.fn().mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(drinkCategories),
+    }).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(drinks),
+    }).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(ordinaryDrinks),
+    });
+    renderWithRouter(<App />, DRINKS_PATH);
+
+    await waitFor(() => {
+      const ordinaryDrinksCategory = screen.getByTestId('Ordinary Drink-category-filter');
+      expect(ordinaryDrinksCategory).toBeInTheDocument();
+
+      // userEvent.click(goatCategory);
+      // expect(screen.getByTestId('0-card-img')).toBeInTheDocument();
+    }, { timeout: 2000 });
+    const ordinaryDrinksCategory = screen.getByTestId('Ordinary Drink-category-filter');
+    userEvent.click(ordinaryDrinksCategory);
+    await waitFor(() => {
+      expect(screen.getByText('3-Mile Long Island Iced Tea')).toBeInTheDocument();
+    }, { timeout: 2000 });
   });
 });

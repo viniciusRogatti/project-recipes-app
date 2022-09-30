@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
@@ -17,14 +17,16 @@ import {
 } from '../services/helpers/Consts';
 import oneDrink from '../../cypress/mocks/oneDrink';
 
+beforeEach(() => {
+  global.fetch = jest.fn().mockResolvedValue({
+    json: jest.fn().mockResolvedValue(oneDrink),
+  });
+});
+
 describe(`Testa a page "Recipe Details", após apertar o botão "Start Recipe",
 ao selecionar um drink`, () => {
   test('Se todos os elementos aparecem na tela', async () => {
     const { history } = renderWithRouter(<App />, '/drinks/178319/in-progress');
-
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneDrink),
-    });
 
     expect(history.location.pathname).toBe('/drinks/178319/in-progress');
 
@@ -68,5 +70,26 @@ ao selecionar um drink`, () => {
     // expect(copiedMessage).toBeInTheDocument();
 
     userEvent.click(finishRecipeBtn);
+  });
+  test('Se o botão de copiar o link funciona', async () => {
+    const { history } = renderWithRouter(<App />, '/drinks/15997/in-progress');
+
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: () => {},
+      },
+    });
+    jest.spyOn(navigator.clipboard, 'writeText');
+
+    expect(history.location.pathname).toBe('/drinks/15997/in-progress');
+
+    const shareBtn = screen.getByTestId('share-btn');
+
+    userEvent.click(shareBtn);
+
+    await waitFor(() => {
+      const copiedMessage = screen.getByText(/link copied!/i);
+      expect(copiedMessage).toBeInTheDocument();
+    }, { timeout: 3000 });
   });
 });

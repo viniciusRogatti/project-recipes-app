@@ -17,6 +17,8 @@ import {
 import beefMeals from '../../cypress/mocks/beefMeals';
 import meals from '../../cypress/mocks/meals';
 import oneMeal from '../../cypress/mocks/oneMeal';
+import mealCategories from '../../cypress/mocks/mealCategories';
+import goatMeals from '../../cypress/mocks/goatMeals';
 
 describe('Testa a página Meals', () => {
   test(`Se ao carregar a pagina, os cards de receitas referente a comidas são 
@@ -151,5 +153,26 @@ describe('Testa a página Meals', () => {
 
     await waitFor(() => expect(history.location.pathname)
       .toBe(pathNameArrabiata), { timeout: 2000 });
+  });
+  test(`Se ao clicar em alguma categoria 
+  renderiza o elemento da categoria especificada`, async () => {
+    global.fetch = jest.fn().mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mealCategories),
+    }).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(meals),
+    }).mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(goatMeals),
+    });
+    renderWithRouter(<App />, MEALS_PATH);
+
+    await waitFor(() => {
+      const goatCategory = screen.getByTestId('Goat-category-filter');
+      expect(goatCategory).toBeInTheDocument();
+    }, { timeout: 2000 });
+    const goatCategory = screen.getByTestId('Goat-category-filter');
+    userEvent.click(goatCategory);
+    await waitFor(() => {
+      expect(screen.getByText('Mbuzi Choma (Roasted Goat)')).toBeInTheDocument();
+    }, { timeout: 2000 });
   });
 });
