@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import Ingredients from '../components/Ingredients';
 import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
 import getIngredientsAndMeasures from '../services/getIngredientsAndMeasures';
 import VideoRecipe from '../components/VideoRecipe';
-import { DRINKS_PATH, MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
+import { DONE_RECIPES_PATH,
+  DRINKS_PATH, MEALS_PATH, RECOMMENDED_LIMIT } from '../services/helpers/Consts';
 import Carrousel from '../styles/carrousel';
 import StartRecipeButton from '../styles/StartRecipeButton';
 import {
@@ -16,7 +17,7 @@ import {
   saveRecipeToFavorite,
 } from '../services/localStorage';
 import Card from '../components/Card';
-import { BoxHeader,
+import { BoxCarrousel, BoxHeader,
   BoxIcons, BoxImage,
   BoxIngredient, BoxInstructions, Container, Main } from '../styles/recipes';
 import { ChevronLeftIcon, DesLikeIcon, LikeIcon, ShareIcon } from '../styles/_icons';
@@ -27,9 +28,9 @@ function RecipeDetails() {
   const { id } = useParams();
   const [detail, setDetail] = useState([]);
   const [ingredients, setIngredients] = useState(null);
-  // const [copiedLink, setcopiedLink] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [recommended, setRecommended] = useState(null);
+  const carrousel = useRef(null);
 
   const screen = pathname.includes('meals') ? 'meals' : 'drinks';
   const cardImg = pathname.includes('meals') ? 'strMealThumb' : 'strDrinkThumb';
@@ -51,7 +52,8 @@ function RecipeDetails() {
     };
     fetchData();
     fetchDetails();
-  }, []); // eslint-disable-line
+    console.log('fetch');
+  }, [pathname]); // eslint-disable-line
 
   const shareLink = () => {
     copy(`http://localhost:3000${pathname}`);
@@ -65,14 +67,28 @@ function RecipeDetails() {
     } else removeRecipeToFavorite(detail, screen);
   };
 
+  const handleLeftClick = () => {
+    const screenCarrousel = 11;
+    carrousel.current.scrollLeft -= (carrousel.current.offsetWidth + screenCarrousel);
+  };
+
+  const handleRightClick = () => {
+    const screenCarrousel = 11;
+    console.log(carrousel.current.offsetWidth + screenCarrousel);
+    console.log(carrousel.current.offsetWidth);
+    carrousel.current.scrollLeft += (carrousel.current.offsetWidth + screenCarrousel);
+  };
+
   const inProgress = Object.keys(getProgessesRecipes()[screen]).some((key) => key === id);
   const isDone = checkIsDoneRecipe(id);
+
+  console.log(detail);
 
   return (
     <Main>
       <BoxHeader>
         <BoxIcons>
-          <ChevronLeftIcon onClick={ () => history.goBack() } />
+          <ChevronLeftIcon margin="80%" onClick={ () => history.goBack() } />
           <ShareIcon
             data-testid="share-btn"
             onClick={ shareLink }
@@ -95,7 +111,6 @@ function RecipeDetails() {
         </h4>
         <BoxImage banner={ detail[cardImg] } />
       </BoxHeader>
-      {/* {copiedLink && <h3>Link copied!</h3>} */}
       <Container>
         <h1> Ingredients </h1>
         <BoxIngredient>
@@ -114,25 +129,36 @@ function RecipeDetails() {
           <p data-testid="instructions">{detail?.strInstructions}</p>
         </BoxInstructions>
         {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
-        <Carrousel>
-          {recommended?.map((recipe, index) => (index < RECOMMENDED_LIMIT && (
-            <Card
-              recipe={ recipe }
-              key={ `${index}-recommendation-card` }
-              titleTestId={ `${index}-recommendation-card` }
-              imgTestId={ `${index}-card-img` }
-              nameTestId={ `${index}-recommendation-title` }
-              type={ screen === 'meals' ? 'drinks' : 'meals' }
-            />
-          )))}
-        </Carrousel>
+        <BoxCarrousel>
+          <Carrousel ref={ carrousel }>
+            {recommended?.map((recipe, index) => (index < RECOMMENDED_LIMIT && (
+              <Card
+                recipe={ recipe }
+                key={ `${index}-recommendation-card` }
+                titleTestId={ `${index}-recommendation-card` }
+                imgTestId={ `${index}-card-img` }
+                nameTestId={ `${index}-recommendation-title` }
+                type={ screen === 'meals' ? 'drinks' : 'meals' }
+              />
+            )))}
+          </Carrousel>
+          <ChevronLeftIcon onClick={ handleLeftClick } className="chevron-left" />
+          <ChevronLeftIcon onClick={ handleRightClick } className="chevron-right" />
+        </BoxCarrousel>
       </Container>
-      {!isDone && (
+      {!isDone ? (
         <StartRecipeButton
           data-testid="start-recipe-btn"
           onClick={ () => history.push(`${pathname}/in-progress`) }
         >
           {inProgress ? 'Continue Recipe' : 'Start Recipe' }
+        </StartRecipeButton>
+      ) : (
+        <StartRecipeButton
+          data-testid="start-recipe-btn"
+          onClick={ () => history.push(`${DONE_RECIPES_PATH}`) }
+        >
+          Receitas Prontas
         </StartRecipeButton>
       )}
     </Main>

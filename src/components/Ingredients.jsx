@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useLocation, useParams } from 'react-router-dom';
 import { getProgessesRecipes, saveProgressesRecipes } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
+import { BoxIngredientInProgress } from '../styles/recipes';
 
 function Ingredients({ ingredient, inProgress, index, isChecked }) {
   const { id } = useParams();
@@ -29,19 +30,21 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
         {ingredient}
       </li>
     ) : (
-      <label
-        htmlFor={ ingredient }
-        key={ index }
-        data-testid={ `${index}-ingredient-step` }
-      >
-        <input
-          type="checkbox"
-          id={ ingredient }
-          onChange={ handleChange }
-          checked={ value }
-        />
-        {ingredient}
-      </label>
+      <BoxIngredientInProgress>
+        <label
+          htmlFor={ ingredient }
+          key={ index }
+          data-testid={ `${index}-ingredient-step` }
+        >
+          <input
+            type="checkbox"
+            id={ ingredient }
+            onChange={ handleChange }
+            checked={ value }
+          />
+          {ingredient}
+        </label>
+      </BoxIngredientInProgress>
     )
   );
 }

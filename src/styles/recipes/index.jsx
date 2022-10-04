@@ -10,7 +10,7 @@ export const Container = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 0 auto 50px;
 
   h1 {
     margin-top: 2%;
@@ -68,6 +68,7 @@ export const BoxIcons = styled.div`
 `;
 
 export const BoxIngredient = styled.ul`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 20px 40px;
@@ -84,7 +85,58 @@ export const BoxIngredient = styled.ul`
   }
 `;
 
-export const BoxInstructions = styled.div`
+export const BoxIngredientInProgress = styled.li`
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  list-style: none;
+
+  label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 5px;
+  }
+
+  input[type="checkbox"] {
+    position: relative;
+    top: 2px;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    -webkit-appearance: none;
+    outline: none;
+    transition: 1.6s;
+  }
+
+  input[type="checkbox"]:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #121212;
+    box-sizing: border-box;
+    transition: 1.0s;
+  }
+  input:checked[type="checkbox"]:before {
+    position: absolute;
+    border: 4px solid #FCC436;
+    top: -15px;
+    left: 5px;
+    border-left: none;
+    border-top: none;
+    width: 10px;
+    transform: rotate(45deg) translate(5px, 10px);
+  }
+`;
+
+export const BoxInstructions = styled.section`
   display: flex;
   flex-direction: column;
   max-height: 200px;
@@ -98,7 +150,7 @@ export const BoxInstructions = styled.div`
   color: #1A1B1C;
 `;
 
-export const BoxVideo = styled.div`
+export const BoxVideo = styled.section`
   max-width: 100%;
   max-height: 100%;
   margin-bottom: 5px;
@@ -106,5 +158,28 @@ export const BoxVideo = styled.div`
   iframe {
     width: 100%;
     height: 100%;
+  }
+`;
+
+export const BoxCarrousel = styled.section`
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  .chevron-left {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 2px;
+    top: 40%;
+  }
+
+  .chevron-right {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transform: rotate(180deg);
+    right: 2px;
+    top: 40%;
   }
 `;

@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 const StartRecipeButton = styled.button`
-display: block;
-background: #FCC436;
-border-radius: 5px;
 position: fixed;
-bottom: 0;
+display: block;
 width: 100%;
 height: 40px;
+background: #FCC436;
+border-radius: 5px;
+bottom: 0;
 `;
 
 export default StartRecipeButton;

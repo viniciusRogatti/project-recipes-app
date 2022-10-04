@@ -35,7 +35,7 @@ export const ShareIcon = styled(shareIcon)`
 export const ChevronLeftIcon = styled(chevronLeftIcon)`
   width: 20px;
   height: 20px;
-  margin-right: 80%;
+  margin-right: ${(props) => props.margin};
   path {
     fill: #FCC436;
   }

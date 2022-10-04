@@ -24,7 +24,7 @@ function RecipeInProgress() {
   const { pathname } = useLocation();
   const history = useHistory();
   const { id } = useParams();
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   // const [copiedLink, setcopiedLink] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -77,60 +77,62 @@ function RecipeInProgress() {
   const allIngredientsFinished = getProgessesRecipes()[screen][id];
 
   return (
-    <Main>
-      <BoxHeader>
-        <BoxIcons>
-          <ChevronLeftIcon onClick={ () => history.goBack() } />
-          <ShareIcon
-            data-testid="share-btn"
-            onClick={ shareLink }
-          />
-          { isFavorite ? (
-            <DesLikeIcon
-              onClick={ handlefavorited }
-              data-testid="favorite-btn"
+    detail && (
+      <Main>
+        <BoxHeader>
+          <BoxIcons>
+            <ChevronLeftIcon margin="80%" onClick={ () => history.goBack() } />
+            <ShareIcon
+              data-testid="share-btn"
+              onClick={ shareLink }
             />
-          ) : (
-            <LikeIcon
-              onClick={ handlefavorited }
-              data-testid="favorite-btn"
-            />
-          )}
-        </BoxIcons>
-        <h3 data-testid="recipe-title">{detail[cardName]}</h3>
-        <h4 data-testid="recipe-category">
-          {screen === 'meals' ? detail.strCategory : detail.strAlcoholic}
-        </h4>
-        <BoxImage banner={ detail[cardImg] } />
-      </BoxHeader>
-      <Container>
-        <h1> Ingredients </h1>
-        <BoxIngredient>
-          {ingredients?.map((ingredient, index) => (
-            <Ingredients
-              ingredient={ ingredient }
-              inProgress
-              index={ index }
-              key={ `id-ingredient${index}` }
-              isChecked={ allIngredientsFinished?.includes(ingredient) }
-            />
-          ))}
-        </BoxIngredient>
-        <h1> Instructions </h1>
-        <BoxInstructions>
-          <p data-testid="instructions">{detail.strInstructions}</p>
-        </BoxInstructions>
+            { isFavorite ? (
+              <DesLikeIcon
+                onClick={ handlefavorited }
+                data-testid="favorite-btn"
+              />
+            ) : (
+              <LikeIcon
+                onClick={ handlefavorited }
+                data-testid="favorite-btn"
+              />
+            )}
+          </BoxIcons>
+          <h3 data-testid="recipe-title">{detail[cardName]}</h3>
+          <h4 data-testid="recipe-category">
+            {screen === 'meals' ? detail.strCategory : detail.strAlcoholic}
+          </h4>
+          <BoxImage banner={ detail[cardImg] } />
+        </BoxHeader>
+        <Container>
+          <h1> Ingredients </h1>
+          <BoxIngredient>
+            {ingredients?.map((ingredient, index) => (
+              <Ingredients
+                ingredient={ ingredient }
+                inProgress
+                index={ index }
+                key={ `id-ingredient${index}` }
+                isChecked={ allIngredientsFinished?.includes(ingredient) }
+              />
+            ))}
+          </BoxIngredient>
+          <h1> Instructions </h1>
+          <BoxInstructions>
+            <p data-testid="instructions">{detail.strInstructions}</p>
+          </BoxInstructions>
 
-        {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
-      </Container>
-      <StartRecipeButton
-        data-testid="finish-recipe-btn"
-        disabled={ !recipeFinished }
-        onClick={ handleDone }
-      >
-        Finish Recipe
-      </StartRecipeButton>
-    </Main>
+          {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
+        </Container>
+        <StartRecipeButton
+          data-testid="finish-recipe-btn"
+          disabled={ !recipeFinished }
+          onClick={ handleDone }
+        >
+          Finish Recipe
+        </StartRecipeButton>
+      </Main>
+    )
   );
 }
 
