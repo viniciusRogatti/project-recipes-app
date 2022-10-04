@@ -3,7 +3,17 @@ import { useLocation } from 'react-router-dom';
 import useRecipes from '../hooks/useRecipes';
 import { fetchAllCategories, fetchCategory } from '../services/fetchApi';
 import { CATEGORIES_LIMIT, MEALS_PATH } from '../services/helpers/Consts';
-import { Container } from '../styles/categorias';
+import { Container, AllMealsIcon, BeefIcon, BreakFastIcon, ChickenIcon,
+  DessertIcon, GoatIcon, AllDrinks, OrdinaryDrinkIcon, CocktailIcon,
+  ShakeIcon, OtherIcon, CocoaIcon } from '../styles/categorias';
+
+const arrayOfIconsMeals = [<BeefIcon key="beef" />,
+  <BreakFastIcon key="breakFast" />, <ChickenIcon key="chicken" />,
+  <DessertIcon key="dessert" />, <GoatIcon key="goat" />];
+
+const arrayOfIconsDrinks = [<OrdinaryDrinkIcon key="ordinary" />,
+  <CocktailIcon key="cocktail" />, <ShakeIcon key="shake" />,
+  <OtherIcon key="other" />, <CocoaIcon key="cocoa" />];
 
 function Categories() {
   const { pathname } = useLocation();
@@ -21,11 +31,11 @@ function Categories() {
     fetch();
   }, []); // eslint-disable-line
 
-  const filterCategory = async ({ target }) => {
-    const fetch = await fetchCategory(pathname, target.innerText);
-    setSavecategory(target.innerText);
-    if (saveCategory === target.innerText) return setIsSearching(!isSearching);
-    if (target.innerText === 'All') return setIsSearching(false);
+  const filterCategory = async ({ target: { parentElement: { id } } }) => {
+    const fetch = await fetchCategory(pathname, id);
+    setSavecategory(id);
+    if (saveCategory === id) return setIsSearching(!isSearching);
+    if (id === 'All') return setIsSearching(false);
     setTrueFilter(fetch[screen]);
   };
 
@@ -38,17 +48,19 @@ function Categories() {
               type="button"
               data-testid={ `${category.strCategory}-category-filter` }
               key={ index }
+              id={ category.strCategory }
               onClick={ filterCategory }
             >
-              {category.strCategory}
+              { screen === 'meals' ? arrayOfIconsMeals[index] : arrayOfIconsDrinks[index]}
             </button>
           ))))}
       <button
         type="button"
+        id="All"
         data-testid="All-category-filter"
         onClick={ filterCategory }
       >
-        All
+        {screen === 'meals' ? <AllMealsIcon /> : <AllDrinks /> }
       </button>
     </Container>
   );

@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MINUS_WATCH, PLUS_EMBED } from '../services/helpers/Consts';
+import { BoxVideo } from '../styles/recipes';
 
 function VideoRecipe({ recipe }) {
   return (
-    <div>
-      <h5>
+    <BoxVideo>
+      <h1>
         Video
-      </h5>
+      </h1>
       <iframe
         data-testid="video"
-        width="560"
-        height="315"
-        src={ recipe.strYoutube.replace(MINUS_WATCH, PLUS_EMBED) }
+        src={ recipe.strYoutube?.replace(MINUS_WATCH, PLUS_EMBED) }
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer;
           autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
-    </div>
+    </BoxVideo>
   );
 }
 

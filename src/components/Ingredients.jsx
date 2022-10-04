@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  saveProgressesRecipesMeals,
-  saveProgressesRecipesDrinks,
-  getProgessesRecipes } from '../services/localStorage';
+import { getProgessesRecipes, saveProgressesRecipes } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
+import { BoxIngredientInProgress } from '../styles/recipes';
 
 function Ingredients({ ingredient, inProgress, index, isChecked }) {
   const { id } = useParams();
@@ -17,8 +15,7 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
 
   const handleChange = ({ target: { checked } }) => {
     setHandleChecked(checked);
-    if (type === 'drinks') saveProgressesRecipesDrinks(id, ingredient);
-    else saveProgressesRecipesMeals(id, ingredient);
+    saveProgressesRecipes(id, ingredient, type);
     setRecipesMade(getProgessesRecipes()[type][id].length);
   };
 
@@ -26,27 +23,28 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
 
   return (
     !inProgress ? (
-      <p
+      <li
         key={ index }
         data-testid={ `${index}-ingredient-name-and-measure` }
       >
         {ingredient}
-      </p>
+      </li>
     ) : (
-      <label
-        htmlFor={ ingredient }
-        key={ index }
-        data-testid={ `${index}-ingredient-step` }
-      >
-        <input
-          type="checkbox"
-          // data-testid={ `${index}-ingredient-step` }
-          id={ ingredient }
-          onChange={ handleChange }
-          checked={ value }
-        />
-        {ingredient}
-      </label>
+      <BoxIngredientInProgress>
+        <label
+          htmlFor={ ingredient }
+          key={ index }
+          data-testid={ `${index}-ingredient-step` }
+        >
+          <input
+            type="checkbox"
+            id={ ingredient }
+            onChange={ handleChange }
+            checked={ value }
+          />
+          {ingredient}
+        </label>
+      </BoxIngredientInProgress>
     )
   );
 }

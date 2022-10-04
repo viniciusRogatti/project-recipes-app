@@ -1,43 +1,53 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 import {
   PROFILE_TOP_BTN,
   SEARCH_TOP_BTN,
   TITLE_HEADER_TESTID } from '../services/helpers/Consts';
-import { Container, IconRecipes, NavBar, TitleIcon } from '../styles/header';
+import {
+  IconRecipes,
+  TitleIcon,
+  SearchIcon,
+  PerfilIcon,
+  DrinksIcon,
+  DoneIcon,
+  FavoriteIcon,
+  FoodsTitle }
+  from '../styles/_icons';
+import { Container, LogoBox, NavBar } from '../styles/header';
+
+const objectIcons = {
+  'Done Recipes': <DoneIcon />,
+  'Favorite Recipes': <FavoriteIcon />,
+  Drinks: <DrinksIcon fill="#FCC436" />,
+  Meals: <FoodsTitle />,
+  Profile: <PerfilIcon fill="#FCC436" />,
+};
 
 function Header({ title, searchAble }) {
   const [toggleSearch, setToggleSearch] = useState(false);
   return (
-    <Container width={ toggleSearch ? '250px' : '150px' }>
+    <Container height={ toggleSearch ? '370px' : '150px' }>
       <NavBar>
-        <IconRecipes />
+        <Link to="/meals">
+          <IconRecipes />
+        </Link>
         <TitleIcon />
         { searchAble && (
-          <button type="button" onClick={ () => setToggleSearch(!toggleSearch) }>
-            <img
-              data-testid={ SEARCH_TOP_BTN }
-              type="image/svg+xml"
-              src={ searchIcon }
-              alt="search-icon"
-            />
-          </button>)}
+          <SearchIcon
+            data-testid={ SEARCH_TOP_BTN }
+            onClick={ () => setToggleSearch(!toggleSearch) }
+          />)}
         <Link to="/profile">
-          <img
-            data-testid={ PROFILE_TOP_BTN }
-            type="image/svg+xml"
-            src={ profileIcon }
-            alt="profile-icon"
-          />
+          <PerfilIcon fill="#41197F" data-testid={ PROFILE_TOP_BTN } />
         </Link>
       </NavBar>
-      <h1 data-testid={ TITLE_HEADER_TESTID }>
-        {title}
-      </h1>
+      <LogoBox data-testid={ TITLE_HEADER_TESTID }>
+        { objectIcons[title]}
+        <span>{ title }</span>
+      </LogoBox>
       { toggleSearch && (<SearchBar />)}
     </Container>
   );

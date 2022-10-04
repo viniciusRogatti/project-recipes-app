@@ -4,9 +4,6 @@ import copy from 'clipboard-copy';
 import Ingredients from './Ingredients';
 import { RecipeDetalsAPI } from '../services/fetchApi';
 import getIngredientsAndMeasures from '../services/getIngredientsAndMeasures';
-import shareIcon from '../images/shareIcon.svg';
-import FavoriteIcon from '../images/blackHeartIcon.svg';
-import notFavoriteIcon from '../images/whiteHeartIcon.svg';
 import VideoRecipe from './VideoRecipe';
 import StartRecipeButton from '../styles/StartRecipeButton';
 import {
@@ -18,14 +15,18 @@ import {
 } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
 import { DONE_RECIPES_PATH } from '../services/helpers/Consts';
+import { BoxHeader,
+  BoxIcons, BoxImage,
+  BoxIngredient, BoxInstructions, Container, Main } from '../styles/recipes';
+import { ChevronLeftIcon, DesLikeIcon, LikeIcon, ShareIcon } from '../styles/_icons';
 
 function RecipeInProgress() {
   const { pathname } = useLocation();
   const history = useHistory();
   const { id } = useParams();
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState(null);
   const [ingredients, setIngredients] = useState(null);
-  const [copiedLink, setcopiedLink] = useState(false);
+  // const [copiedLink, setcopiedLink] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipeFinished, setrecipeFinished] = useState(false);
   const { recipesMade } = useRecipes();
@@ -76,47 +77,62 @@ function RecipeInProgress() {
   const allIngredientsFinished = getProgessesRecipes()[screen][id];
 
   return (
-    <section>
-      <button
-        type="button"
-        onClick={ handlefavorited }
-        data-testid="favorite-btn"
-        src={ isFavorite ? FavoriteIcon : notFavoriteIcon }
-      >
-        Favoritar
-      </button>
-      {copiedLink && <h3>Link copied!</h3>}
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ shareLink }
-      >
-        <img src={ shareIcon } alt="link video" />
-      </button>
-      <img alt={ detail[cardName] } src={ detail[cardImg] } data-testid="recipe-photo" />
-      <h3 data-testid="recipe-title">{detail[cardName]}</h3>
-      <h4 data-testid="recipe-category">{detail.strCategory}</h4>
-      <h5> Ingredients </h5>
-      {ingredients?.map((ingredient, index) => (
-        <Ingredients
-          ingredient={ ingredient }
-          inProgress
-          index={ index }
-          key={ `id-ingredient${index}` }
-          isChecked={ allIngredientsFinished?.includes(ingredient) }
-        />
-      ))}
-      <h5> Instructions </h5>
-      <p data-testid="instructions">{detail.strInstructions}</p>
-      {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
-      <StartRecipeButton
-        data-testid="finish-recipe-btn"
-        disabled={ !recipeFinished }
-        onClick={ handleDone }
-      >
-        Finish Recipe
-      </StartRecipeButton>
-    </section>
+    detail && (
+      <Main>
+        <BoxHeader>
+          <BoxIcons>
+            <ChevronLeftIcon margin="80%" onClick={ () => history.goBack() } />
+            <ShareIcon
+              data-testid="share-btn"
+              onClick={ shareLink }
+            />
+            { isFavorite ? (
+              <DesLikeIcon
+                onClick={ handlefavorited }
+                data-testid="favorite-btn"
+              />
+            ) : (
+              <LikeIcon
+                onClick={ handlefavorited }
+                data-testid="favorite-btn"
+              />
+            )}
+          </BoxIcons>
+          <h3 data-testid="recipe-title">{detail[cardName]}</h3>
+          <h4 data-testid="recipe-category">
+            {screen === 'meals' ? detail.strCategory : detail.strAlcoholic}
+          </h4>
+          <BoxImage banner={ detail[cardImg] } />
+        </BoxHeader>
+        <Container>
+          <h1> Ingredients </h1>
+          <BoxIngredient>
+            {ingredients?.map((ingredient, index) => (
+              <Ingredients
+                ingredient={ ingredient }
+                inProgress
+                index={ index }
+                key={ `id-ingredient${index}` }
+                isChecked={ allIngredientsFinished?.includes(ingredient) }
+              />
+            ))}
+          </BoxIngredient>
+          <h1> Instructions </h1>
+          <BoxInstructions>
+            <p data-testid="instructions">{detail.strInstructions}</p>
+          </BoxInstructions>
+
+          {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
+        </Container>
+        <StartRecipeButton
+          data-testid="finish-recipe-btn"
+          disabled={ !recipeFinished }
+          onClick={ handleDone }
+        >
+          Finish Recipe
+        </StartRecipeButton>
+      </Main>
+    )
   );
 }
 
