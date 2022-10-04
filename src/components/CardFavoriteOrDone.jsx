@@ -5,7 +5,7 @@ import copy from 'clipboard-copy';
 import { removeRecipeToFavorite } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
 import { BoxBtn, BoxImage, BoxInfo, CardRecipe } from '../styles/favorites';
-import { LikeIcon, ShareIcon } from '../styles/_icons';
+import { DesLikeIcon, ShareIcon } from '../styles/_icons';
 
 function CardFavoriteOrDone({ recipe, index, isDone }) {
   const [copiedLink, setCopiedLink] = useState(false);
@@ -58,7 +58,7 @@ function CardFavoriteOrDone({ recipe, index, isDone }) {
               {tag}
             </span>
           )) : (
-            <LikeIcon
+            <DesLikeIcon
               onClick={ handlefavorited }
               data-testid={ `${index}-horizontal-favorite-btn` }
             />

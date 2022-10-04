@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CardFavoriteOrDone from '../components/CardFavoriteOrDone';
 import FilterBar from '../components/FilterBar';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import useRecipes from '../hooks/useRecipes';
 import { getFavoriteRecipes } from '../services/localStorage';
@@ -39,6 +40,7 @@ function FavoriteRecipes() {
           />
         ))}
       </Container>
+      <Footer />
     </Main>
 
   );

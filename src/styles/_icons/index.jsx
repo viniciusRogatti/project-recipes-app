@@ -14,7 +14,9 @@ import { ReactComponent as allFilterBarIcon } from '../_images/all-filter-bar.sv
 import { ReactComponent as drinkFilterBarIcon } from '../_images/drinks-filter-bar.svg';
 import { ReactComponent as mealsFilterBarIcon } from '../_images/meals-filter-bar.svg';
 import { ReactComponent as shareIcon } from '../_images/Share.svg';
+import { ReactComponent as desLikeIcon } from '../_images/deslike.svg';
 import { ReactComponent as likeIcon } from '../_images/like.svg';
+import { ReactComponent as chevronLeftIcon } from '../_images/chevron-left-icon.svg';
 
 export const SearchIcon = styled(searchIcon)`
   width: 33px;
@@ -30,9 +32,31 @@ export const ShareIcon = styled(shareIcon)`
   width: 25px;
 `;
 
+export const ChevronLeftIcon = styled(chevronLeftIcon)`
+  width: 20px;
+  height: 20px;
+  margin-right: 80%;
+  path {
+    fill: #FCC436;
+  }
+`;
+
+export const DesLikeIcon = styled(desLikeIcon)`
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+  path {
+    fill: #FCC436;
+  }
+`;
+
 export const LikeIcon = styled(likeIcon)`
   width: 25px;
   margin-left: 10px;
+
+  path {
+    fill: #FCC436;
+  }
 `;
 
 export const AllFilterBarIcon = styled(allFilterBarIcon)`

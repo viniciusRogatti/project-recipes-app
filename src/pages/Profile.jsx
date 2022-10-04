@@ -14,7 +14,6 @@ function Profile() {
     localStorage.clear();
   };
   const userEmail = JSON.parse(localStorage.getItem(USER_KEY));
-  console.log(userEmail);
 
   return (
     <Container>

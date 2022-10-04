@@ -11,11 +11,11 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px auto 10px;
+  margin: 5px auto 62px;
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  gap: 15px;
+  gap: 10px;
 `;
 
 export const CardRecipe = styled.div`

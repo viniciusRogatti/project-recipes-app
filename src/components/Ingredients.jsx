@@ -22,12 +22,12 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
 
   return (
     !inProgress ? (
-      <p
+      <li
         key={ index }
         data-testid={ `${index}-ingredient-name-and-measure` }
       >
         {ingredient}
-      </p>
+      </li>
     ) : (
       <label
         htmlFor={ ingredient }
