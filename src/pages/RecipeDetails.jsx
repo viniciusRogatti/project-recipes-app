@@ -52,7 +52,6 @@ function RecipeDetails() {
     };
     fetchData();
     fetchDetails();
-    console.log('fetch');
   }, [pathname]); // eslint-disable-line
 
   const shareLink = () => {
@@ -74,15 +73,11 @@ function RecipeDetails() {
 
   const handleRightClick = () => {
     const screenCarrousel = 11;
-    console.log(carrousel.current.offsetWidth + screenCarrousel);
-    console.log(carrousel.current.offsetWidth);
     carrousel.current.scrollLeft += (carrousel.current.offsetWidth + screenCarrousel);
   };
 
   const inProgress = Object.keys(getProgessesRecipes()[screen]).some((key) => key === id);
   const isDone = checkIsDoneRecipe(id);
-
-  console.log(detail);
 
   return (
     <Main>
