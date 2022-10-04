@@ -17,7 +17,9 @@ function FilterBar({ page }) {
     if (id === 'All') return handleRecipeFilter(allRecipes);
     if (id === 'Foods') {
       return handleRecipeFilter(allRecipes?.filter((e) => e.type === 'meal'));
-    } handleRecipeFilter(allRecipes?.filter((e) => e.type === 'drink'));
+    } if (id === 'Drinks') {
+      handleRecipeFilter(allRecipes?.filter((e) => e.type === 'drink'));
+    }
   };
 
   return (

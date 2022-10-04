@@ -62,14 +62,29 @@ export const LikeIcon = styled(likeIcon)`
 export const AllFilterBarIcon = styled(allFilterBarIcon)`
   width: 65px;
   height: 85px;
+  z-index: 2;
+
+  path {
+    pointer-events: none;
+  }
 `;
 export const DrinkFilterBarIcon = styled(drinkFilterBarIcon)`
   width: 65px;
   height: 85px;
+  z-index: 2;
+
+  path {
+    pointer-events: none;
+  }
 `;
 export const MealsFilterBarIcon = styled(mealsFilterBarIcon)`
   width: 65px;
   height: 85px;
+  z-index: 2;
+
+  path {
+    pointer-events: none;
+  }
 `;
 
 export const TitleIcon = styled(titleIcon)`

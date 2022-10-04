@@ -110,7 +110,7 @@ export const BoxIngredientInProgress = styled.li`
     margin-right: 10px;
     -webkit-appearance: none;
     outline: none;
-    transition: 1.6s;
+    transition: 1.0s;
   }
 
   input[type="checkbox"]:before {
@@ -122,7 +122,7 @@ export const BoxIngredientInProgress = styled.li`
     height: 100%;
     border: 2px solid #121212;
     box-sizing: border-box;
-    transition: 1.0s;
+    transition: .5s;
   }
   input:checked[type="checkbox"]:before {
     position: absolute;
