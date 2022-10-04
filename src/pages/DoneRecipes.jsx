@@ -34,7 +34,6 @@ function DoneRecipes() {
       </Container>
       <Footer />
     </Main>
-
   );
 }
 
