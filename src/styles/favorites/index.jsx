@@ -79,7 +79,6 @@ export const BoxInfo = styled.div`
     padding: 0 5px;
     border-radius: 20px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-right: 5px;
     font-weight: 400;
     font-size: 13px;
     line-height: 12px;
@@ -88,6 +87,7 @@ export const BoxInfo = styled.div`
 
 export const BoxBtn = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-top: 25px;
@@ -96,5 +96,9 @@ export const BoxBtn = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+
+  span {
+    margin: 2px;
   }
 `;

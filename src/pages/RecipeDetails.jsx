@@ -153,7 +153,7 @@ function RecipeDetails() {
           data-testid="start-recipe-btn"
           onClick={ () => history.push(`${DONE_RECIPES_PATH}`) }
         >
-          Receitas Prontas
+          Done Recipes
         </StartRecipeButton>
       )}
     </Main>
