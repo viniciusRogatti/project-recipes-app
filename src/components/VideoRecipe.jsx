@@ -12,7 +12,7 @@ function VideoRecipe({ recipe }) {
         data-testid="video"
         width="560"
         height="315"
-        src={ recipe.strYoutube.replace(MINUS_WATCH, PLUS_EMBED) }
+        src={ recipe.strYoutube?.replace(MINUS_WATCH, PLUS_EMBED) }
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer;

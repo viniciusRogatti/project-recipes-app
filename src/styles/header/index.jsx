@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-import { ReactComponent as profileIcon } from '../../images/profileIcon.svg';
-import { ReactComponent as searchIcon } from '../../images/searchIcon.svg';
-import { ReactComponent as titleIcon } from '../_images/logo-title.svg';
-import { ReactComponent as foodsTitle } from '../_images/foods-title.svg';
-import { ReactComponent as drinksIcon } from '../_images/drinks-title.svg';
-import { ReactComponent as iconRecipes } from '../_images/ícone Recipes app.svg';
-
 export const Container = styled.header`
   position: relative;
   top: 0;
@@ -14,52 +7,36 @@ export const Container = styled.header`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: ${(props) => props.width};
+  height: ${(props) => props.height};
 `;
 
 export const NavBar = styled.div`
   background: #FCDC36;
   display: flex;
   align-items: center;
-  padding: 7px 10px;
-  width: 100vw;
+  justify-content: space-around;
+  padding: 7px 25px;
+  width: 100%;
   height: 60px;
-
-  a { width: 60px; }
 `;
 
 export const LogoBox = styled.div`
   display: flex;
-  margin-top: 10px;
-`;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0 10px;
+  gap: 10px;
 
-export const SearchIcon = styled(searchIcon)`
-  width: 70px;
-  height: 30px;
-`;
-export const PerfilIcon = styled(profileIcon)`
-  width: 30px;
-  height: 30px;
-`;
-
-export const IconRecipes = styled(iconRecipes)`
-  width: 100px;
-  margin-right: 10px;
-`;
-
-export const TitleIcon = styled(titleIcon)`
-  width: 200px;
-  height: 40.97px;
-  margin-right: 10px;
-`;
-
-export const FoodsTitle = styled(foodsTitle)`
-  width: 180px;
-  height: 100px;
-`;
-export const DrinksIcon = styled(drinksIcon)`
-  width: 180px;
-  height: 100px;
+  span {
+    text-align: center;
+    letter-spacing: 0.105em;
+    text-transform: uppercase;
+    color: #41197F;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0.105em;
+  }
 `;
 
 export const SearchBox = styled.div`

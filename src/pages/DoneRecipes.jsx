@@ -4,6 +4,7 @@ import FilterBar from '../components/FilterBar';
 import Header from '../components/Header';
 import useRecipes from '../hooks/useRecipes';
 import { getRecipes } from '../services/localStorage';
+import { Container, Main } from '../styles/favorites';
 
 function DoneRecipes() {
   const [recipesDone, setRecipesDone] = useState(null);
@@ -16,19 +17,21 @@ function DoneRecipes() {
   const recipesToRender = filteredRecipes || recipesDone;
 
   return (
-    <div>
+    <Main>
       <Header title="Done Recipes" searchAble={ false } />
       <FilterBar page="done" />
-      { recipesToRender?.map((recipe, index) => (
-        <CardFavoriteOrDone
-          key={ recipe.id }
-          tags={ recipe.tags }
-          isDone
-          recipe={ recipe }
-          index={ index }
-        />
-      ))}
-    </div>
+      <Container>
+        { recipesToRender?.map((recipe, index) => (
+          <CardFavoriteOrDone
+            key={ recipe.id }
+            tags={ recipe.tags }
+            isDone
+            recipe={ recipe }
+            index={ index }
+          />
+        ))}
+      </Container>
+    </Main>
 
   );
 }

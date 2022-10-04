@@ -29,8 +29,6 @@ function RecipeDetails() {
   const [copiedLink, setcopiedLink] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [recommended, setRecommended] = useState(null);
-  const [isDone, setIsDone] = useState(false);
-  const [inProgressRecipes, setInProgressRecipes] = useState(false);
 
   const screen = pathname.includes('meals') ? 'meals' : 'drinks';
   const cardImg = pathname.includes('meals') ? 'strMealThumb' : 'strDrinkThumb';
@@ -41,12 +39,7 @@ function RecipeDetails() {
     const fetchDetails = async () => {
       const response = await RecipeDetalsAPI(pathname, id);
       const result = response[screen];
-      const progressRecipes = getProgessesRecipes()[screen];
-      if (progressRecipes) {
-        setInProgressRecipes(Object.keys(progressRecipes).some((key) => key === id));
-      }
       setDetail(result[0]);
-      setIsDone(checkIsDoneRecipe(id));
       setIngredients(getIngredientsAndMeasures(result[0]));
       setIsFavorite(checkRecipeIsFavorited(result[0], screen));
     };
@@ -71,6 +64,9 @@ function RecipeDetails() {
     } else removeRecipeToFavorite(detail, screen);
   };
 
+  const inProgress = Object.keys(getProgessesRecipes()[screen]).some((key) => key === id);
+  const isDone = checkIsDoneRecipe(id);
+
   return (
     <section>
       <button
@@ -80,6 +76,9 @@ function RecipeDetails() {
         src={ isFavorite ? FavoriteIcon : notFavoriteIcon }
       >
         Favoritar
+      </button>
+      <button type="button" onClick={ () => history.goBack() }>
+        Voltar
       </button>
       {copiedLink && <h3>Link copied!</h3>}
       <button
@@ -105,7 +104,7 @@ function RecipeDetails() {
         />
       ))}
       <h5> Instructions </h5>
-      <p data-testid="instructions">{detail.strInstructions}</p>
+      <p data-testid="instructions">{detail?.strInstructions}</p>
       {ingredients && screen === 'meals' && <VideoRecipe recipe={ detail } /> }
       <Carrousel>
         {recommended?.map((recipe, index) => (index < RECOMMENDED_LIMIT && (
@@ -124,7 +123,7 @@ function RecipeDetails() {
           data-testid="start-recipe-btn"
           onClick={ () => history.push(`${pathname}/in-progress`) }
         >
-          {inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
+          {inProgress ? 'Continue Recipe' : 'Start Recipe' }
         </StartRecipeButton>
       )}
     </section>

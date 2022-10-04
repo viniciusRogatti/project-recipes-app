@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Carrousel = styled.div`
+const Carrousel = styled.section`
   width: 100vw;
   overflow-x: auto;
   display: flex;

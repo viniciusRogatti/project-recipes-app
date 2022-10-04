@@ -2,56 +2,48 @@ import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { DONE_RECIPES_PATH, FAVORITES_PATH } from '../services/helpers/Consts';
-// comentário teste
+import { DONE_RECIPES_PATH, FAVORITES_PATH, USER_KEY } from '../services/helpers/Consts';
+import { Container, BoxLinks } from '../styles/profile';
+import { DoneIcon, FavoriteIcon, LogoutIcon } from '../styles/_icons';
 
 function Profile() {
   const history = useHistory();
-
-  const handleDoneButton = () => {
-    history.push(DONE_RECIPES_PATH);
-  };
-
-  const handleFavoriteButton = () => {
-    history.push(FAVORITES_PATH);
-  };
 
   const handleLogoutButton = () => {
     history.push('/');
     localStorage.clear();
   };
-  // const userEmail = JSON.parse(localStorage.getItem('user'));
+  const userEmail = JSON.parse(localStorage.getItem(USER_KEY));
+  console.log(userEmail);
+
   return (
-    <div>
+    <Container>
       <Header title="Profile" searchAble={ false } />
-      <p data-testid="profile-email">
-        {
-          localStorage.getItem('user')
-        }
-      </p>
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        onClick={ handleDoneButton }
-      >
-        Done Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        onClick={ handleFavoriteButton }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ handleLogoutButton }
-      >
-        Logout
-      </button>
+      <h3 data-testid="profile-email">
+        { userEmail.email }
+      </h3>
+      <BoxLinks onClick={ () => history.push(DONE_RECIPES_PATH) }>
+        <DoneIcon
+          data-testid="profile-done-btn"
+        />
+        <span>Done Recipes</span>
+      </BoxLinks>
+      <hr />
+      <BoxLinks onClick={ () => history.push(FAVORITES_PATH) }>
+        <FavoriteIcon
+          data-testid="profile-favorite-btn"
+        />
+        <span>Favorite Recipes</span>
+      </BoxLinks>
+      <hr />
+      <BoxLinks onClick={ handleLogoutButton }>
+        <LogoutIcon
+          data-testid="profile-logout-btn"
+        />
+        <span>Logout</span>
+      </BoxLinks>
       <Footer />
-    </div>
+    </Container>
 
   );
 }

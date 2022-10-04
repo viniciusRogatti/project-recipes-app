@@ -4,6 +4,7 @@ import FilterBar from '../components/FilterBar';
 import Header from '../components/Header';
 import useRecipes from '../hooks/useRecipes';
 import { getFavoriteRecipes } from '../services/localStorage';
+import { Container, Main } from '../styles/favorites';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState(null);
@@ -24,19 +25,21 @@ function FavoriteRecipes() {
   }, []);
 
   return (
-    <div>
+    <Main>
       <Header title="Favorite Recipes" searchAble={ false } />
       <FilterBar page="favorite" />
-      { favoriteRecipes?.map((recipe, index) => (
-        <CardFavoriteOrDone
-          key={ recipe.id }
-          tags={ recipe.tags }
-          isDone={ false }
-          recipe={ recipe }
-          index={ index }
-        />
-      ))}
-    </div>
+      <Container>
+        { favoriteRecipes?.map((recipe, index) => (
+          <CardFavoriteOrDone
+            key={ recipe.id }
+            tags={ recipe.tags }
+            isDone={ false }
+            recipe={ recipe }
+            index={ index }
+          />
+        ))}
+      </Container>
+    </Main>
 
   );
 }

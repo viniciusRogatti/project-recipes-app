@@ -85,6 +85,9 @@ function RecipeInProgress() {
       >
         Favoritar
       </button>
+      <button type="button" onClick={ () => history.goBack() }>
+        Voltar
+      </button>
       {copiedLink && <h3>Link copied!</h3>}
       <button
         type="button"

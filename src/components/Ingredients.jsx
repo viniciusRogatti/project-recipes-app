@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  saveProgressesRecipesMeals,
-  saveProgressesRecipesDrinks,
-  getProgessesRecipes } from '../services/localStorage';
+import { getProgessesRecipes, saveProgressesRecipes } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
 
 function Ingredients({ ingredient, inProgress, index, isChecked }) {
@@ -17,8 +14,7 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
 
   const handleChange = ({ target: { checked } }) => {
     setHandleChecked(checked);
-    if (type === 'drinks') saveProgressesRecipesDrinks(id, ingredient);
-    else saveProgressesRecipesMeals(id, ingredient);
+    saveProgressesRecipes(id, ingredient, type);
     setRecipesMade(getProgessesRecipes()[type][id].length);
   };
 
@@ -40,7 +36,6 @@ function Ingredients({ ingredient, inProgress, index, isChecked }) {
       >
         <input
           type="checkbox"
-          // data-testid={ `${index}-ingredient-step` }
           id={ ingredient }
           onChange={ handleChange }
           checked={ value }

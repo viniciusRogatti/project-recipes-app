@@ -2,48 +2,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useRecipes from '../hooks/useRecipes';
 import { getFavoriteRecipes, getRecipes } from '../services/localStorage';
+import { AllFilterBarIcon,
+  DrinkFilterBarIcon, MealsFilterBarIcon } from '../styles/_icons';
+import Container from '../styles/filterBar';
 
 function FilterBar({ page }) {
   const { handleRecipeFilter } = useRecipes();
 
-  const handleFilter = ({ target: { name } }) => {
+  const handleFilter = ({ target: { id } }) => {
     let allRecipes;
     if (page === 'favorite') {
       allRecipes = getFavoriteRecipes();
     } else allRecipes = getRecipes();
-    if (name === 'All') return handleRecipeFilter(allRecipes);
-    if (name === 'Foods') {
+    if (id === 'All') return handleRecipeFilter(allRecipes);
+    if (id === 'Foods') {
       return handleRecipeFilter(allRecipes?.filter((e) => e.type === 'meal'));
     } handleRecipeFilter(allRecipes?.filter((e) => e.type === 'drink'));
   };
 
   return (
-    <div>
-      <button
-        type="button"
+    <Container>
+      <AllFilterBarIcon
+        id="All"
         data-testid="filter-by-all-btn"
-        name="All"
         onClick={ handleFilter }
-      >
-        All
-      </button>
-      <button
-        type="button"
+      />
+      <MealsFilterBarIcon
         data-testid="filter-by-meal-btn"
-        name="Foods"
+        id="Foods"
         onClick={ handleFilter }
-      >
-        Foods
-      </button>
-      <button
-        type="button"
+      />
+      <DrinkFilterBarIcon
         data-testid="filter-by-drink-btn"
-        name="Drinks"
+        id="Drinks"
         onClick={ handleFilter }
-      >
-        Drinks
-      </button>
-    </div>
+      />
+    </Container>
   );
 }
 

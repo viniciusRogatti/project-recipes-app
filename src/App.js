@@ -27,20 +27,18 @@ import RecipeInProgress from './components/RecipeInProgress';
 function App() {
   return (
     <RecipesProvider>
-      <div>
-        <Switch>
-          <Route exact path={ LOGIN_PATH } component={ Login } />
-          <Route exact path={ MEALS_PATH } component={ Meals } />
-          <Route exact path={ DRINKS_PATH } component={ Drinks } />
-          <Route exact path={ PROFILE_PATH } component={ Profile } />
-          <Route exact path={ MEALS_IN_PROGRESS_PATH } component={ RecipeInProgress } />
-          <Route exact path={ DRINKS_IN_PROGRESS_PATH } component={ RecipeInProgress } />
-          <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
-          <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
-          <Route exact path={ MEALS_RECIPES_PATH } component={ RecipeDetails } />
-          <Route exact path={ DRINKS_RECIPES_PATH } component={ RecipeDetails } />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path={ LOGIN_PATH } component={ Login } />
+        <Route exact path={ MEALS_PATH } component={ Meals } />
+        <Route exact path={ DRINKS_PATH } component={ Drinks } />
+        <Route exact path={ PROFILE_PATH } component={ Profile } />
+        <Route exact path={ MEALS_IN_PROGRESS_PATH } component={ RecipeInProgress } />
+        <Route exact path={ DRINKS_IN_PROGRESS_PATH } component={ RecipeInProgress } />
+        <Route exact path={ DONE_RECIPES_PATH } component={ DoneRecipes } />
+        <Route exact path={ FAVORITES_PATH } component={ FavoriteRecipes } />
+        <Route exact path={ MEALS_RECIPES_PATH } component={ RecipeDetails } />
+        <Route exact path={ DRINKS_RECIPES_PATH } component={ RecipeDetails } />
+      </Switch>
     </RecipesProvider>
   );
 }
