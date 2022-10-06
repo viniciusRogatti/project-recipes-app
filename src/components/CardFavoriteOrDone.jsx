@@ -1,29 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import copy from 'clipboard-copy';
-import { removeRecipeToFavorite } from '../services/localStorage';
-import useRecipes from '../hooks/useRecipes';
 import { BoxBtn, BoxImage, BoxInfo, CardRecipe } from '../styles/favorites';
-import { DesLikeIcon, ShareIcon } from '../styles/_icons';
+import ShareAnimation from './LottieAnimations/ShareAnimation';
+import LikeAnimation from './LottieAnimations/LikeAnimation';
 
 function CardFavoriteOrDone({ recipe, index, isDone }) {
-  const [copiedLink, setCopiedLink] = useState(false);
-  const { setTrueUpdate, updateFavorite } = useRecipes();
-
   const screen = recipe.type === 'drink' ? 'drinks' : 'meals';
   const titleCard = recipe.type === 'drink' ? 'alcoholicOrNot' : 'nationality';
-
-  const shareLink = () => {
-    copy(`http://localhost:3000/${screen}/${recipe.id}`);
-    setCopiedLink(true);
-  };
-
-  const handlefavorited = () => {
-    removeRecipeToFavorite(recipe, screen);
-    console.log(!updateFavorite);
-    setTrueUpdate(!updateFavorite);
-  };
 
   return (
     <CardRecipe>
@@ -45,12 +29,12 @@ function CardFavoriteOrDone({ recipe, index, isDone }) {
           <h5 data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate }</h5>
         )}
         <BoxBtn>
-          <ShareIcon
+          <ShareAnimation
             data-testid={ `${index}-horizontal-share-btn` }
-            onClick={ shareLink }
             className={ isDone && 'absolute' }
+            pathname={ `/${screen}/${recipe.id}` }
           />
-          { isDone ? recipe.tags.map((tag) => (
+          { isDone ? recipe.tags?.map((tag) => (
             <span
               key={ `tag-id:${tag}` }
               data-testid={ `${index}-${tag}-horizontal-tag` }
@@ -58,13 +42,12 @@ function CardFavoriteOrDone({ recipe, index, isDone }) {
               {tag}
             </span>
           )) : (
-            <DesLikeIcon
-              onClick={ handlefavorited }
-              data-testid={ `${index}-horizontal-favorite-btn` }
+            <LikeAnimation
+              detail={ recipe }
+              type={ screen }
             />
           )}
         </BoxBtn>
-        { copiedLink ? <span>Link copied!</span> : ''}
       </BoxInfo>
     </CardRecipe>
   );

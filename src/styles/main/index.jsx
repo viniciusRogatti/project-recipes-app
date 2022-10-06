@@ -34,6 +34,7 @@ export const Main = styled.main`
 
 export const RecipesCard = styled.div`
   width: 48%; 
+  max-height: 45%;
   border: 0.517989px solid #B1B1B1;
   border-radius: 5px;
   flex: none;

@@ -26,22 +26,28 @@ export const BoxHeader = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 170px;
+  height: 180px;
 
   h3 {
     margin-top: 5%;
     text-align: center;
+    font-size: 24px;
     letter-spacing: 0.105em;
     text-transform: uppercase;
     color: #FCC436;
   }
   h4 {
-    margin-top: 2px;
     text-align: center;
     font-size: 18px;
     letter-spacing: 0.105em;
     text-transform: uppercase;
     color: #FFFFFF;
+  }
+
+  svg {
+    margin-top: 15px;
+    width: 40px;
+    height: 30px;
   }
 `;
 
@@ -52,19 +58,44 @@ export const BoxImage = styled.div`
   background-size: cover;
   background-position: end;
   background-repeat: no-repeat;
-  filter: contrast(30%);
-  opacity: 0.8;
+  filter: contrast(40%);
+  opacity: 0.9;
   width: 100%;
   height: 100%;
 `;
 
-export const BoxIcons = styled.div`
+export const ContainerIcons = styled.div`
   display: flex;
+  margin: 5px 0 20px;
+`;
+
+export const BoxIcons = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: start;
-  padding: 15px;
-  width: 100vw;
-  height: 50px;
+  width: 50%;
+  height: 80px;
+  font-weight: bold;
+  color: #FCC436;
+  font-size: 18px;
+  letter-spacing: 0.105em;
+
+  svg {
+    max-width: 150px;
+    max-height: 80px;
+  }
+
+  .like-icon {
+    position: absolute;
+    top: 20px;
+  }
+
+  .share-icon {
+    position: absolute;
+    top: 22px;
+  }
 `;
 
 export const BoxIngredient = styled.ul`
@@ -152,12 +183,12 @@ export const BoxInstructions = styled.section`
 
 export const BoxVideo = styled.section`
   max-width: 100%;
-  max-height: 100%;
+  height: 250px;
   margin-bottom: 5px;
 
   iframe {
     width: 100%;
-    height: 100%;
+    height: 200px;
   }
 `;
 

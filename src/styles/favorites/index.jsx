@@ -24,6 +24,15 @@ export const CardRecipe = styled.div`
   max-height: 150px;
   border: 0.517989px solid #B1B1B1;
   border-radius: 5px;
+  background:#FFFFFF;
+
+  .like-icon {
+    position: absolute;
+    right: 30px;
+    top: -30px;
+    max-width: 65px;
+  }
+
 `;
 
 export const BoxImage = styled.div`
@@ -45,19 +54,20 @@ export const BoxInfo = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  width: 50%;
+  width: 60%;
   font-family: 'Epilogue';
 
   h1 {
     font-weight: 700;
     font-size: 20px;
-    line-height: 12px;
+    line-height: 20px;
     color: #1A1B1C;
+    margin-top: 5px;
   }
 
   h2 {
     font-weight: 300;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 9px;
     color: #797D86;
     margin-top: 2px;
@@ -89,13 +99,13 @@ export const BoxBtn = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  margin-top: 25px;
+  justify-content: start;
 
-  .absolute {
+  div {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    max-width: 100px;
+    top: -5px;
+    right: -20px;
   }
 
   span {

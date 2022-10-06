@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import copy from 'clipboard-copy';
 import Ingredients from '../components/Ingredients';
 import { AllRecipesAPI, RecipeDetalsAPI } from '../services/fetchApi';
 import getIngredientsAndMeasures from '../services/getIngredientsAndMeasures';
@@ -11,24 +10,22 @@ import Carrousel from '../styles/carrousel';
 import StartRecipeButton from '../styles/StartRecipeButton';
 import {
   checkIsDoneRecipe,
-  checkRecipeIsFavorited,
   getProgessesRecipes,
-  removeRecipeToFavorite,
-  saveRecipeToFavorite,
 } from '../services/localStorage';
 import Card from '../components/Card';
 import { BoxCarrousel, BoxHeader,
-  BoxIcons, BoxImage,
-  BoxIngredient, BoxInstructions, Container, Main } from '../styles/recipes';
-import { ChevronLeftIcon, DesLikeIcon, LikeIcon, ShareIcon } from '../styles/_icons';
+  BoxIcons, BoxImage, BoxIngredient, BoxInstructions,
+  Container, ContainerIcons, Main } from '../styles/recipes';
+import { ChevronLeftIcon } from '../styles/_icons';
+import LikeAnimation from '../components/LottieAnimations/LikeAnimation';
+import ShareAnimation from '../components/LottieAnimations/ShareAnimation';
 
 function RecipeDetails() {
   const { pathname } = useLocation();
   const history = useHistory();
   const { id } = useParams();
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState({});
   const [ingredients, setIngredients] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [recommended, setRecommended] = useState(null);
   const carrousel = useRef(null);
 
@@ -43,7 +40,6 @@ function RecipeDetails() {
       const result = response[screen];
       setDetail(result[0]);
       setIngredients(getIngredientsAndMeasures(result[0]));
-      setIsFavorite(checkRecipeIsFavorited(result[0], screen));
     };
     const fetchData = async () => {
       const path = screen === 'meals' ? DRINKS_PATH : MEALS_PATH;
@@ -53,18 +49,6 @@ function RecipeDetails() {
     fetchData();
     fetchDetails();
   }, [pathname]); // eslint-disable-line
-
-  const shareLink = () => {
-    copy(`http://localhost:3000${pathname}`);
-    setcopiedLink(true);
-  };
-
-  const handlefavorited = () => {
-    setIsFavorite(!isFavorite);
-    if (!isFavorite) {
-      saveRecipeToFavorite(detail, screen);
-    } else removeRecipeToFavorite(detail, screen);
-  };
 
   const handleLeftClick = () => {
     const screenCarrousel = 11;
@@ -82,24 +66,7 @@ function RecipeDetails() {
   return (
     <Main>
       <BoxHeader>
-        <BoxIcons>
-          <ChevronLeftIcon margin="80%" onClick={ () => history.goBack() } />
-          <ShareIcon
-            data-testid="share-btn"
-            onClick={ shareLink }
-          />
-          { isFavorite ? (
-            <DesLikeIcon
-              onClick={ handlefavorited }
-              data-testid="favorite-btn"
-            />
-          ) : (
-            <LikeIcon
-              onClick={ handlefavorited }
-              data-testid="favorite-btn"
-            />
-          )}
-        </BoxIcons>
+        <ChevronLeftIcon margin="20%" onClick={ () => history.goBack() } />
         <h3 data-testid="recipe-title">{detail[cardName]}</h3>
         <h4 data-testid="recipe-category">
           {screen === 'meals' ? detail.strCategory : detail.strAlcoholic}
@@ -107,6 +74,22 @@ function RecipeDetails() {
         <BoxImage banner={ detail[cardImg] } />
       </BoxHeader>
       <Container>
+        <ContainerIcons>
+          <BoxIcons>
+            <span> Copy Link </span>
+            <ShareAnimation
+              pathname={ pathname }
+            />
+          </BoxIcons>
+          <BoxIcons>
+            <span> Favorite </span>
+            <LikeAnimation
+              detail={ detail }
+              type={ screen }
+              className="like-header"
+            />
+          </BoxIcons>
+        </ContainerIcons>
         <h1> Ingredients </h1>
         <BoxIngredient>
           {ingredients?.map((ingredient, index) => (

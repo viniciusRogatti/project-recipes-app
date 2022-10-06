@@ -8,7 +8,6 @@ import { DoneIcon, FavoriteIcon, LogoutIcon } from '../styles/_icons';
 
 function Profile() {
   const history = useHistory();
-
   const handleLogoutButton = () => {
     history.push('/');
     localStorage.clear();

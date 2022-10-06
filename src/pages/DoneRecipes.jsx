@@ -9,13 +9,13 @@ import { Container, Main } from '../styles/favorites';
 
 function DoneRecipes() {
   const [recipesDone, setRecipesDone] = useState(null);
-  const { filteredRecipes } = useRecipes();
+  const { filteredRecipes, isFilter } = useRecipes();
 
   useEffect(() => {
     setRecipesDone(getRecipes());
   }, []);
 
-  const recipesToRender = filteredRecipes || recipesDone;
+  const recipesToRender = isFilter ? filteredRecipes : recipesDone;
 
   return (
     <Main>

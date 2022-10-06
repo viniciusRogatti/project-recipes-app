@@ -8,14 +8,16 @@ function RecipesProvider({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [recipesMade, setRecipesMade] = useState(0);
   const [updateFavorite, setUpdateFavorite] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
 
   const setTrueFilter = (param) => {
     setFilteredBarRecipes(param);
     setIsSearching(true);
   };
 
-  const handleRecipeFilter = (param) => {
-    setFilteredRecipes(param);
+  const handleRecipeFilter = (array, bool) => {
+    setFilteredRecipes(array);
+    setIsFilter(bool);
   };
 
   const setTrueUpdate = (param) => {
@@ -32,8 +34,10 @@ function RecipesProvider({ children }) {
     setRecipesMade,
     handleRecipeFilter,
     filteredBarRecipes,
+    isFilter,
     setIsSearching,
-  }), [filteredRecipes, recipesMade, updateFavorite, isSearching, filteredBarRecipes]);
+  }), [filteredRecipes, isFilter,
+    recipesMade, updateFavorite, isSearching, filteredBarRecipes]);
 
   return (
     <RecipesContext.Provider value={ contextValue }>

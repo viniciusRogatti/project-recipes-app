@@ -14,11 +14,11 @@ function FilterBar({ page }) {
     if (page === 'favorite') {
       allRecipes = getFavoriteRecipes();
     } else allRecipes = getRecipes();
-    if (id === 'All') return handleRecipeFilter(allRecipes);
+    if (id === 'All') return handleRecipeFilter(allRecipes, false);
     if (id === 'Foods') {
-      return handleRecipeFilter(allRecipes?.filter((e) => e.type === 'meal'));
+      return handleRecipeFilter(allRecipes?.filter((e) => e.type === 'meal'), true);
     } if (id === 'Drinks') {
-      handleRecipeFilter(allRecipes?.filter((e) => e.type === 'drink'));
+      handleRecipeFilter(allRecipes?.filter((e) => e.type === 'drink'), true);
     }
   };
 

@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import copy from 'clipboard-copy';
 import Ingredients from './Ingredients';
 import { RecipeDetalsAPI } from '../services/fetchApi';
 import getIngredientsAndMeasures from '../services/getIngredientsAndMeasures';
 import VideoRecipe from './VideoRecipe';
 import StartRecipeButton from '../styles/StartRecipeButton';
-import {
-  checkRecipeIsFavorited,
-  getProgessesRecipes,
-  removeRecipeToFavorite,
-  saveDoneRecipe,
-  saveRecipeToFavorite,
-} from '../services/localStorage';
+import { getProgessesRecipes, saveDoneRecipe } from '../services/localStorage';
 import useRecipes from '../hooks/useRecipes';
 import { DONE_RECIPES_PATH } from '../services/helpers/Consts';
 import { BoxHeader,
-  BoxIcons, BoxImage,
-  BoxIngredient, BoxInstructions, Container, Main } from '../styles/recipes';
-import { ChevronLeftIcon, DesLikeIcon, LikeIcon, ShareIcon } from '../styles/_icons';
+  BoxIcons, BoxImage, BoxIngredient,
+  BoxInstructions, Container, ContainerIcons, Main } from '../styles/recipes';
+import { ChevronLeftIcon } from '../styles/_icons';
+import ShareAnimation from './LottieAnimations/ShareAnimation';
+import LikeAnimation from './LottieAnimations/LikeAnimation';
 
 function RecipeInProgress() {
   const { pathname } = useLocation();
@@ -26,8 +21,6 @@ function RecipeInProgress() {
   const { id } = useParams();
   const [detail, setDetail] = useState(null);
   const [ingredients, setIngredients] = useState(null);
-  // const [copiedLink, setcopiedLink] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [recipeFinished, setrecipeFinished] = useState(false);
   const { recipesMade } = useRecipes();
 
@@ -41,7 +34,6 @@ function RecipeInProgress() {
       const result = response[screen];
       setDetail(result[0]);
       setIngredients(getIngredientsAndMeasures(result[0]));
-      setIsFavorite(checkRecipeIsFavorited(result[0], screen));
     };
     fetchDetails();
   }, []); // eslint-disable-line
@@ -57,18 +49,6 @@ function RecipeInProgress() {
     setrecipeFinished(recipesMade === ingredients?.length);
   }, [recipesMade]); // eslint-disable-line
 
-  const shareLink = () => {
-    copy(`http://localhost:3000/${screen}/${id}`);
-    setcopiedLink(true);
-  };
-
-  const handlefavorited = () => {
-    setIsFavorite(!isFavorite);
-    if (!isFavorite) {
-      saveRecipeToFavorite(detail, screen);
-    } else removeRecipeToFavorite(detail, screen);
-  };
-
   const handleDone = () => {
     saveDoneRecipe(detail, screen);
     history.push(DONE_RECIPES_PATH);
@@ -80,24 +60,7 @@ function RecipeInProgress() {
     detail && (
       <Main>
         <BoxHeader>
-          <BoxIcons>
-            <ChevronLeftIcon margin="80%" onClick={ () => history.goBack() } />
-            <ShareIcon
-              data-testid="share-btn"
-              onClick={ shareLink }
-            />
-            { isFavorite ? (
-              <DesLikeIcon
-                onClick={ handlefavorited }
-                data-testid="favorite-btn"
-              />
-            ) : (
-              <LikeIcon
-                onClick={ handlefavorited }
-                data-testid="favorite-btn"
-              />
-            )}
-          </BoxIcons>
+          <ChevronLeftIcon margin="20%" onClick={ () => history.goBack() } />
           <h3 data-testid="recipe-title">{detail[cardName]}</h3>
           <h4 data-testid="recipe-category">
             {screen === 'meals' ? detail.strCategory : detail.strAlcoholic}
@@ -105,6 +68,22 @@ function RecipeInProgress() {
           <BoxImage banner={ detail[cardImg] } />
         </BoxHeader>
         <Container>
+          <ContainerIcons>
+            <BoxIcons>
+              <span> Copy Link </span>
+              <ShareAnimation
+                pathname={ pathname }
+              />
+            </BoxIcons>
+            <BoxIcons>
+              <span> Favorite </span>
+              <LikeAnimation
+                detail={ detail }
+                type={ screen }
+                className="like-header"
+              />
+            </BoxIcons>
+          </ContainerIcons>
           <h1> Ingredients </h1>
           <BoxIngredient>
             {ingredients?.map((ingredient, index) => (
