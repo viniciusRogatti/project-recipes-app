@@ -5,8 +5,8 @@ import App from './App';
 import GlobalStyle from './styles/GlobalStyles';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <GlobalStyle basename="/project-recipes-app" />
+  <BrowserRouter basename="/project-recipes-app">
+    <GlobalStyle />
     <App />
   </BrowserRouter>,
   document.getElementById('root'),
