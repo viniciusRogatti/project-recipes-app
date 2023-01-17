@@ -6,7 +6,6 @@ export const Container = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-
 `;
 
 export const Main = styled.main`
@@ -34,7 +33,7 @@ export const Main = styled.main`
 
 export const RecipesCard = styled.div`
   width: 48%; 
-  max-height: 45%;
+  max-height: 60%;
   border: 0.517989px solid #B1B1B1;
   border-radius: 5px;
   flex: none;
