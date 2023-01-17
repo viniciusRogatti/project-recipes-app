@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/project-recipes-app/static/css/main.84487ea8.css",
-    "main.js": "/project-recipes-app/static/js/main.80030bfa.js",
+    "main.js": "/project-recipes-app/static/js/main.44b672af.js",
     "static/media/tomate.svg": "/project-recipes-app/static/media/tomate.7ae90d3aab61e26967495aff64b25fa5.svg",
     "static/media/logo Recipes App.svg": "/project-recipes-app/static/media/logo Recipes App.41bab340aaa08a53a4f3a759f18b56aa.svg",
     "static/media/beef.svg": "/project-recipes-app/static/media/beef.8b377bf08ed5184e653888bb743ff8e4.svg",
@@ -32,10 +32,10 @@
     "static/media/logout.svg": "/project-recipes-app/static/media/logout.d60dd1a3860f60736646f09df4cff086.svg",
     "static/media/chevron-left-icon.svg": "/project-recipes-app/static/media/chevron-left-icon.7c66c4576e621ab1377a15fb956ec894.svg",
     "main.84487ea8.css.map": "/project-recipes-app/static/css/main.84487ea8.css.map",
-    "main.80030bfa.js.map": "/project-recipes-app/static/js/main.80030bfa.js.map"
+    "main.44b672af.js.map": "/project-recipes-app/static/js/main.44b672af.js.map"
   },
   "entrypoints": [
     "static/css/main.84487ea8.css",
-    "static/js/main.80030bfa.js"
+    "static/js/main.44b672af.js"
   ]
 }
